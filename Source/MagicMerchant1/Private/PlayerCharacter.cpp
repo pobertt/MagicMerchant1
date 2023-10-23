@@ -11,6 +11,9 @@ APlayerCharacter::APlayerCharacter()
 	
 	hp = 100;
 	mp = 200;
+	// money = 2222.f;
+	currency2 = 3333.f;
+	lvl = 1;
 }
 
 // Called when the game starts or when spawned

@@ -22,7 +22,7 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = playerStats, meta = (AllowPrivateAccess = "true"))
 	int mp;
 
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = playerStats, meta = (AllowPrivateAccess = "true"))
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = playerStats, meta = (AllowPrivateAccess = "true"))
 	float money;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = playerStats, meta = (AllowPrivateAccess = "true"))
