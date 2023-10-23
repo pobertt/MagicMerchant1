@@ -9,11 +9,11 @@ APlayerCharacter::APlayerCharacter()
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 	
-	hp = 100;
-	mp = 200;
+	//hp = 100;
+	//mp = 200;
 	// money = 2222.f;
-	currency2 = 3333.f;
-	lvl = 1;
+	//currency2 = 3333.f;
+	//lvl = 1;
 }
 
 // Called when the game starts or when spawned

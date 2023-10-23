@@ -16,19 +16,19 @@ public:
 	APlayerCharacter();
 	
 	//Player Stats
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = playerStats, meta = (AllowPrivateAccess = "true"))
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = playerStats, meta = (AllowPrivateAccess = "true"))
 	int hp;
 
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = playerStats, meta = (AllowPrivateAccess = "true"))
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = playerStats, meta = (AllowPrivateAccess = "true"))
 	int mp;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = playerStats, meta = (AllowPrivateAccess = "true"))
 	float money;
 
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = playerStats, meta = (AllowPrivateAccess = "true"))
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = playerStats, meta = (AllowPrivateAccess = "true"))
 	float currency2;
 
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = playerStats, meta = (AllowPrivateAccess = "true"))
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = playerStats, meta = (AllowPrivateAccess = "true"))
 	int lvl;
 
 protected:
