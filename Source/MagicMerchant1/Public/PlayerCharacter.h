@@ -17,19 +17,55 @@ public:
 	
 	//Player Stats
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = playerStats, meta = (AllowPrivateAccess = "true"))
-	int hp;
+		int32 hp;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = playerStats, meta = (AllowPrivateAccess = "true"))
-	int mp;
+		int32 mp;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = playerStats, meta = (AllowPrivateAccess = "true"))
-	float money;
+		float money;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = playerStats, meta = (AllowPrivateAccess = "true"))
-	float currency2;
+		float currency2;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = playerStats, meta = (AllowPrivateAccess = "true"))
-	int lvl;
+		int32 lvl;
+
+	//Declaring functions to add to player stats
+	UFUNCTION(BlueprintCallable, Category = playerStats)
+		int32 AddHp();
+
+	UFUNCTION(BlueprintCallable, Category = playerStats)
+		int32 AddMp();
+
+	UFUNCTION(BlueprintCallable, Category = playerStats)
+		float AddMoney();
+
+	UFUNCTION(BlueprintCallable, Category = playerStats)
+		float AddCurrency2();
+
+	UFUNCTION(BlueprintCallable, Category = playerStats)
+		int32 AddLvl();
+
+	//Declaring functions to subtract from player stats
+	UFUNCTION(BlueprintCallable, Category = playerStats)
+		int32 SubHp();
+
+	UFUNCTION(BlueprintCallable, Category = playerStats)
+		int32 SubMp();
+
+	UFUNCTION(BlueprintCallable, Category = playerStats)
+		float SubMoney();
+
+	UFUNCTION(BlueprintCallable, Category = playerStats)
+		float SubCurrency2();
+
+	UFUNCTION(BlueprintCallable, Category = playerStats)
+		int32 SubLvl();
+
+	UFUNCTION(BlueprintImplementableEvent, Category = playerStats)
+		void SayHey();
+	void SayHey_Implementation() { };
 
 protected:
 	// Called when the game starts or when spawned
@@ -39,6 +75,6 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
-
+	
 };
 
