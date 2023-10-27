@@ -18,6 +18,7 @@ public:
 	FString name;
 	FString description;
 	float itemPrice;
+	int32 numOfItem;
 
 protected:
 	// Called when the game starts or when spawned
