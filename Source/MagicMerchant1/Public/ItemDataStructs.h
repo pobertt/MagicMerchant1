@@ -87,6 +87,8 @@ struct FItemNumericData
 USTRUCT()
 struct FItemAssetData
 {
+	GENERATED_USTRUCT_BODY()
+
 	UPROPERTY(EditAnywhere)
 		UTexture2D* Icon;
 
