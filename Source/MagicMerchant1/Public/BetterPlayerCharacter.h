@@ -31,6 +31,9 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = playerStats, meta = (AllowPrivateAccess = "true"))
 		int32 lvl;
 
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Inventory, meta = (AllowPrivateAccess = "true"))
+		class UDataTable* Inventory;
+
 	//Declaring functions to add to player stats
 	UFUNCTION(BlueprintCallable, Category = playerStats)
 		int32 AddHp();
