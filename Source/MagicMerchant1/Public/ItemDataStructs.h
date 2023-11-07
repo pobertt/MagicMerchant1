@@ -6,15 +6,7 @@
 #include "Engine/DataTable.h"
 #include "ItemDataStructs.generated.h"
 
-/**
- * 
- */
-class MAGICMERCHANT1_API ItemDataStructs
-{
-public:
-	ItemDataStructs();
-	~ItemDataStructs();
-};
+
 
 UENUM()
 enum class EItemQuality : uint8
@@ -41,13 +33,13 @@ struct FItemStatistics
 	GENERATED_USTRUCT_BODY()
 
 	UPROPERTY(EditAnywhere)
-		float BuyValue;
+	float BuyValue;
 
 	UPROPERTY(EditAnywhere)
-		float SellValue;
+	float SellValue;
 
 	UPROPERTY(EditAnywhere)
-		float DamageValue;
+	float DamageValue;
 };
 
 USTRUCT()
@@ -56,16 +48,16 @@ struct FItemTextData
 	GENERATED_USTRUCT_BODY()
 
 	UPROPERTY(EditAnywhere)
-		FText Name;
+	FText Name;
 
 	UPROPERTY(EditAnywhere)
-		FText Description;
+	FText Description;
 
 	UPROPERTY(EditAnywhere)
-		FText InteractionText;
+	FText InteractionText;
 	
 	UPROPERTY(EditAnywhere)
-		FText UsageText;
+	FText UsageText;
 };
 
 USTRUCT()
@@ -74,13 +66,13 @@ struct FItemNumericData
 	GENERATED_USTRUCT_BODY()
 
 	UPROPERTY(EditAnywhere)
-		float Weight;
+	float Weight;
 
 	UPROPERTY(EditAnywhere)
-		int32 MaxStackSize;
+	int32 MaxStackSize;
 
 	UPROPERTY(EditAnywhere)
-		bool bIsStackable;
+	bool bIsStackable;
 
 };
 
@@ -90,32 +82,42 @@ struct FItemAssetData
 	GENERATED_USTRUCT_BODY()
 
 	UPROPERTY(EditAnywhere)
-		UTexture2D* Icon;
+	UTexture2D* Icon;
 
 	UPROPERTY(EditAnywhere)
-		UStaticMesh* Mesh;
+	UStaticMesh* Mesh;
 };
 
-USTRUCT()
+USTRUCT(BlueprintType)
 struct FItemData : public FTableRowBase
 {
 	GENERATED_USTRUCT_BODY()
 
 	UPROPERTY(EditAnywhere, Category = "Item Data")
-		EItemType ItemType;
+	EItemType ItemType;
 
 	UPROPERTY(EditAnywhere, Category = "Item Data")
-		EItemType ItemQuality;
+	EItemQuality ItemQuality;
 
 	UPROPERTY(EditAnywhere, Category = "Item Data")
-		EItemType ItemStatistics;
+	FItemStatistics ItemStatistics;
 
 	UPROPERTY(EditAnywhere, Category = "Item Data")
-		EItemType TextData;
+	FItemTextData TextData;
 
 	UPROPERTY(EditAnywhere, Category = "Item Data")
-		EItemType NumericData;
+	FItemNumericData NumericData;
 
 	UPROPERTY(EditAnywhere, Category = "Item Data")
-		EItemType AssetData;
+	FItemAssetData AssetData;
+};
+
+/**
+ *
+ */
+class MAGICMERCHANT1_API ItemDataStructs
+{
+public:
+	ItemDataStructs();
+	~ItemDataStructs();
 };
