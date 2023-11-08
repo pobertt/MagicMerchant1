@@ -93,8 +93,8 @@ struct FPotionRecipeData
 {
 	GENERATED_USTRUCT_BODY()
 
-		UPROPERTY(EditAnywhere)
-		FText Ingredient1;
+	UPROPERTY(EditAnywhere)
+	FText Ingredient1;
 };
 
 USTRUCT(BlueprintType)
