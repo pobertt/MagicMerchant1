@@ -88,6 +88,15 @@ struct FItemAssetData
 	UStaticMesh* Mesh;
 };
 
+USTRUCT()
+struct FPotionRecipeData
+{
+	GENERATED_USTRUCT_BODY()
+
+		UPROPERTY(EditAnywhere)
+		FText Ingredient1;
+};
+
 USTRUCT(BlueprintType)
 struct FItemData : public FTableRowBase
 {
@@ -110,13 +119,18 @@ struct FItemData : public FTableRowBase
 
 	UPROPERTY(EditAnywhere, Category = "Item Data")
 	FItemAssetData AssetData;
+
+	UPROPERTY(EditAnywhere, Category = "Item Data")
+	FPotionRecipeData PotionRecipeData;
 };
 
 /**
  *
  */
+
 class MAGICMERCHANT1_API ItemDataStructs
 {
+
 public:
 	ItemDataStructs();
 	~ItemDataStructs();
