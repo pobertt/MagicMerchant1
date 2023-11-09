@@ -23,7 +23,7 @@ enum class EItemType : uint8
 {
 	Ingredient UMETA(DisplayName = "Ingredient"),
 	Potion UMETA(DisplayName = "Potion"),
-	Magic UMETA(DisplayName = "Magic??"),
+	Magic UMETA(DisplayName = "Spell"),
 	Placeholder UMETA(DisplayName = "Placeholder")
 };
 
@@ -88,19 +88,13 @@ struct FItemAssetData
 	UStaticMesh* Mesh;
 };
 
-USTRUCT()
-struct FPotionRecipeData
-{
-	GENERATED_USTRUCT_BODY()
-
-	UPROPERTY(EditAnywhere)
-	FText Ingredient1;
-};
-
 USTRUCT(BlueprintType)
 struct FItemData : public FTableRowBase
 {
 	GENERATED_USTRUCT_BODY()
+
+	UPROPERTY(EditAnywhere, Category = "Item Data")
+	FName ID;
 
 	UPROPERTY(EditAnywhere, Category = "Item Data")
 	EItemType ItemType;
@@ -119,9 +113,6 @@ struct FItemData : public FTableRowBase
 
 	UPROPERTY(EditAnywhere, Category = "Item Data")
 	FItemAssetData AssetData;
-
-	UPROPERTY(EditAnywhere, Category = "Item Data")
-	FPotionRecipeData PotionRecipeData;
 };
 
 /**
