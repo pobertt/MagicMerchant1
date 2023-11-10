@@ -4,8 +4,8 @@
 
 #include "CoreMinimal.h"
 #include "ItemDataStructs.h"
-#include "ItemBase.generated.h"
 #include <BetterPlayerCharacter.h>
+#include "ItemBase.generated.h"
 
 /**
  * 
