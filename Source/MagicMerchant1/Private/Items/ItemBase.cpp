@@ -10,6 +10,7 @@ UItemBase::UItemBase()
 
 UItemBase* UItemBase::CreateItemCopy() const
 {
+	//Creating a copy 
 	UItemBase* ItemCopy = NewObject<UItemBase>(StaticClass());
 
 	ItemCopy->ID = this->ID;

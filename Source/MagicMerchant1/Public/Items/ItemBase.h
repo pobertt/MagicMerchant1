@@ -53,6 +53,7 @@ public:
 	UItemBase* CreateItemCopy() const;
 
 	//Inlining, copys entire contents of the function to everywhere it will be called. Reduces the overhead of calling
+	//Getter functions (Access to class properties)
 	UFUNCTION(Category = "Item")
 	FORCEINLINE float GetItemStackWeight() const { return Quantity * NumericData.Weight; };
 	
