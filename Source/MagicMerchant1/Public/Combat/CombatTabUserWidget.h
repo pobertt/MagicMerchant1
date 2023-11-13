@@ -14,4 +14,7 @@ class MAGICMERCHANT1_API UCombatTabUserWidget : public UUserWidget
 {
 	GENERATED_BODY()
 	
+protected:
+	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
+		class UButton* Attack1Button;
 };
