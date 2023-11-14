@@ -4,7 +4,9 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/GameModeBase.h"
+#include "Public/Combat/CombatTabUserWidget.h"
 #include "MagicMerchant1GameModeBase.generated.h"
+
 
 /**
  * 
@@ -13,7 +15,13 @@ UCLASS()
 class MAGICMERCHANT1_API AMagicMerchant1GameModeBase : public AGameModeBase
 {
 	GENERATED_BODY()
-/*
+
+public:
+	UFUNCTION(BlueprintCallable)
+	void AddCombatWidget();
+
+	UFUNCTION(BlueprintCallable)
+	void RemoveCombatWidget();
 
 protected:
 	UPROPERTY(EditAnywhere, Category = "Class Types")
@@ -22,8 +30,9 @@ protected:
 
 	//Displaying widget to viewport instead of doing it in blueprints
 	UPROPERTY(VisibleInstanceOnly, Category = "Runtime")
-	class UCombatTabUserWidget* ButtonWidget;
+	class UCombatTabUserWidget* CombatWidget;
+
+
 
 	virtual void BeginPlay() override;
-	*/
 };
