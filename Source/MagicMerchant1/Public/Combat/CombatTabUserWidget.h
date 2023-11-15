@@ -21,10 +21,15 @@ protected:
 	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
 		class UButton* Attack1Button;
 
+	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
+		class UButton* Item1Button;
+
 	virtual void NativeConstruct() override;
 
 	UFUNCTION()
 		void Attack1ButtonOnClicked();
 
+	UFUNCTION()
+		void Item1ButtonOnClicked();
 
 };

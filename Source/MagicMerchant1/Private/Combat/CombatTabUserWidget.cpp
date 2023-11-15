@@ -8,15 +8,21 @@
 
 void UCombatTabUserWidget::NativeConstruct()
 {
-	if (Attack1Button)
+	if (Attack1Button && Item1Button)
 	{
 		Attack1Button->OnClicked.AddDynamic(this, &UCombatTabUserWidget::Attack1ButtonOnClicked);
+		Item1Button->OnClicked.AddDynamic(this, &UCombatTabUserWidget::Item1ButtonOnClicked);
 	}
 }
 
 //When button is pressed it changes text label to 17
 void UCombatTabUserWidget::Attack1ButtonOnClicked()
 {
+	TextLabel->SetText(FText::FromString("EnemyAttacked"));
+}
 
-	TextLabel->SetText(FText::FromString("EnemyAttacks"));
+void UCombatTabUserWidget::Item1ButtonOnClicked()
+{
+	TextLabel->SetText(FText::FromString("Item1Pressed"));
+	//item consumed
 }
