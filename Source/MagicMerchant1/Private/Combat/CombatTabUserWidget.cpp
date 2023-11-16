@@ -33,5 +33,6 @@ void UCombatTabUserWidget::BackButtonOnClicked()
 {
 	TextLabel->SetText(FText::FromString("BackPressed"));
 	//BackButton pressed
-	RemoveCombatWidget();
+	//RemoveCombatWidget();
+	//Display main ui again
 }
