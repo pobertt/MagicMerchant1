@@ -28,11 +28,8 @@ protected:
 	//specifying a base class in c++ and assigning a specific class inside of blueprints 
 	TSubclassOf<UUserWidget> WidgetClass;
 
-	//Displaying widget to viewport instead of doing it in blueprints
 	UPROPERTY(VisibleInstanceOnly, Category = "Runtime")
 	class UCombatTabUserWidget* CombatWidget;
-
-
 
 	virtual void BeginPlay() override;
 };

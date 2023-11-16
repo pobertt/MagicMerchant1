@@ -24,6 +24,9 @@ protected:
 	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
 		class UButton* Item1Button;
 
+	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
+		class UButton* BackButton;
+
 	virtual void NativeConstruct() override;
 
 	UFUNCTION()
@@ -31,5 +34,8 @@ protected:
 
 	UFUNCTION()
 		void Item1ButtonOnClicked();
+
+	UFUNCTION()
+		void BackButtonOnClicked();
 
 };
