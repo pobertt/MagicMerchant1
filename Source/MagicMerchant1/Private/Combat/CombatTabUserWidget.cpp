@@ -10,17 +10,23 @@ void UCombatTabUserWidget::NativeConstruct()
 {
 	if (Attack1Button && Item1Button && BackButton)
 	{
+		//delegate calls, function will be called from click
 		Attack1Button->OnClicked.AddDynamic(this, &UCombatTabUserWidget::Attack1ButtonOnClicked);
 		Item1Button->OnClicked.AddDynamic(this, &UCombatTabUserWidget::Item1ButtonOnClicked);
 		BackButton->OnClicked.AddDynamic(this, &UCombatTabUserWidget::BackButtonOnClicked);
 	}
+
+	GamemodeRef = Cast<AMagicMerchant1GameModeBase>(GetWorld()->GetAuthGameMode());
+	PlayerRef = Cast<ABetterPlayerCharacter>(GetWorld()->GetFirstPlayerController()->GetPawn());
+
 }
 
 //When button is pressed it changes text label to 17
 void UCombatTabUserWidget::Attack1ButtonOnClicked()
 {
-	TextLabel->SetText(FText::FromString("EnemyAttacked"));
 	//enenmy attacked
+	TextLabel->SetText(FText::FromString("EnemyAttacked"));
+	PlayerRef->AttackEnemy();
 }
 
 void UCombatTabUserWidget::Item1ButtonOnClicked()
@@ -33,6 +39,8 @@ void UCombatTabUserWidget::BackButtonOnClicked()
 {
 	TextLabel->SetText(FText::FromString("BackPressed"));
 	//BackButton pressed
-	//RemoveCombatWidget();
+	//GamemodeRef->RemoveCombatWidget();
 	//Display main ui again
+	GamemodeRef->AddMainUIWidget();
+
 }

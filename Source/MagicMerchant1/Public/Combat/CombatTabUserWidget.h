@@ -3,7 +3,9 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "MagicMerchant1\MagicMerchant1GameModeBase.h"
 #include "Blueprint/UserWidget.h"
+#include "BetterPlayerCharacter.h"
 #include "CombatTabUserWidget.generated.h"
 
 /**
@@ -38,4 +40,8 @@ protected:
 	UFUNCTION()
 		void BackButtonOnClicked();
 
+private:
+	class AMagicMerchant1GameModeBase* GamemodeRef;
+
+	class ABetterPlayerCharacter* PlayerRef;
 };

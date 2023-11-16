@@ -23,13 +23,25 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void RemoveCombatWidget();
 
+	UFUNCTION(BlueprintCallable)
+	void AddMainUIWidget();
+
+	UFUNCTION(BlueprintCallable)
+	void RemoveMainUIWidget();
+
 protected:
 	UPROPERTY(EditAnywhere, Category = "Class Types")
 	//specifying a base class in c++ and assigning a specific class inside of blueprints 
 	TSubclassOf<UUserWidget> WidgetClass;
+	
+	UPROPERTY(EditAnywhere, Category = "Class Types")
+	//specifying a base class in c++ and assigning a specific class inside of blueprints 
+	TSubclassOf<UUserWidget> MainUIClass;
 
 	UPROPERTY(VisibleInstanceOnly, Category = "Runtime")
 	class UCombatTabUserWidget* CombatWidget;
+
+
 
 	virtual void BeginPlay() override;
 };

@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
+#include "Combat\BaseEnemy.h"
 #include "BetterPlayerCharacter.generated.h"
 
 UCLASS()
@@ -13,9 +14,11 @@ class MAGICMERCHANT1_API ABetterPlayerCharacter : public ACharacter
 
 public:
 	// Sets default values for this character's properties
+
 	ABetterPlayerCharacter();
 
 	//Player Stats
+
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = playerStats, meta = (AllowPrivateAccess = "true"))
 		int32 hp;
 
@@ -35,6 +38,7 @@ public:
 		class UDataTable* Inventory;
 
 	//Declaring functions to add to player stats
+
 	UFUNCTION(BlueprintCallable, Category = playerStats)
 		int32 AddHp();
 
@@ -51,6 +55,7 @@ public:
 		int32 AddLvl();
 
 	//Declaring functions to subtract from player stats
+
 	UFUNCTION(BlueprintCallable, Category = playerStats)
 		int32 SubHp();
 
@@ -70,6 +75,11 @@ public:
 		void SayHey();
 	void SayHey_Implementation() { };
 
+	//Combat Functions
+
+	UFUNCTION(BlueprintCallable, Category = playerCombat)
+		void AttackEnemy();
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
@@ -80,5 +90,9 @@ public:
 
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
+
+private:
+	class ABaseEnemy* BaseEnemyRef;
+
 
 };

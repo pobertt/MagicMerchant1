@@ -13,6 +13,7 @@ ABetterPlayerCharacter::ABetterPlayerCharacter()
 	money = 0.f;
 	currency2 = 0.f;
 	lvl = 1;
+	int32 basicAttackDMG = 10;
 }
 
 //Adding to player stats
@@ -75,6 +76,12 @@ int32 ABetterPlayerCharacter::SubLvl()
 {
 	lvl--;
 	return lvl;
+}
+
+void ABetterPlayerCharacter::AttackEnemy()
+{
+	//when called minus enemy max hp by how much damage
+	UE_LOG(LogTemp, Warning, TEXT("AttackEnemy function worked"));
 }
 
 // Called when the game starts or when spawned
