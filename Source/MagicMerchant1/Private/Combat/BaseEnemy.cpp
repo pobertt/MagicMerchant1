@@ -8,13 +8,20 @@ ABaseEnemy::ABaseEnemy()
 {
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
-	int32 MaxHP = 20;
-	float HPRegen = 0;
-	int32 Strength = 10;
-	int32 Defense = 10;
-	// Type = ;
-	float DropRate = 0.2;
 
+	//Base Enemy Stats
+	MaxHP = 20;
+	CurrentHP = MaxHP;
+	HPRegen = 0.5f;
+
+	BaseAttack = 10;
+	AttackMultiplier = 1;
+
+	Defense = 0;
+	DefenseMultiplier = 1;
+
+	isAlive = true;
+	//Type = "Base"; 
 }
 
 // Called when the game starts or when spawned

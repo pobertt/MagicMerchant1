@@ -11,7 +11,6 @@
 
 void AMagicMerchant1GameModeBase::BeginPlay()
 {
-
 	//Creating CombatWidget and checking if it exists
 	if (IsValid(WidgetClass))
 	{
@@ -20,9 +19,9 @@ void AMagicMerchant1GameModeBase::BeginPlay()
 		
 		//Grabbing reference to main ui blueprint
 		//static ConstructorHelpers::FClassFinder<UUserWidget> MainUI(TEXT("/Game/UserInterface/WBP_UI"));
-		// && !MainUI.Succeeded()
+		//&& MainUI.Succeeded()
 		//Checking whether or not CombatWidget was created successfully 
-		if(CombatWidget != nullptr )
+		if(CombatWidget != nullptr)
 		{
 			GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Blue, "UI is Active");
 			return;
@@ -32,8 +31,16 @@ void AMagicMerchant1GameModeBase::BeginPlay()
 			//Grabbing reference to MainUIClass
 			// MainUIClass = MainUI.Class;
 		}
+	}
+	//Getting player Ref
+	PlayerRef = Cast<ABetterPlayerCharacter>(GetWorld()->GetFirstPlayerController()->GetPawn());
+	if (PlayerRef->IsValidLowLevel())
+	{
+		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Blue, "Player Exists");
+	}
+	else {
 
-
+		 GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Blue, "Player Does not  Exists");
 	}
 }
 
@@ -41,13 +48,18 @@ void AMagicMerchant1GameModeBase::BeginPlay()
 
 void AMagicMerchant1GameModeBase::AddCombatWidget()
 {
+	//Creating combat widget
+	CombatWidget = Cast<UCombatTabUserWidget>(CreateWidget(GetWorld(), WidgetClass));
 	CombatWidget->AddToViewport();
 
+	PlayerRef->MakeEnemy();
 }
 
 void AMagicMerchant1GameModeBase::RemoveCombatWidget()
 {
-	CombatWidget->RemoveFromParent();
+	//Destroy Combat Widget and BaseEnemy Actor
+	CombatWidget->Destruct();
+	BaseEnemyRef->Destroy();
 	UWidgetLayoutLibrary::RemoveAllWidgets(GetWorld());
 }
 

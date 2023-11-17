@@ -27,6 +27,7 @@ void UCombatTabUserWidget::Attack1ButtonOnClicked()
 	//enenmy attacked
 	TextLabel->SetText(FText::FromString("EnemyAttacked"));
 	PlayerRef->AttackEnemy();
+	
 }
 
 void UCombatTabUserWidget::Item1ButtonOnClicked()

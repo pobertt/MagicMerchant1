@@ -6,6 +6,7 @@
 #include "MagicMerchant1\MagicMerchant1GameModeBase.h"
 #include "Blueprint/UserWidget.h"
 #include "BetterPlayerCharacter.h"
+#include "Combat/BaseEnemy.h"
 #include "CombatTabUserWidget.generated.h"
 
 /**
@@ -41,7 +42,12 @@ protected:
 		void BackButtonOnClicked();
 
 private:
+
+	//Game References
+
 	class AMagicMerchant1GameModeBase* GamemodeRef;
 
 	class ABetterPlayerCharacter* PlayerRef;
+
+	class ABaseEnemy* BaseEnemyRef;
 };

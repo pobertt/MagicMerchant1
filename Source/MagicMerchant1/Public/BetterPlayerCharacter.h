@@ -4,7 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
-#include "Combat\BaseEnemy.h"
+#include "Combat/BaseEnemy.h"
 #include "BetterPlayerCharacter.generated.h"
 
 UCLASS()
@@ -33,6 +33,11 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = playerStats, meta = (AllowPrivateAccess = "true"))
 		int32 lvl;
+
+	//CombatStats
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = playerCombatStats, meta = (AllowPrivateAccess = "true"))
+		int32 basicAttackDMG;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Inventory, meta = (AllowPrivateAccess = "true"))
 		class UDataTable* Inventory;
@@ -77,12 +82,17 @@ public:
 
 	//Combat Functions
 
+	UFUNCTION(BlueprintCallable, Category = BaseEnemy)
+		void MakeEnemy();
+
 	UFUNCTION(BlueprintCallable, Category = playerCombat)
 		void AttackEnemy();
 
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
+
+
 
 public:	
 	// Called every frame
@@ -92,7 +102,7 @@ public:
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
 private:
-	class ABaseEnemy* BaseEnemyRef;
 
+	class ABaseEnemy* BaseEnemyRef;
 
 };

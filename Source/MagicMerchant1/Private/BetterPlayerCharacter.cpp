@@ -13,7 +13,9 @@ ABetterPlayerCharacter::ABetterPlayerCharacter()
 	money = 0.f;
 	currency2 = 0.f;
 	lvl = 1;
-	int32 basicAttackDMG = 10;
+
+	//Combat Stats
+	basicAttackDMG = 10;
 }
 
 //Adding to player stats
@@ -78,10 +80,23 @@ int32 ABetterPlayerCharacter::SubLvl()
 	return lvl;
 }
 
+void ABetterPlayerCharacter::MakeEnemy()
+{
+	//SpawnActor BaseEnemy var Info
+	FVector Location(0, 0, 0);
+	FRotator Rotation(0, 0, 0);
+	FActorSpawnParameters SpawnInfo;
+
+	//Creating new reference to Base Enemy
+	BaseEnemyRef = Cast<ABaseEnemy>(GetWorld()->SpawnActor<ABaseEnemy>(Location, Rotation, SpawnInfo));
+
+}
+
 void ABetterPlayerCharacter::AttackEnemy()
 {
 	//when called minus enemy max hp by how much damage
 	UE_LOG(LogTemp, Warning, TEXT("AttackEnemy function worked"));
+	
 }
 
 // Called when the game starts or when spawned
