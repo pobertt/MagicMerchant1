@@ -88,8 +88,9 @@ void ABetterPlayerCharacter::MakeEnemy()
 	FActorSpawnParameters SpawnInfo;
 
 	//Creating new reference to Base Enemy
-	BaseEnemyRef = Cast<ABaseEnemy>(GetWorld()->SpawnActor<ABaseEnemy>(Location, Rotation, SpawnInfo));
+	//BaseEnemyRef = Cast<ABaseEnemy>(GetWorld()->SpawnActor<ABaseEnemy>(Location, Rotation, SpawnInfo));
 
+	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Yellow, "Enemy Made");
 }
 
 void ABetterPlayerCharacter::AttackEnemy()
