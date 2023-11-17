@@ -17,10 +17,10 @@ public:
 
 	//Enemy Stats
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = enemyStats, meta = (AllowPrivateAccess = "true"))
-		int32 MaxHP;
+		float MaxHP;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = enemyStats, meta = (AllowPrivateAccess = "true"))
-		int32 CurrentHP;
+		float CurrentHP;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = enemyStats, meta = (AllowPrivateAccess = "true"))
 		float HPRegen;

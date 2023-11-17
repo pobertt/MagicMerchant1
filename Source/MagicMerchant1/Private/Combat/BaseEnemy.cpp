@@ -10,7 +10,7 @@ ABaseEnemy::ABaseEnemy()
 	PrimaryActorTick.bCanEverTick = true;
 
 	//Base Enemy Stats
-	MaxHP = 20;
+	MaxHP = 100;
 	CurrentHP = MaxHP;
 	HPRegen = 0.5f;
 

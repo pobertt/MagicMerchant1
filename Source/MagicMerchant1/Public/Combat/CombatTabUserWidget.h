@@ -30,6 +30,9 @@ protected:
 	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
 		class UButton* BackButton;
 
+	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
+		class USlider* EnemyHPSlider;
+
 	virtual void NativeConstruct() override;
 
 	UFUNCTION()

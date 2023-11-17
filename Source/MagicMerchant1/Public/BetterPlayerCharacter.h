@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
 #include "Combat/BaseEnemy.h"
+#include "Math/UnrealMathUtility.h"
 #include "BetterPlayerCharacter.generated.h"
 
 UCLASS()
@@ -38,6 +39,8 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = playerCombatStats, meta = (AllowPrivateAccess = "true"))
 		int32 basicAttackDMG;
+
+	//Inventory
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Inventory, meta = (AllowPrivateAccess = "true"))
 		class UDataTable* Inventory;
