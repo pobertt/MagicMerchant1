@@ -58,9 +58,10 @@ void AMagicMerchant1GameModeBase::AddCombatWidget()
 void AMagicMerchant1GameModeBase::RemoveCombatWidget()
 {
 	//Destroy Combat Widget and BaseEnemy Actor
+	CombatWidget->RemoveFromParent();
 	CombatWidget->Destruct();
 	//BaseEnemyRef->Destroy();
-	UWidgetLayoutLibrary::RemoveAllWidgets(GetWorld());
+	//UWidgetLayoutLibrary::RemoveAllWidgets(GetWorld());
 }
 
 void AMagicMerchant1GameModeBase::AddMainUIWidget()

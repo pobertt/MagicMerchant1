@@ -40,7 +40,7 @@ void UCombatTabUserWidget::BackButtonOnClicked()
 {
 	TextLabel->SetText(FText::FromString("BackPressed"));
 	//BackButton pressed
-	//GamemodeRef->RemoveCombatWidget();
+	GamemodeRef->RemoveCombatWidget();
 	//Display main ui again
 	GamemodeRef->AddMainUIWidget();
 
