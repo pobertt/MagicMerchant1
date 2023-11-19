@@ -51,8 +51,6 @@ void AMagicMerchant1GameModeBase::AddCombatWidget()
 	//Creating combat widget
 	CombatWidget = Cast<UCombatTabUserWidget>(CreateWidget(GetWorld(), WidgetClass));
 	CombatWidget->AddToViewport();
-
-	PlayerRef->MakeEnemy();
 }
 
 void AMagicMerchant1GameModeBase::RemoveCombatWidget()

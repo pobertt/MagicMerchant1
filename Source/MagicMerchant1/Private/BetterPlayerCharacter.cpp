@@ -83,16 +83,15 @@ int32 ABetterPlayerCharacter::SubLvl()
 
 void ABetterPlayerCharacter::MakeEnemy()
 {
-	/*
+	
 	//SpawnActor BaseEnemy var Info
 	FVector Location(0, 0, 0);
 	FRotator Rotation(0, 0, 0);
 	FActorSpawnParameters SpawnInfo;
 
 	//Creating new reference to Base Enemy
-	BaseEnemyRef = Cast<ABaseEnemy>(GetWorld()->SpawnActor<ABaseEnemy>(Location, Rotation, SpawnInfo));
-	*/
-
+	//BaseEnemyRef = Cast<ABaseEnemy>(GetWorld()->SpawnActor<ABaseEnemy>(Location, Rotation, SpawnInfo));
+	ABaseEnemy* BaseEnemyRef = GetWorld()->SpawnActor<ABaseEnemy>(Location, Rotation, SpawnInfo);
 	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Yellow, "Enemy Made");
 }
 

@@ -32,8 +32,10 @@ void UCombatTabUserWidget::Attack1ButtonOnClicked()
 
 void UCombatTabUserWidget::Item1ButtonOnClicked()
 {
-	TextLabel->SetText(FText::FromString("Item1Pressed"));
+	TextLabel->SetText(FText::FromString("Enemy Made"));
 	//item consumed
+
+	PlayerRef->MakeEnemy();
 }
 
 void UCombatTabUserWidget::BackButtonOnClicked()

@@ -6,6 +6,7 @@
 #include "GameFramework/Character.h"
 #include "Combat/BaseEnemy.h"
 #include "Math/UnrealMathUtility.h"
+//#include "MagicMerchant1/MagicMerchant1GameModeBase.h"
 #include "BetterPlayerCharacter.generated.h"
 
 UCLASS()
@@ -105,7 +106,5 @@ public:
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
 private:
-
-	class ABaseEnemy* BaseEnemyRef;
 
 };
