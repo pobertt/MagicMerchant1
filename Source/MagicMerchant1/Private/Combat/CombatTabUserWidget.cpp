@@ -19,14 +19,16 @@ void UCombatTabUserWidget::NativeConstruct()
 	GamemodeRef = Cast<AMagicMerchant1GameModeBase>(GetWorld()->GetAuthGameMode());
 	PlayerRef = Cast<ABetterPlayerCharacter>(GetWorld()->GetFirstPlayerController()->GetPawn());
 
+	PlayerRef->MakeEnemy();
+	BaseEnemyRef = PlayerRef->BaseEnemyRef;
 }
 
 //When button is pressed it changes text label to 17
 void UCombatTabUserWidget::Attack1ButtonOnClicked()
 {
 	//enenmy attacked
-	TextLabel->SetText(FText::FromString("EnemyAttacked"));
 	PlayerRef->AttackEnemy();
+	TextLabel->SetText(FText::AsNumber(BaseEnemyRef->CurrentHP));
 	
 }
 
@@ -34,8 +36,6 @@ void UCombatTabUserWidget::Item1ButtonOnClicked()
 {
 	TextLabel->SetText(FText::FromString("Enemy Made"));
 	//item consumed
-
-	PlayerRef->MakeEnemy();
 }
 
 void UCombatTabUserWidget::BackButtonOnClicked()

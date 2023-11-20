@@ -33,7 +33,7 @@ void AMagicMerchant1GameModeBase::BeginPlay()
 		}
 	}
 	//Getting player Ref
-	PlayerRef = Cast<ABetterPlayerCharacter>(GetWorld()->GetFirstPlayerController()->GetPawn());
+	/*PlayerRef = Cast<ABetterPlayerCharacter>(GetWorld()->GetFirstPlayerController()->GetPawn());
 	if (PlayerRef->IsValidLowLevel())
 	{
 		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Blue, "Player Exists");
@@ -42,6 +42,7 @@ void AMagicMerchant1GameModeBase::BeginPlay()
 
 		 GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Blue, "Player Does not  Exists");
 	}
+	*/
 }
 
 
@@ -58,7 +59,15 @@ void AMagicMerchant1GameModeBase::RemoveCombatWidget()
 	//Destroy Combat Widget and BaseEnemy Actor
 	CombatWidget->RemoveFromParent();
 	CombatWidget->Destruct();
-	//BaseEnemyRef->Destroy();
+	if (BaseEnemyRef->IsValidLowLevel())
+	{
+		BaseEnemyRef->Destroy();
+		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Blue, "Enemy Valid");
+	}
+	else {
+		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Blue, "Enemy not Valid");
+	}
+		
 	//UWidgetLayoutLibrary::RemoveAllWidgets(GetWorld());
 }
 
@@ -71,5 +80,10 @@ void AMagicMerchant1GameModeBase::AddMainUIWidget()
 void AMagicMerchant1GameModeBase::RemoveMainUIWidget()
 {
 	UWidgetLayoutLibrary::RemoveAllWidgets(GetWorld());
+}
+
+void AMagicMerchant1GameModeBase::SetEnemyRef(AActor* enemy)
+{
+	BaseEnemyRef = Cast<ABaseEnemy>(enemy);
 }
 

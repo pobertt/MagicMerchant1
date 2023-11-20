@@ -6,7 +6,7 @@
 #include "GameFramework/GameModeBase.h"
 #include "Public/Combat/CombatTabUserWidget.h"
 #include "Combat/BaseEnemy.h"
-#include "BetterPlayerCharacter.h"
+// #include "BetterPlayerCharacter.h"
 #include "MagicMerchant1GameModeBase.generated.h"
 
 
@@ -17,6 +17,10 @@ UCLASS()
 class MAGICMERCHANT1_API AMagicMerchant1GameModeBase : public AGameModeBase
 {
 	GENERATED_BODY()
+
+	//Base Enemy Reference
+	UPROPERTY()
+	class ABaseEnemy* BaseEnemyRef;
 
 public:
 	UFUNCTION(BlueprintCallable)
@@ -31,6 +35,9 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void RemoveMainUIWidget();
 
+	UFUNCTION()
+	void SetEnemyRef(AActor* enemy);
+
 protected:
 	UPROPERTY(EditAnywhere, Category = "Class Types")
 	//specifying a base class in c++ and assigning a specific class inside of blueprints 
@@ -44,11 +51,8 @@ protected:
 	UPROPERTY(VisibleInstanceOnly, Category = "Runtime")
 	class UCombatTabUserWidget* CombatWidget;
 
-	//Base Enemy Reference
-	class ABaseEnemy* BaseEnemyRef;
-
 	//Player Reference
-	class ABetterPlayerCharacter* PlayerRef;
+	// class ABetterPlayerCharacter* PlayerRef;
 
 	virtual void BeginPlay() override;
 };

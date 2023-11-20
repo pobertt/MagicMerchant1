@@ -6,7 +6,7 @@
 #include "GameFramework/Character.h"
 #include "Combat/BaseEnemy.h"
 #include "Math/UnrealMathUtility.h"
-//#include "MagicMerchant1/MagicMerchant1GameModeBase.h"
+// #include "MagicMerchant1/MagicMerchant1GameModeBase.h"
 #include "BetterPlayerCharacter.generated.h"
 
 UCLASS()
@@ -40,6 +40,9 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = playerCombatStats, meta = (AllowPrivateAccess = "true"))
 		int32 basicAttackDMG;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = playerCombatStats, meta = (AllowPrivateAccess = "true"))
+		float MyFloat;
 
 	//Inventory
 
@@ -91,6 +94,10 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = playerCombat)
 		void AttackEnemy();
+
+	//Base Enemy Reference
+	UPROPERTY(BlueprintReadWrite)
+	class ABaseEnemy* BaseEnemyRef;
 
 protected:
 	// Called when the game starts or when spawned

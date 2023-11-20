@@ -16,7 +16,6 @@ ABetterPlayerCharacter::ABetterPlayerCharacter()
 
 	//Combat Stats
 	basicAttackDMG = 10;
-	//float MyFloat;
 }
 
 //Adding to player stats
@@ -90,8 +89,10 @@ void ABetterPlayerCharacter::MakeEnemy()
 	FActorSpawnParameters SpawnInfo;
 
 	//Creating new reference to Base Enemy
-	//BaseEnemyRef = Cast<ABaseEnemy>(GetWorld()->SpawnActor<ABaseEnemy>(Location, Rotation, SpawnInfo));
-	ABaseEnemy* BaseEnemyRef = GetWorld()->SpawnActor<ABaseEnemy>(Location, Rotation, SpawnInfo);
+	BaseEnemyRef = Cast<ABaseEnemy>(GetWorld()->SpawnActor<ABaseEnemy>(Location, Rotation, SpawnInfo));
+	
+	//ABaseEnemy* BaseEnemyRef = GetWorld()->SpawnActor<ABaseEnemy>(Location, Rotation, SpawnInfo);
+	
 	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Yellow, "Enemy Made");
 }
 
@@ -99,12 +100,9 @@ void ABetterPlayerCharacter::AttackEnemy()
 {
 	//when called minus enemy max hp by how much damage
 	UE_LOG(LogTemp, Warning, TEXT("AttackEnemy function worked"));
-	
-	/*
-	BaseEnemyRef->CurrentHP - basicAttackDMG = MyFloat;
 
+	MyFloat = BaseEnemyRef->CurrentHP - basicAttackDMG;
 	BaseEnemyRef->CurrentHP = FMath::Clamp(MyFloat, 0.0f, 100.0f);
-	*/
 
 }
 
