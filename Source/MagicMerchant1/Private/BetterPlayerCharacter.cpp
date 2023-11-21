@@ -10,7 +10,7 @@ ABetterPlayerCharacter::ABetterPlayerCharacter()
 	PrimaryActorTick.bCanEverTick = true;
 	hp = 100;
 	mp = 100;
-	money = 0.f;
+	money = 10000.f;
 	currency2 = 0.f;
 	lvl = 1;
 
@@ -62,9 +62,9 @@ int32 ABetterPlayerCharacter::SubMp()
 	return mp;
 }
 
-float ABetterPlayerCharacter::SubMoney()
+float ABetterPlayerCharacter::SubMoney(int Cost)
 {
-	money--;
+	money -= Cost;
 	return money;
 }
 
@@ -91,8 +91,6 @@ void ABetterPlayerCharacter::MakeEnemy()
 	//Creating new reference to Base Enemy
 	BaseEnemyRef = Cast<ABaseEnemy>(GetWorld()->SpawnActor<ABaseEnemy>(Location, Rotation, SpawnInfo));
 	
-	//ABaseEnemy* BaseEnemyRef = GetWorld()->SpawnActor<ABaseEnemy>(Location, Rotation, SpawnInfo);
-	
 	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Yellow, "Enemy Made");
 }
 
@@ -103,6 +101,8 @@ void ABetterPlayerCharacter::AttackEnemy()
 
 	MyFloat = BaseEnemyRef->CurrentHP - basicAttackDMG;
 	BaseEnemyRef->CurrentHP = FMath::Clamp(MyFloat, 0.0f, 100.0f);
+
+	
 
 }
 

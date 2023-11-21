@@ -75,7 +75,7 @@ public:
 		int32 SubMp();
 
 	UFUNCTION(BlueprintCallable, Category = playerStats)
-		float SubMoney();
+		float SubMoney(int Cost);
 
 	UFUNCTION(BlueprintCallable, Category = playerStats)
 		float SubCurrency2();
