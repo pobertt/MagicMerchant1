@@ -10,7 +10,7 @@ ABetterPlayerCharacter::ABetterPlayerCharacter()
 	PrimaryActorTick.bCanEverTick = true;
 	hp = 100;
 	mp = 100;
-	money = 10000.f;
+	money = 0.0f;
 	currency2 = 0.f;
 	lvl = 1;
 

@@ -91,6 +91,7 @@ void UCombatTabUserWidget::Attack1ButtonOnClicked()
 		//output Enemy health 
 		EnemyHPText->SetText(FText::AsNumber(BaseEnemyRef->CurrentHP));
 	}
+	//Ineffienct currently, can just turn it into a function and call it on each click
 }
 
 void UCombatTabUserWidget::Attack2ButtonOnClicked()
@@ -220,7 +221,7 @@ void UCombatTabUserWidget::Item2ButtonOnClicked()
 
 void UCombatTabUserWidget::Item3ButtonOnClicked()
 {
-	if (PlayerRef->money < 0 && LockedButtons[6] == true)
+	if (PlayerRef->money < 20000 && LockedButtons[6] == true)
 	{
 		TextLabel->SetText(FText::FromString("LOCKED!!"));
 	}
@@ -244,14 +245,14 @@ void UCombatTabUserWidget::Item3ButtonOnClicked()
 
 void UCombatTabUserWidget::Item4ButtonOnClicked()
 {
-	if (PlayerRef->money < 0 && LockedButtons[7] == true)
+	if (PlayerRef->money < 200000 && LockedButtons[7] == true)
 	{
 		TextLabel->SetText(FText::FromString("LOCKED!!!"));
 	}
 	else if (FirstClickArray[7] == true) {
 		LockedButtons[7] = false;
 
-		PlayerRef->money = PlayerRef->SubMoney(20000);
+		PlayerRef->money = PlayerRef->SubMoney(200000);
 		TextLabel->SetText(FText::FromString("Purchased"));
 
 		Item4TextBlock->SetText(FText::FromString("Item 4"));
