@@ -83,7 +83,7 @@ void UCombatTabUserWidget::Attack1ButtonOnClicked()
 	{
 		//Will run this code on click once button is purchased
 		//Player Attack Enemy function being called 
-		PlayerRef->AttackEnemy();
+		PlayerRef->AttackEnemy(5);
 
 		//Output text
 		TextLabel->SetText(FText::FromString("Attack 1 Used"));
@@ -113,7 +113,7 @@ void UCombatTabUserWidget::Attack2ButtonOnClicked()
 
 	if (LockedButtons[1] == false && FirstClickArray[1] == false)
 	{
-		PlayerRef->AttackEnemy();
+		PlayerRef->AttackEnemy(10);
 		TextLabel->SetText(FText::FromString("Attack 2 Used"));
 		EnemyHPText->SetText(FText::AsNumber(BaseEnemyRef->CurrentHP));
 	}
@@ -138,7 +138,7 @@ void UCombatTabUserWidget::Attack3ButtonOnClicked()
 
 	if (LockedButtons[2] == false && FirstClickArray[2] == false)
 	{
-		PlayerRef->AttackEnemy();
+		PlayerRef->AttackEnemy(25);
 		TextLabel->SetText(FText::FromString("Attack 3 Used"));
 		EnemyHPText->SetText(FText::AsNumber(BaseEnemyRef->CurrentHP));
 	}
@@ -163,7 +163,7 @@ void UCombatTabUserWidget::Attack4ButtonOnClicked()
 
 	if (LockedButtons[3] == false && FirstClickArray[3] == false)
 	{
-		PlayerRef->AttackEnemy();
+		PlayerRef->AttackEnemy(50);
 		TextLabel->SetText(FText::FromString("Attack 4 Used"));
 		EnemyHPText->SetText(FText::AsNumber(BaseEnemyRef->CurrentHP));
 	}

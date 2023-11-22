@@ -2,7 +2,6 @@
 
 
 #include "MagicMerchant1GameModeBase.h"
-
 #include "UObject/ConstructorHelpers.h"
 #include "Blueprint/UserWidget.h"
 #include "Blueprint/WidgetLayoutLibrary.h"
@@ -11,25 +10,55 @@
 
 void AMagicMerchant1GameModeBase::BeginPlay()
 {
-	//Creating CombatWidget and checking if it exists
+	//Creating CombatWidget and checking if it exists	
 	if (IsValid(WidgetClass))
 	{
 		//Creating CombatWidget - Cast 
 		CombatWidget = Cast<UCombatTabUserWidget>(CreateWidget(GetWorld(), WidgetClass));
-		
+		/*
+		* 
 		//Grabbing reference to main ui blueprint
-		//static ConstructorHelpers::FClassFinder<UUserWidget> MainUI(TEXT("/Game/UserInterface/WBP_UI"));
-		//&& MainUI.Succeeded()
+		static ConstructorHelpers::FClassFinder<UUserWidget> MainUI(TEXT("/Game/UserInterface/WBP_UI.WBP_UI_C"));
+		
+		UBlueprintGeneratedClass* MainUI = Cast<UBlueprintGeneratedClass>(UUserWidget::StaticClass());
+
+		UBlueprint* MainUIBP = Cast<UBlueprint>(MainUI->ClassGeneratedBy);
+		*/
+
+		/*
+		FString bpResource = "/Game/Blueprints/BP_Wall_A.BP_Wall_A";
+		UBlueprint* GeneratedBP = Cast<UBlueprint>(StaticLoadObject(UObject::StaticClass(), NULL, *bpResource));
+		UWorld* World = GetWorld();
+		World->SpawnActor<AActor>(GeneratedBP->GeneratedClass, FVector(0, 0, 0), FRotator(0, 0, 0));
+		*/
+
+		/*
+		FString MainUI = "/Game/UserInterface/WBP_UI.WBP_UI";
+		GeneratedMainUIBP = Cast<UUserWidget>(StaticLoadObject(UObject::StaticClass(), NULL, *MainUI));
+		
+		UI = Cast<UUserWidget>(CreateWidget(GetWorld(), GeneratedMainUIBP));
+		*/
+		static ConstructorHelpers::FClassFinder<UUserWidget> MainUI(TEXT("/Game/UserInterface/WBP_UI.WBP_UI_C"));
+		MainUIClass = MainUI.Class;
+
+		if (MainUI.Succeeded())
+		{
+			UE_LOG(LogTemp, Warning, TEXT("succeeded"));
+		}
+		else {
+			UE_LOG(LogTemp, Warning, TEXT("not succeeded"));
+		}
+
 		//Checking whether or not CombatWidget was created successfully 
 		if(CombatWidget != nullptr)
 		{
 			GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Blue, "UI is Active");
+			//Grabbing reference to MainUIClass
+			
 			return;
 		}
 		else {
 			GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Blue, "This UI is not Active");
-			//Grabbing reference to MainUIClass
-			// MainUIClass = MainUI.Class;
 		}
 	}
 }
@@ -63,8 +92,8 @@ void AMagicMerchant1GameModeBase::RemoveCombatWidget()
 
 void AMagicMerchant1GameModeBase::AddMainUIWidget()
 {
-	// UUserWidget* UI = CreateWidget<UUserWidget>(GetWorld()->GetGameInstance(), *MainUIClass);
-	// UI->AddToViewport();
+	//UUserWidget* UI = CreateWidget<UUserWidget>(GetWorld()->GetGameInstance(), *MainUIClass);
+	//UI->AddToViewport();
 }
 
 void AMagicMerchant1GameModeBase::RemoveMainUIWidget()
@@ -76,4 +105,3 @@ void AMagicMerchant1GameModeBase::SetEnemyRef(AActor* enemy)
 {
 	BaseEnemyRef = Cast<ABaseEnemy>(enemy);
 }
-

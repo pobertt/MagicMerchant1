@@ -93,7 +93,7 @@ public:
 		void MakeEnemy();
 
 	UFUNCTION(BlueprintCallable, Category = playerCombat)
-		void AttackEnemy();
+		void AttackEnemy(int Dmg);
 
 	//Base Enemy Reference
 	UPROPERTY(BlueprintReadWrite)
