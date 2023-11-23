@@ -20,8 +20,27 @@ ABaseEnemy::ABaseEnemy()
 	Defense = 0;
 	DefenseMultiplier = 1;
 
-	isAlive = true;
+	Value = 10;
+
+	isAlive = false;
 	//Type = "Base"; 
+}
+/*
+void ABaseEnemy::Destroy()
+{
+	if (isAlive == false)
+	{
+		ABaseEnemy Destruct();
+	}
+	UE_LOG(LogTemp, Warning, TEXT("Enemy Destroy function called"));
+}
+*/
+
+
+
+void ABaseEnemy::ResetHealth()
+{
+	CurrentHP = MaxHP;
 }
 
 // Called when the game starts or when spawned

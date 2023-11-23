@@ -58,7 +58,7 @@ public:
 		int32 AddMp();
 
 	UFUNCTION(BlueprintCallable, Category = playerStats)
-		float AddMoney();
+		float AddMoney(float Amount);
 
 	UFUNCTION(BlueprintCallable, Category = playerStats)
 		float AddCurrency2();
@@ -94,6 +94,12 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = playerCombat)
 		void AttackEnemy(int Dmg);
+
+	UFUNCTION(BlueprintCallable, Category = BaseEnemy)
+		void EnemyKilled();
+
+	UFUNCTION(BlueprintCallable, Category = BaseEnemy)
+		void EnemyRespawn();
 
 	//Base Enemy Reference
 	UPROPERTY(BlueprintReadWrite)

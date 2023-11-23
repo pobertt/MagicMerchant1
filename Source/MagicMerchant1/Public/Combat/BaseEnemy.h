@@ -38,11 +38,19 @@ public:
 		float DefenseMultiplier;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = enemyStats, meta = (AllowPrivateAccess = "true"))
+		float Value;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = enemyStats, meta = (AllowPrivateAccess = "true"))
 		bool isAlive;
 
 	//UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = enemyStats, meta = (AllowPrivateAccess = "true"))
-		//const Type;
+		//string Type;
 
+	//UFUNCTION(BlueprintCallable, Category = BaseEnemy)
+		//void Destroy();
+
+	UFUNCTION(BlueprintCallable, Category = BaseEnemy)
+	void ResetHealth();
 
 protected:
 	// Called when the game starts or when spawned

@@ -38,9 +38,10 @@ void AMagicMerchant1GameModeBase::BeginPlay()
 		
 		UI = Cast<UUserWidget>(CreateWidget(GetWorld(), GeneratedMainUIBP));
 		*/
+		/*
 		static ConstructorHelpers::FClassFinder<UUserWidget> MainUI(TEXT("/Game/UserInterface/WBP_UI.WBP_UI_C"));
 		MainUIClass = MainUI.Class;
-
+		
 		if (MainUI.Succeeded())
 		{
 			UE_LOG(LogTemp, Warning, TEXT("succeeded"));
@@ -48,6 +49,7 @@ void AMagicMerchant1GameModeBase::BeginPlay()
 		else {
 			UE_LOG(LogTemp, Warning, TEXT("not succeeded"));
 		}
+		*/
 
 		//Checking whether or not CombatWidget was created successfully 
 		if(CombatWidget != nullptr)

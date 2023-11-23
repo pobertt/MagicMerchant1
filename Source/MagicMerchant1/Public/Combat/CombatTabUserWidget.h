@@ -96,6 +96,9 @@ protected:
 	//Attack Functions
 
 	UFUNCTION()
+		void AttackFunction();
+
+	UFUNCTION()
 		void Attack1ButtonOnClicked();
 
 	UFUNCTION()

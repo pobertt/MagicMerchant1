@@ -45,7 +45,7 @@ void UCombatTabUserWidget::NativeConstruct()
 
 //Attack Button Functions 
 
-void UCombatTabUserWidget::Attack1ButtonOnClicked()
+void UCombatTabUserWidget::AttackFunction()
 {
 	//old
 	//enenmy attacked
@@ -94,6 +94,11 @@ void UCombatTabUserWidget::Attack1ButtonOnClicked()
 	//Ineffienct currently, can just turn it into a function and call it on each click
 }
 
+void UCombatTabUserWidget::Attack1ButtonOnClicked()
+{
+	AttackFunction();
+}
+
 void UCombatTabUserWidget::Attack2ButtonOnClicked()
 {
 	if (PlayerRef->money < 1000 && LockedButtons[1] == true)
@@ -113,9 +118,19 @@ void UCombatTabUserWidget::Attack2ButtonOnClicked()
 
 	if (LockedButtons[1] == false && FirstClickArray[1] == false)
 	{
-		PlayerRef->AttackEnemy(10);
-		TextLabel->SetText(FText::FromString("Attack 2 Used"));
-		EnemyHPText->SetText(FText::AsNumber(BaseEnemyRef->CurrentHP));
+		if (BaseEnemyRef->CurrentHP > 0)
+		{
+			PlayerRef->AttackEnemy(10);
+			TextLabel->SetText(FText::FromString("Attack 2 Used"));
+			EnemyHPText->SetText(FText::AsNumber(BaseEnemyRef->CurrentHP));
+		}
+		else if (BaseEnemyRef->CurrentHP == 0)
+		{
+			PlayerRef->EnemyKilled();
+			TextLabel->SetText(FText::FromString("Enemy Killed"));
+			GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Yellow, "Enemy Killed");
+		}
+		
 	}
 }
 

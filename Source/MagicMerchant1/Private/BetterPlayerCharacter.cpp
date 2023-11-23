@@ -10,7 +10,7 @@ ABetterPlayerCharacter::ABetterPlayerCharacter()
 	PrimaryActorTick.bCanEverTick = true;
 	hp = 100;
 	mp = 100;
-	money = 0.0f;
+	money = 10000.0f;
 	currency2 = 0.f;
 	lvl = 1;
 
@@ -31,9 +31,9 @@ int32 ABetterPlayerCharacter::AddMp()
 	return mp;
 }
 
-float ABetterPlayerCharacter::AddMoney()
+float ABetterPlayerCharacter::AddMoney(float Amount)
 {
-	money++;
+	money += Amount;
 	return money;
 }
 
@@ -82,7 +82,6 @@ int32 ABetterPlayerCharacter::SubLvl()
 
 void ABetterPlayerCharacter::MakeEnemy()
 {
-	
 	//SpawnActor BaseEnemy var Info
 	FVector Location(0, 0, 0);
 	FRotator Rotation(0, 0, 0);
@@ -90,20 +89,51 @@ void ABetterPlayerCharacter::MakeEnemy()
 
 	//Creating new reference to Base Enemy
 	BaseEnemyRef = Cast<ABaseEnemy>(GetWorld()->SpawnActor<ABaseEnemy>(Location, Rotation, SpawnInfo));
-	
+
+	//Setting isAlive to true when made
+	BaseEnemyRef->isAlive = true;
 	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Yellow, "Enemy Made");
 }
 
 void ABetterPlayerCharacter::AttackEnemy(int Dmg)
 {
-	//when called minus enemy max hp by how much damage
 	UE_LOG(LogTemp, Warning, TEXT("AttackEnemy function worked"));
 
+	//when called minus enemy current hp by how much damage
 	MyFloat = BaseEnemyRef->CurrentHP - Dmg;
+
+	//Clamp??
 	BaseEnemyRef->CurrentHP = FMath::Clamp(MyFloat, 0.0f, 100.0f);
+}
 
+void ABetterPlayerCharacter::EnemyKilled()
+{
+	//Set isAlive to false
+	BaseEnemyRef->isAlive = false;
+
+	//Give player however much money the enemy is worth
+	AddMoney(BaseEnemyRef->Value);
+
+	//Destroying the enemy when killed (so we dont have overlapping enemy spawns, only want 1 enemy at a time)
+	BaseEnemyRef->Destroy();
+
+	//calling enemy respawn
+	EnemyRespawn();
+	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Yellow, "Enemy Made");
+}
+
+void ABetterPlayerCharacter::EnemyRespawn()
+{
+	//If enemy is dead
+	if (BaseEnemyRef->isAlive == false) 
+	{
+		//Setting Health back to original value
+		BaseEnemyRef->ResetHealth();
+
+		//Create a new enemy 
+		MakeEnemy();
+	}
 	
-
 }
 
 // Called when the game starts or when spawned
