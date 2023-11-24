@@ -10,7 +10,7 @@ ABetterPlayerCharacter::ABetterPlayerCharacter()
 	PrimaryActorTick.bCanEverTick = true;
 	hp = 100;
 	mp = 100;
-	money = 10000.0f;
+	money = 100.0f;
 	currency2 = 0.f;
 	lvl = 1;
 
@@ -87,8 +87,11 @@ void ABetterPlayerCharacter::MakeEnemy()
 	FRotator Rotation(0, 0, 0);
 	FActorSpawnParameters SpawnInfo;
 
-	//Creating new reference to Base Enemy
-	BaseEnemyRef = Cast<ABaseEnemy>(GetWorld()->SpawnActor<ABaseEnemy>(Location, Rotation, SpawnInfo));
+	if (!BaseEnemyRef->IsValidLowLevel())
+	{
+		//Creating new reference to Base Enemy
+		BaseEnemyRef = Cast<ABaseEnemy>(GetWorld()->SpawnActor<ABaseEnemy>(Location, Rotation, SpawnInfo));
+	}
 
 	//Setting isAlive to true when made
 	BaseEnemyRef->isAlive = true;
@@ -115,7 +118,7 @@ void ABetterPlayerCharacter::EnemyKilled()
 	AddMoney(BaseEnemyRef->Value);
 
 	//Destroying the enemy when killed (so we dont have overlapping enemy spawns, only want 1 enemy at a time)
-	BaseEnemyRef->Destroy();
+	//BaseEnemyRef->Destroy();
 
 	//calling enemy respawn
 	EnemyRespawn();
@@ -127,13 +130,30 @@ void ABetterPlayerCharacter::EnemyRespawn()
 	//If enemy is dead
 	if (BaseEnemyRef->isAlive == false) 
 	{
-		//Setting Health back to original value
-		BaseEnemyRef->ResetHealth();
+		//Setting things back to original value
+		InitBaseEnemy();
 
 		//Create a new enemy 
 		MakeEnemy();
 	}
 	
+}
+
+void ABetterPlayerCharacter::InitBaseEnemy()
+{
+	BaseEnemyRef->MaxHP = 100;
+	BaseEnemyRef->CurrentHP = BaseEnemyRef->MaxHP;
+	BaseEnemyRef->HPRegen = 0.5f;
+
+	BaseEnemyRef->BaseAttack = 10;
+	BaseEnemyRef->AttackMultiplier = 1;
+
+	BaseEnemyRef->Defense = 0;
+	BaseEnemyRef->DefenseMultiplier = 1;
+
+	BaseEnemyRef->Value = 10;
+
+	BaseEnemyRef->isAlive = false;
 }
 
 // Called when the game starts or when spawned

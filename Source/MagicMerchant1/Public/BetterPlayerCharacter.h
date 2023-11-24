@@ -101,6 +101,9 @@ public:
 	UFUNCTION(BlueprintCallable, Category = BaseEnemy)
 		void EnemyRespawn();
 
+	UFUNCTION(BlueprintCallable, Category = BaseEnemy)
+		void InitBaseEnemy();
+
 	//Base Enemy Reference
 	UPROPERTY(BlueprintReadWrite)
 	class ABaseEnemy* BaseEnemyRef;

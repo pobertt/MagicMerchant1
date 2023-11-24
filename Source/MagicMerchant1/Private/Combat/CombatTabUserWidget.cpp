@@ -43,11 +43,7 @@ void UCombatTabUserWidget::NativeConstruct()
 	BaseEnemyRef = PlayerRef->BaseEnemyRef;
 }
 
-//Attack Button Functions 
-
-void UCombatTabUserWidget::AttackFunction()
-{
-	//old
+//old
 	//enenmy attacked
 	/*
 	PlayerRef->AttackEnemy();
@@ -55,132 +51,117 @@ void UCombatTabUserWidget::AttackFunction()
 	EnemyHPText->SetText(FText::AsNumber(BaseEnemyRef->CurrentHP));
 	*/
 
+//Attack Button Functions 
+
+void UCombatTabUserWidget::AttackFunction(int Cost, int LockedButtonsIndex, int FirstClickArrayIndex, int Dmg, FString AttackUsed)
+{
 	//Checks the cost of the button and whether the button is in the locked state
-	if (PlayerRef->money < 0 && LockedButtons[0] == true)
+	if (PlayerRef->money < Cost && LockedButtons[LockedButtonsIndex] == true)
 	{
 		//If true then say button is LOCKED
 		TextLabel->SetText(FText::FromString("LOCKED"));
 	}
+
 	//Move onto this statemnent if player has enough money for the button 
 	//(will always purchase if player has enough money anyways)
-	else if (FirstClickArray[0] == true) {
+	else if (FirstClickArray[FirstClickArrayIndex] == true) {
+
 		//Unlock's the button
-		LockedButtons[0] = false;
+		LockedButtons[LockedButtonsIndex] = false;
 
 		//Minusing the cost of the button from player money
-		PlayerRef->money = PlayerRef->SubMoney(0);
+		PlayerRef->money = PlayerRef->SubMoney(Cost);
+
 		//Output text saying it is purchased
 		TextLabel->SetText(FText::FromString("Purchased"));
 
-		//Changing the original text to Attack 1 text
-		Attack1TextBlock->SetText(FText::FromString("Attack 1"));
 		//First Click has been consumed
-		FirstClickArray[0] = false;
+		FirstClickArray[FirstClickArrayIndex] = false;
 		return;
 	}
+
 	//If button is unlocked and the first click (purchase) is consumed 
-	if (LockedButtons[0] == false && FirstClickArray[0] == false)
+	if (LockedButtons[LockedButtonsIndex] == false && FirstClickArray[FirstClickArrayIndex] == false)
 	{
-		//Will run this code on click once button is purchased
-		//Player Attack Enemy function being called 
-		PlayerRef->AttackEnemy(5);
-
-		//Output text
-		TextLabel->SetText(FText::FromString("Attack 1 Used"));
-
-		//output Enemy health 
-		EnemyHPText->SetText(FText::AsNumber(BaseEnemyRef->CurrentHP));
-	}
-	//Ineffienct currently, can just turn it into a function and call it on each click
-}
-
-void UCombatTabUserWidget::Attack1ButtonOnClicked()
-{
-	AttackFunction();
-}
-
-void UCombatTabUserWidget::Attack2ButtonOnClicked()
-{
-	if (PlayerRef->money < 1000 && LockedButtons[1] == true)
-	{
-		TextLabel->SetText(FText::FromString("LOCKED!"));
-	}
-	else if (FirstClickArray[1] == true) {
-		LockedButtons[1] = false;
-
-		PlayerRef->money = PlayerRef->SubMoney(1000);
-		TextLabel->SetText(FText::FromString("Purchased"));
-
-		Attack2TextBlock->SetText(FText::FromString("Attack 2"));
-		FirstClickArray[1] = false;
-		return;
-	}
-
-	if (LockedButtons[1] == false && FirstClickArray[1] == false)
-	{
+		//Checking if HP is greater than 0
 		if (BaseEnemyRef->CurrentHP > 0)
 		{
-			PlayerRef->AttackEnemy(10);
-			TextLabel->SetText(FText::FromString("Attack 2 Used"));
+			//If greater then deal dmg and print text
+			PlayerRef->AttackEnemy(Dmg);
+			TextLabel->SetText(FText::FromString(AttackUsed));
 			EnemyHPText->SetText(FText::AsNumber(BaseEnemyRef->CurrentHP));
 		}
 		else if (BaseEnemyRef->CurrentHP == 0)
 		{
+			//Kill the enemy if health is 0
 			PlayerRef->EnemyKilled();
 			TextLabel->SetText(FText::FromString("Enemy Killed"));
 			GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Yellow, "Enemy Killed");
 		}
-		
+	}
+}
+
+void UCombatTabUserWidget::ItemFunction(int Cost, int LockedButtonsIndex, int FirstClickArrayIndex)
+{
+	if (PlayerRef->money < Cost && LockedButtons[LockedButtonsIndex] == true)
+	{
+		TextLabel->SetText(FText::FromString("LOCKED"));
+	}
+	else if (FirstClickArray[FirstClickArrayIndex] == true) {
+		LockedButtons[LockedButtonsIndex] = false;
+
+		PlayerRef->money = PlayerRef->SubMoney(Cost);
+		TextLabel->SetText(FText::FromString("Purchased"));
+
+
+		FirstClickArray[FirstClickArrayIndex] = false;
+		return;
+	}
+
+	if (LockedButtons[LockedButtonsIndex] == false && FirstClickArray[FirstClickArrayIndex] == false)
+	{
+		TextLabel->SetText(FText::FromString("Item consumed"));
+		//item consumed function goes here
+	}
+}
+
+void UCombatTabUserWidget::Attack1ButtonOnClicked()
+{
+	AttackFunction(0, 0, 0, 5, "Attack 1 Used");
+	//Changing the original text and changing the button name text
+	if (LockedButtons[0] == false)
+	{
+		Attack1TextBlock->SetText(FText::FromString("Attack 1"));
+	}
+}
+
+void UCombatTabUserWidget::Attack2ButtonOnClicked()
+{
+	AttackFunction(1000, 1, 1, 10, "Attack 2 Used");
+
+	if (LockedButtons[1] == false)
+	{
+		Attack2TextBlock->SetText(FText::FromString("Attack 2"));
 	}
 }
 
 void UCombatTabUserWidget::Attack3ButtonOnClicked()
 {
-	if (PlayerRef->money < 10000 && LockedButtons[2] == true)
+	AttackFunction(2500, 2, 2, 25, "Attack 3 Used");
+
+	if (LockedButtons[2] == false)
 	{
-		TextLabel->SetText(FText::FromString("LOCKED!!"));
-	}
-	else if (FirstClickArray[2] == true) {
-		LockedButtons[2] = false;
-
-		PlayerRef->money = PlayerRef->SubMoney(10000);
-		TextLabel->SetText(FText::FromString("Purchased"));
-
 		Attack3TextBlock->SetText(FText::FromString("Attack 3"));
-		FirstClickArray[2] = false;
-		return;
-	}
-
-	if (LockedButtons[2] == false && FirstClickArray[2] == false)
-	{
-		PlayerRef->AttackEnemy(25);
-		TextLabel->SetText(FText::FromString("Attack 3 Used"));
-		EnemyHPText->SetText(FText::AsNumber(BaseEnemyRef->CurrentHP));
 	}
 }
 
 void UCombatTabUserWidget::Attack4ButtonOnClicked()
 {
-	if (PlayerRef->money < 100000 && LockedButtons[3] == true)
+	AttackFunction(5000, 3, 3, 50, "Attack 4 Used");
+
+	if (LockedButtons[3] == false)
 	{
-		TextLabel->SetText(FText::FromString("LOCKED!!!"));
-	}
-	else if (FirstClickArray[3] == true) {
-		LockedButtons[3] = false;
-
-		PlayerRef->money = PlayerRef->SubMoney(100000);
-		TextLabel->SetText(FText::FromString("Purchased"));
-
 		Attack4TextBlock->SetText(FText::FromString("Attack 4"));
-		FirstClickArray[3] = false;
-		return;
-	}
-
-	if (LockedButtons[3] == false && FirstClickArray[3] == false)
-	{
-		PlayerRef->AttackEnemy(50);
-		TextLabel->SetText(FText::FromString("Attack 4 Used"));
-		EnemyHPText->SetText(FText::AsNumber(BaseEnemyRef->CurrentHP));
 	}
 }
 
@@ -188,97 +169,41 @@ void UCombatTabUserWidget::Attack4ButtonOnClicked()
 
 void UCombatTabUserWidget::Item1ButtonOnClicked()
 {
-	if (PlayerRef->money < 0 && LockedButtons[4] == true)
+	ItemFunction(0, 4, 4);
+	
+	if (LockedButtons[4] == false)
 	{
-		TextLabel->SetText(FText::FromString("LOCKED"));
-	}
-	else if (FirstClickArray[4] == true) {
-		LockedButtons[4] = false;
-
-		PlayerRef->money = PlayerRef->SubMoney(0);
-		TextLabel->SetText(FText::FromString("Purchased"));
-
 		Item1TextBlock->SetText(FText::FromString("Item 1"));
-		FirstClickArray[4] = false;
-		return;
-	}
-
-	if (LockedButtons[4] == false && FirstClickArray[4] == false)
-	{
-		TextLabel->SetText(FText::FromString("Item consumed"));
-		//item consumed function goes here
 	}
 }
 
 void UCombatTabUserWidget::Item2ButtonOnClicked()
 {
-	if (PlayerRef->money < 2000 && LockedButtons[5] == true)
+	ItemFunction(2000, 5, 5);
+
+	if (LockedButtons[5] == false)
 	{
-		TextLabel->SetText(FText::FromString("LOCKED!"));
-	}
-	else if (FirstClickArray[5] == true) {
-		LockedButtons[5] = false;
-
-		PlayerRef->money = PlayerRef->SubMoney(2000);
-		TextLabel->SetText(FText::FromString("Purchased"));
-
 		Item2TextBlock->SetText(FText::FromString("Item 2"));
-		FirstClickArray[5] = false;
-		return;
-	}
-
-	if (LockedButtons[5] == false && FirstClickArray[5] == false)
-	{
-		TextLabel->SetText(FText::FromString("Item consumed"));
-		//item consumed function goes here
 	}
 }
 
 void UCombatTabUserWidget::Item3ButtonOnClicked()
 {
-	if (PlayerRef->money < 20000 && LockedButtons[6] == true)
+	ItemFunction(5000, 5, 5);
+
+	if (LockedButtons[5] == false)
 	{
-		TextLabel->SetText(FText::FromString("LOCKED!!"));
-	}
-	else if (FirstClickArray[6] == true) {
-		LockedButtons[6] = false;
-
-		PlayerRef->money = PlayerRef->SubMoney(20000);
-		TextLabel->SetText(FText::FromString("Purchased"));
-
 		Item3TextBlock->SetText(FText::FromString("Item 3"));
-		FirstClickArray[6] = false;
-		return;
-	}
-
-	if (LockedButtons[6] == false && FirstClickArray[6] == false)
-	{
-		TextLabel->SetText(FText::FromString("Item consumed"));
-		//item consumed function goes here
 	}
 }
 
 void UCombatTabUserWidget::Item4ButtonOnClicked()
 {
-	if (PlayerRef->money < 200000 && LockedButtons[7] == true)
+	ItemFunction(10000, 6, 6);
+
+	if (LockedButtons[6] == false)
 	{
-		TextLabel->SetText(FText::FromString("LOCKED!!!"));
-	}
-	else if (FirstClickArray[7] == true) {
-		LockedButtons[7] = false;
-
-		PlayerRef->money = PlayerRef->SubMoney(200000);
-		TextLabel->SetText(FText::FromString("Purchased"));
-
 		Item4TextBlock->SetText(FText::FromString("Item 4"));
-		FirstClickArray[7] = false;
-		return;
-	}
-
-	if (LockedButtons[7] == false && FirstClickArray[7] == false)
-	{
-		TextLabel->SetText(FText::FromString("Item consumed"));
-		//item consumed function goes here
 	}
 }
 

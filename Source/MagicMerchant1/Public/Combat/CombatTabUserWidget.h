@@ -96,7 +96,10 @@ protected:
 	//Attack Functions
 
 	UFUNCTION()
-		void AttackFunction();
+		void AttackFunction(int Cost, int LockedButtonsIndex, int FirstClickArrayIndex, int Dmg, FString AttackUsed);
+
+	UFUNCTION()
+		void ItemFunction(int Cost, int LockedButtonsIndex, int FirstClickArrayIndex);
 
 	UFUNCTION()
 		void Attack1ButtonOnClicked();

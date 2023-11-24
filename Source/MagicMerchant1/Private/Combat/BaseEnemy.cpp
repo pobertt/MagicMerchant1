@@ -40,7 +40,7 @@ void ABaseEnemy::Destroy()
 
 void ABaseEnemy::ResetHealth()
 {
-	CurrentHP = MaxHP;
+	//CurrentHP = MaxHP;
 }
 
 // Called when the game starts or when spawned

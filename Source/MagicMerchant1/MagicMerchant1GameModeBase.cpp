@@ -39,7 +39,7 @@ void AMagicMerchant1GameModeBase::BeginPlay()
 		UI = Cast<UUserWidget>(CreateWidget(GetWorld(), GeneratedMainUIBP));
 		*/
 		/*
-		static ConstructorHelpers::FClassFinder<UUserWidget> MainUI(TEXT("/Game/UserInterface/WBP_UI.WBP_UI_C"));
+		static ConstructorHelpers::FClassFinder<UUserWidget> MainUI(TEXT("/Game/UserInterface/WBP_UI"));
 		MainUIClass = MainUI.Class;
 		
 		if (MainUI.Succeeded())
