@@ -7,6 +7,9 @@
 #include "Blueprint/UserWidget.h"
 #include "BetterPlayerCharacter.h"
 #include "Combat/BaseEnemy.h"
+#include "MyGameInstance.h"
+#include "TimerManager.h"
+#include "Engine.h"
 #include "CombatTabUserWidget.generated.h"
 
 
@@ -23,10 +26,17 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = CombatWidgetVariables, meta = (AllowPrivateAccess = "true"))
 		bool Locked = true;
 
-
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = CombatWidgetVariables, meta = (AllowPrivateAccess = "true"))
 		uint8 FirstClick = 1;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = CombatWidgetVariables, meta = (AllowPrivateAccess = "true"))
+		bool bCanClick = true;
+
+	//Handles the delay between clicks
+	FTimerHandle ButtonPressTimerHandle;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = CombatWidgetVariables, meta = (AllowPrivateAccess = "true"))
+		float DelayTimer;
 
 	//Combat Tab Widget Text Variables
 
@@ -128,6 +138,9 @@ protected:
 		void Item4ButtonOnClicked();
 
 	//Button Functions
+
+	UFUNCTION()
+		void ButtonTimerReset();
 
 	UFUNCTION()
 		void BackButtonOnClicked();

@@ -113,7 +113,6 @@ void UCombatTabUserWidget::ItemFunction(int Cost, int LockedButtonsIndex, int Fi
 		PlayerRef->money = PlayerRef->SubMoney(Cost);
 		TextLabel->SetText(FText::FromString("Purchased"));
 
-
 		FirstClickArray[FirstClickArrayIndex] = false;
 		return;
 	}
@@ -127,11 +126,23 @@ void UCombatTabUserWidget::ItemFunction(int Cost, int LockedButtonsIndex, int Fi
 
 void UCombatTabUserWidget::Attack1ButtonOnClicked()
 {
-	AttackFunction(0, 0, 0, 5, "Attack 1 Used");
-	//Changing the original text and changing the button name text
-	if (LockedButtons[0] == false)
+	//Timer works but find a way of only doing it if unlocked, maybe put it in the attack function?
+	if (bCanClick == true)
 	{
-		Attack1TextBlock->SetText(FText::FromString("Attack 1"));
+		bCanClick = false;
+		AttackFunction(0, 0, 0, 10, "Attack 1 Used");
+		//Changing the original text and changing the button name text
+		if (LockedButtons[0] == false)
+		{
+			Attack1TextBlock->SetText(FText::FromString("cooldown"));
+
+			GetWorld()->GetTimerManager().SetTimer(
+				ButtonPressTimerHandle,
+				this,
+				&UCombatTabUserWidget::ButtonTimerReset,
+				1.0f,
+				false);
+		}
 	}
 }
 
@@ -180,7 +191,7 @@ void UCombatTabUserWidget::Item1ButtonOnClicked()
 void UCombatTabUserWidget::Item2ButtonOnClicked()
 {
 	ItemFunction(2000, 5, 5);
-
+	
 	if (LockedButtons[5] == false)
 	{
 		Item2TextBlock->SetText(FText::FromString("Item 2"));
@@ -205,9 +216,19 @@ void UCombatTabUserWidget::Item4ButtonOnClicked()
 	{
 		Item4TextBlock->SetText(FText::FromString("Item 4"));
 	}
+
+	
 }
 
 //Button Functions
+
+void UCombatTabUserWidget::ButtonTimerReset()
+{
+	bCanClick = true;
+	GetWorld()->GetTimerManager().ClearTimer(ButtonPressTimerHandle);
+
+	Attack1TextBlock->SetText(FText::FromString("Attack 1"));
+}
 
 void UCombatTabUserWidget::BackButtonOnClicked()
 {
