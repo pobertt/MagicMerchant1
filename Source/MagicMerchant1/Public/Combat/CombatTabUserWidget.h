@@ -29,6 +29,8 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = CombatWidgetVariables, meta = (AllowPrivateAccess = "true"))
 		uint8 FirstClick = 1;
 
+	//Time variables
+
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = CombatWidgetVariables, meta = (AllowPrivateAccess = "true"))
 		bool bCanClick = true;
 
@@ -71,6 +73,9 @@ protected:
 
 	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
 		class UTextBlock* EnemyHPText;
+
+	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
+		class UImage* BaseEnemyImg;
 
 	//Combat Tab Widget Button Variables
 
@@ -144,6 +149,9 @@ protected:
 
 	UFUNCTION()
 		void BackButtonOnClicked();
+
+	//Timer Functions
+
 
 private:
 

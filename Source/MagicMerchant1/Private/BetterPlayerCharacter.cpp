@@ -10,7 +10,7 @@ ABetterPlayerCharacter::ABetterPlayerCharacter()
 	PrimaryActorTick.bCanEverTick = true;
 	hp = 100;
 	mp = 100;
-	money = 100.0f;
+	money = 10000.0f;
 	currency2 = 0.f;
 	lvl = 1;
 
@@ -82,20 +82,33 @@ int32 ABetterPlayerCharacter::SubLvl()
 
 void ABetterPlayerCharacter::MakeEnemy()
 {
-	//SpawnActor BaseEnemy var Info
-	FVector Location(0, 0, 0);
-	FRotator Rotation(0, 0, 0);
-	FActorSpawnParameters SpawnInfo;
-
-	if (!BaseEnemyRef->IsValidLowLevel())
+	//Timer for making enemy does not work
+	if (bEnemyRespawn == true)
 	{
-		//Creating new reference to Base Enemy
-		BaseEnemyRef = Cast<ABaseEnemy>(GetWorld()->SpawnActor<ABaseEnemy>(Location, Rotation, SpawnInfo));
-	}
+		bEnemyRespawn = false;
 
-	//Setting isAlive to true when made
-	BaseEnemyRef->isAlive = true;
-	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Yellow, "Enemy Made");
+		GetWorld()->GetTimerManager().SetTimer(
+			EnemyRespawnTimerHandle,
+			this,
+			&ABetterPlayerCharacter::EnemySpawnDelay,
+			5.0f,
+			false);
+
+		//SpawnActor BaseEnemy var Info
+		FVector Location(0, 0, 0);
+		FRotator Rotation(0, 0, 0);
+		FActorSpawnParameters SpawnInfo;
+
+		if (!BaseEnemyRef->IsValidLowLevel())
+		{
+			//Creating new reference to Base Enemy
+			BaseEnemyRef = Cast<ABaseEnemy>(GetWorld()->SpawnActor<ABaseEnemy>(Location, Rotation, SpawnInfo));
+		}
+
+		//Setting isAlive to true when made
+		BaseEnemyRef->isAlive = true;
+		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Yellow, "Enemy Made");
+	}
 }
 
 void ABetterPlayerCharacter::AttackEnemy(int Dmg)
@@ -111,32 +124,31 @@ void ABetterPlayerCharacter::AttackEnemy(int Dmg)
 
 void ABetterPlayerCharacter::EnemyKilled()
 {
-	//Set isAlive to false
-	BaseEnemyRef->isAlive = false;
+		//Set isAlive to false
+		BaseEnemyRef->isAlive = false;
 
-	//Give player however much money the enemy is worth
-	AddMoney(BaseEnemyRef->Value);
+		//Give player however much money the enemy is worth
+		AddMoney(BaseEnemyRef->Value);
 
-	//Destroying the enemy when killed (so we dont have overlapping enemy spawns, only want 1 enemy at a time)
-	//BaseEnemyRef->Destroy();
+		//Destroying the enemy when killed (so we dont have overlapping enemy spawns, only want 1 enemy at a time)
+		//BaseEnemyRef->Destroy();
 
-	//calling enemy respawn
-	EnemyRespawn();
-	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Yellow, "Enemy Made");
+		//calling enemy respawn
+		EnemyRespawn();
+		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Yellow, "Enemy Made");
 }
 
 void ABetterPlayerCharacter::EnemyRespawn()
 {
-	//If enemy is dead
-	if (BaseEnemyRef->isAlive == false) 
-	{
-		//Setting things back to original value
-		InitBaseEnemy();
+		//If enemy is dead
+		if (BaseEnemyRef->isAlive == false)
+		{
+			//Setting things back to original value
+			InitBaseEnemy();
 
-		//Create a new enemy 
-		MakeEnemy();
-	}
-	
+			//Create a new enemy 
+			MakeEnemy();
+		}	
 }
 
 void ABetterPlayerCharacter::InitBaseEnemy()
@@ -154,6 +166,12 @@ void ABetterPlayerCharacter::InitBaseEnemy()
 	BaseEnemyRef->Value = 10;
 
 	BaseEnemyRef->isAlive = false;
+}
+
+void ABetterPlayerCharacter::EnemySpawnDelay()
+{
+	bEnemyRespawn = true;
+	GetWorld()->GetTimerManager().ClearTimer(EnemyRespawnTimerHandle);
 }
 
 // Called when the game starts or when spawned

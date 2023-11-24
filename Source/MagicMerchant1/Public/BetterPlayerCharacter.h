@@ -7,6 +7,9 @@
 #include "Combat/BaseEnemy.h"
 #include "Math/UnrealMathUtility.h"
 // #include "MagicMerchant1/MagicMerchant1GameModeBase.h"
+#include "Combat\CombatTabUserWidget.h"
+#include "TimerManager.h"
+#include "Engine.h"
 #include "BetterPlayerCharacter.generated.h"
 
 UCLASS()
@@ -36,13 +39,23 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = playerStats, meta = (AllowPrivateAccess = "true"))
 		int32 lvl;
 
-	//CombatStats
+	//Combat Stats
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = playerCombatStats, meta = (AllowPrivateAccess = "true"))
 		int32 basicAttackDMG;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = playerCombatStats, meta = (AllowPrivateAccess = "true"))
 		float MyFloat;
+
+	//Enemy Variables
+
+	FTimerHandle EnemyRespawnTimerHandle;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = BaseEnemy, meta = (AllowPrivateAccess = "true"))
+		bool bEnemyRespawn = true;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = BaseEnemy, meta = (AllowPrivateAccess = "true"))
+		float RespawnDelayTimer;
 
 	//Inventory
 
@@ -87,7 +100,7 @@ public:
 		void SayHey();
 	void SayHey_Implementation() { };
 
-	//Combat Functions
+	//Enenmy Functions
 
 	UFUNCTION(BlueprintCallable, Category = BaseEnemy)
 		void MakeEnemy();
@@ -103,6 +116,9 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = BaseEnemy)
 		void InitBaseEnemy();
+
+	UFUNCTION(BlueprintCallable, Category = BaseEnemy)
+		void EnemySpawnDelay();
 
 	//Base Enemy Reference
 	UPROPERTY(BlueprintReadWrite)

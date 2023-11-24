@@ -130,7 +130,7 @@ void UCombatTabUserWidget::Attack1ButtonOnClicked()
 	if (bCanClick == true)
 	{
 		bCanClick = false;
-		AttackFunction(0, 0, 0, 10, "Attack 1 Used");
+		AttackFunction(0, 0, 0, 99, "Attack 1 Used");
 		//Changing the original text and changing the button name text
 		if (LockedButtons[0] == false)
 		{
