@@ -231,7 +231,7 @@ void UCombatTabUserWidget::ButtonTimerReset()
 	Attack1TextBlock->SetText(FText::FromString("Attack 1"));
 }
 
-bool UCombatTabUserWidget::IdleFunction()
+void UCombatTabUserWidget::IdleFunction()
 {
 	//it did work but didnt call Attack1Button more than once because of return 
 	//but didnt know how to make it not infinite

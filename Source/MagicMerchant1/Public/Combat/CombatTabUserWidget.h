@@ -40,6 +40,8 @@ protected:
 	//Handles the delay between clicks
 	FTimerHandle ButtonPressTimerHandle;
 
+	FTimerHandle IdleFunctionTimerHandle;
+
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = CombatWidgetVariables, meta = (AllowPrivateAccess = "true"))
 		float DelayTimer;
 
@@ -154,7 +156,7 @@ protected:
 	//Button Functions
 
 	UFUNCTION()
-		bool IdleFunction();
+		void IdleFunction();
 
 	UFUNCTION()
 		void BackButtonOnClicked();
@@ -167,6 +169,9 @@ protected:
 
 	UFUNCTION()
 		void ButtonTimerReset();
+
+	UFUNCTION()
+		void IdleTimerReset();
 
 
 private:
