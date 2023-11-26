@@ -13,7 +13,7 @@ void UCombatTabUserWidget::NativeConstruct()
 		LockedButtons.Push(true);
 		FirstClickArray.Push(true);
 	}
-	if (Attack1Button && Attack2Button && Attack3Button && Attack4Button && Item1Button && Item2Button && Item3Button && Item4Button && BackButton )
+	if (Attack1Button && Attack2Button && Attack3Button && Attack4Button && Item1Button && Item2Button && Item3Button && Item4Button && BackButton && IdleButton )
 	{
 		//delegate calls, function will be called from click
 		
@@ -34,6 +34,7 @@ void UCombatTabUserWidget::NativeConstruct()
 		//Other Buttons 
 
 		BackButton->OnClicked.AddDynamic(this, &UCombatTabUserWidget::BackButtonOnClicked);
+		IdleButton->OnClicked.AddDynamic(this, &UCombatTabUserWidget::IdleButtonOnClicked);
 	}
 
 	GamemodeRef = Cast<AMagicMerchant1GameModeBase>(GetWorld()->GetAuthGameMode());
@@ -130,7 +131,7 @@ void UCombatTabUserWidget::Attack1ButtonOnClicked()
 	if (bCanClick == true)
 	{
 		bCanClick = false;
-		AttackFunction(0, 0, 0, 99, "Attack 1 Used");
+		AttackFunction(0, 0, 0, 5, "Attack 1 Used");
 		//Changing the original text and changing the button name text
 		if (LockedButtons[0] == false)
 		{
@@ -230,6 +231,46 @@ void UCombatTabUserWidget::ButtonTimerReset()
 	Attack1TextBlock->SetText(FText::FromString("Attack 1"));
 }
 
+bool UCombatTabUserWidget::IdleFunction()
+{
+	//it did work but didnt call Attack1Button more than once because of return 
+	//but didnt know how to make it not infinite
+	
+	//If Button is on turn it off
+	if (Idle == true)
+	{
+		Idle = false;
+		IdleButtonTextBlock->SetText(FText::FromString("Idle: Off"));
+	}
+	else if (Idle == false)
+	{
+		Idle = true;
+		IdleButtonTextBlock->SetText(FText::FromString("Idle: On"));
+
+		while (Idle == true)
+		{
+			Attack1ButtonOnClicked();
+			return;
+		}
+	}
+
+	/*
+	while (true)
+	{
+		if (Idle == true)
+		{
+			IdleButtonTextBlock->SetText(FText::FromString("Idle: On"));
+			return true;
+		}
+		else if (Idle == false)
+		{
+			IdleButtonTextBlock->SetText(FText::FromString("Idle: Off"));
+			return false;
+		}
+	}
+	*/
+}
+
 void UCombatTabUserWidget::BackButtonOnClicked()
 {
 	TextLabel->SetText(FText::FromString("BackPressed"));
@@ -237,5 +278,19 @@ void UCombatTabUserWidget::BackButtonOnClicked()
 	GamemodeRef->RemoveCombatWidget();
 	//Display main ui again
 	GamemodeRef->AddMainUIWidget();
-
 }
+
+void UCombatTabUserWidget::IdleButtonOnClicked()
+{
+	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, "Idle Clicked");
+	
+	IdleFunction();
+
+	/*
+	Idle = true;
+	do {
+		Attack1ButtonOnClicked();
+	} while (IdleFunction());
+	*/
+}
+

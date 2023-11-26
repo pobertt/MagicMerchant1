@@ -29,6 +29,9 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = CombatWidgetVariables, meta = (AllowPrivateAccess = "true"))
 		uint8 FirstClick = 1;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = CombatWidgetVariables, meta = (AllowPrivateAccess = "true"))
+		bool Idle = false;
+
 	//Time variables
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = CombatWidgetVariables, meta = (AllowPrivateAccess = "true"))
@@ -69,6 +72,9 @@ protected:
 	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
 		class UTextBlock* Item4TextBlock;
 
+	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
+		class UTextBlock* IdleButtonTextBlock;
+
 	//Enemy Variables
 
 	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
@@ -105,6 +111,9 @@ protected:
 
 	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
 		class UButton* BackButton;
+
+	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
+		class UButton* IdleButton;
 
 	virtual void NativeConstruct() override;
 
@@ -145,12 +154,19 @@ protected:
 	//Button Functions
 
 	UFUNCTION()
-		void ButtonTimerReset();
+		bool IdleFunction();
 
 	UFUNCTION()
 		void BackButtonOnClicked();
 
+	UFUNCTION()
+		void IdleButtonOnClicked();
+
+
 	//Timer Functions
+
+	UFUNCTION()
+		void ButtonTimerReset();
 
 
 private:
