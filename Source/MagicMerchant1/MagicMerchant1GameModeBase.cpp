@@ -15,6 +15,7 @@ void AMagicMerchant1GameModeBase::BeginPlay()
 	{
 		//Creating CombatWidget - Cast 
 		CombatWidget = Cast<UCombatTabUserWidget>(CreateWidget(GetWorld(), WidgetClass));
+	
 		/*
 		* 
 		//Grabbing reference to main ui blueprint
@@ -55,7 +56,6 @@ void AMagicMerchant1GameModeBase::BeginPlay()
 		if(CombatWidget != nullptr)
 		{
 			GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Blue, "UI is Active");
-			//Grabbing reference to MainUIClass
 			
 			return;
 		}

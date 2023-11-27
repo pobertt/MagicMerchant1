@@ -121,7 +121,7 @@ void ABetterPlayerCharacter::AttackEnemy(int Dmg)
 	MyFloat = BaseEnemyRef->CurrentHP - Dmg;
 
 	//Clamp??
-	BaseEnemyRef->CurrentHP = FMath::Clamp(MyFloat, 0.0f, 100.0f);
+	BaseEnemyRef->CurrentHP = FMath::Clamp(MyFloat, 0.0f, BaseEnemyRef->MaxHP);
 }
 
 void ABetterPlayerCharacter::EnemyKilled()
