@@ -44,14 +44,6 @@ void UCombatTabUserWidget::NativeConstruct()
 	BaseEnemyRef = PlayerRef->BaseEnemyRef;
 }
 
-//old
-	//enenmy attacked
-	/*
-	PlayerRef->AttackEnemy();
-	TextLabel->SetText(FText::FromString("Attack 1 Used"));
-	EnemyHPText->SetText(FText::AsNumber(BaseEnemyRef->CurrentHP));
-	*/
-
 //Attack Button Functions 
 
 void UCombatTabUserWidget::AttackFunction(int Cost, int LockedButtonsIndex, int FirstClickArrayIndex, int Dmg, FString AttackUsed)
