@@ -23,20 +23,7 @@ ABaseEnemy::ABaseEnemy()
 	Value = 10;
 
 	isAlive = false;
-	//Type = "Base"; 
 }
-/*
-void ABaseEnemy::Destroy()
-{
-	if (isAlive == false)
-	{
-		ABaseEnemy Destruct();
-	}
-	UE_LOG(LogTemp, Warning, TEXT("Enemy Destroy function called"));
-}
-*/
-
-
 
 void ABaseEnemy::ResetHealth()
 {
@@ -57,3 +44,19 @@ void ABaseEnemy::Tick(float DeltaTime)
 
 }
 
+AFireTypeEnemy::AFireTypeEnemy()
+{
+	MaxHP = 150;
+	CurrentHP = MaxHP;
+
+}
+
+AGrassTypeEnemy::AGrassTypeEnemy()
+{
+
+}
+
+AWaterTypeEnemy::AWaterTypeEnemy()
+{
+
+}

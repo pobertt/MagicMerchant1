@@ -61,3 +61,30 @@ public:
 	virtual void Tick(float DeltaTime) override;
 
 };
+
+UCLASS()
+class MAGICMERCHANT1_API AFireTypeEnemy : public ABaseEnemy
+{
+	GENERATED_BODY()
+
+public:
+	AFireTypeEnemy();
+};
+
+UCLASS()
+class MAGICMERCHANT1_API AGrassTypeEnemy : public ABaseEnemy
+{
+	GENERATED_BODY()
+
+public:
+	AGrassTypeEnemy();
+};
+
+UCLASS()
+class MAGICMERCHANT1_API AWaterTypeEnemy : public ABaseEnemy
+{
+	GENERATED_BODY()
+
+public:
+	AWaterTypeEnemy();
+};

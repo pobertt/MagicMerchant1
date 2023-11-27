@@ -87,6 +87,7 @@ void ABetterPlayerCharacter::MakeEnemy()
 	{
 		bEnemyRespawn = false;
 
+		//doesn't work
 		GetWorld()->GetTimerManager().SetTimer(
 			EnemyRespawnTimerHandle,
 			this,
@@ -102,7 +103,8 @@ void ABetterPlayerCharacter::MakeEnemy()
 		if (!BaseEnemyRef->IsValidLowLevel())
 		{
 			//Creating new reference to Base Enemy
-			BaseEnemyRef = Cast<ABaseEnemy>(GetWorld()->SpawnActor<ABaseEnemy>(Location, Rotation, SpawnInfo));
+			//BaseEnemyRef = Cast<ABaseEnemy>(GetWorld()->SpawnActor<ABaseEnemy>(Location, Rotation, SpawnInfo));
+			BaseEnemyRef = Cast<ABaseEnemy>(GetWorld()->SpawnActor<AFireTypeEnemy>(Location, Rotation, SpawnInfo));
 		}
 
 		//Setting isAlive to true when made
@@ -153,15 +155,15 @@ void ABetterPlayerCharacter::EnemyRespawn()
 
 void ABetterPlayerCharacter::InitBaseEnemy()
 {
-	BaseEnemyRef->MaxHP = 100;
+	BaseEnemyRef->MaxHP = BaseEnemyRef->MaxHP;
 	BaseEnemyRef->CurrentHP = BaseEnemyRef->MaxHP;
-	BaseEnemyRef->HPRegen = 0.5f;
+	BaseEnemyRef->HPRegen = BaseEnemyRef->HPRegen;
 
-	BaseEnemyRef->BaseAttack = 10;
-	BaseEnemyRef->AttackMultiplier = 1;
+	BaseEnemyRef->BaseAttack = BaseEnemyRef->BaseAttack;
+	BaseEnemyRef->AttackMultiplier = BaseEnemyRef->AttackMultiplier;
 
-	BaseEnemyRef->Defense = 0;
-	BaseEnemyRef->DefenseMultiplier = 1;
+	BaseEnemyRef->Defense = BaseEnemyRef->Defense;
+	BaseEnemyRef->DefenseMultiplier = BaseEnemyRef->DefenseMultiplier;
 
 	BaseEnemyRef->Value = 10;
 
