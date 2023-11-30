@@ -22,12 +22,26 @@ ABaseEnemy::ABaseEnemy()
 
 	Value = 10;
 
+	EnemyType = "Base";
+
 	isAlive = false;
 }
 
 void ABaseEnemy::ResetHealth()
 {
 	//CurrentHP = MaxHP;
+}
+
+//These functions are for player combat spells, to know what type the enemy is
+
+void ABaseEnemy::SetType(FString Type)
+{
+	EnemyType = Type;
+}
+
+FString ABaseEnemy::GetType()
+{
+	return EnemyType;
 }
 
 // Called when the game starts or when spawned
@@ -46,17 +60,17 @@ void ABaseEnemy::Tick(float DeltaTime)
 
 AFireTypeEnemy::AFireTypeEnemy()
 {
-	MaxHP = 150;
-	CurrentHP = MaxHP;
-
+	
+	SetType("Fire");
 }
 
 AGrassTypeEnemy::AGrassTypeEnemy()
 {
-
+	SetType("Grass");
 }
 
 AWaterTypeEnemy::AWaterTypeEnemy()
 {
-
+	SetType("Water");
 }
+

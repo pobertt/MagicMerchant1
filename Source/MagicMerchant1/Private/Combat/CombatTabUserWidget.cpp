@@ -223,44 +223,38 @@ void UCombatTabUserWidget::ButtonTimerReset()
 	Attack1TextBlock->SetText(FText::FromString("Attack 1"));
 }
 
+void UCombatTabUserWidget::IdleTimerReset()
+{
+	GetWorld()->GetTimerManager().ClearTimer(IdleFunctionTimerHandle);
+
+	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, "Idle Timer Reset Called");
+}
+
 void UCombatTabUserWidget::IdleFunction()
 {
 	//it did work but didnt call Attack1Button more than once because of return 
 	//but didnt know how to make it not infinite
-	
+
 	//If Button is on turn it off
 	if (Idle == true)
 	{
 		Idle = false;
 		IdleButtonTextBlock->SetText(FText::FromString("Idle: Off"));
+
+		IdleTimerReset();
 	}
 	else if (Idle == false)
 	{
 		Idle = true;
 		IdleButtonTextBlock->SetText(FText::FromString("Idle: On"));
 
-		while (Idle == true)
-		{
-			Attack1ButtonOnClicked();
-			return;
-		}
+		GetWorld()->GetTimerManager().SetTimer(
+				IdleFunctionTimerHandle,
+				this,
+				&UCombatTabUserWidget::Attack1ButtonOnClicked,
+				1.0f,
+				true);
 	}
-
-	/*
-	while (true)
-	{
-		if (Idle == true)
-		{
-			IdleButtonTextBlock->SetText(FText::FromString("Idle: On"));
-			return true;
-		}
-		else if (Idle == false)
-		{
-			IdleButtonTextBlock->SetText(FText::FromString("Idle: Off"));
-			return false;
-		}
-	}
-	*/
 }
 
 void UCombatTabUserWidget::BackButtonOnClicked()
@@ -277,12 +271,5 @@ void UCombatTabUserWidget::IdleButtonOnClicked()
 	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, "Idle Clicked");
 	
 	IdleFunction();
-
-	/*
-	Idle = true;
-	do {
-		Attack1ButtonOnClicked();
-	} while (IdleFunction());
-	*/
 }
 

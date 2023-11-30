@@ -170,6 +170,9 @@ protected:
 	UFUNCTION()
 		void ButtonTimerReset();
 
+	UFUNCTION()
+		void IdleTimerReset();
+
 
 private:
 

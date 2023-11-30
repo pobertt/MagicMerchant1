@@ -43,14 +43,17 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = enemyStats, meta = (AllowPrivateAccess = "true"))
 		bool isAlive;
 
-	//UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = enemyStats, meta = (AllowPrivateAccess = "true"))
-		//string Type;
-
-	//UFUNCTION(BlueprintCallable, Category = BaseEnemy)
-		//void Destroy();
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = enemyStats, meta = (AllowPrivateAccess = "true"))
+		FString EnemyType;
 
 	UFUNCTION(BlueprintCallable, Category = BaseEnemy)
 	void ResetHealth();
+
+	UFUNCTION(BlueprintCallable, Category = TypeEnemy)
+	void SetType(FString Type);
+
+	UFUNCTION(BlueprintCallable, Category =	TypeEnemy)
+	virtual FString GetType();
 
 protected:
 	// Called when the game starts or when spawned

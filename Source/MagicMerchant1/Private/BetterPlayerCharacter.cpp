@@ -105,6 +105,8 @@ void ABetterPlayerCharacter::MakeEnemy()
 			//Creating new reference to Base Enemy
 			//BaseEnemyRef = Cast<ABaseEnemy>(GetWorld()->SpawnActor<ABaseEnemy>(Location, Rotation, SpawnInfo));
 			BaseEnemyRef = Cast<ABaseEnemy>(GetWorld()->SpawnActor<AFireTypeEnemy>(Location, Rotation, SpawnInfo));
+
+
 		}
 
 		//Setting isAlive to true when made
@@ -133,7 +135,9 @@ void ABetterPlayerCharacter::EnemyKilled()
 		AddMoney(BaseEnemyRef->Value);
 
 		//Destroying the enemy when killed (so we dont have overlapping enemy spawns, only want 1 enemy at a time)
-		//BaseEnemyRef->Destroy();
+		BaseEnemyRef->Destroy();
+
+
 
 		//calling enemy respawn
 		EnemyRespawn();
@@ -197,5 +201,3 @@ void ABetterPlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerIn
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 
 }
-
-//FMath::RandRange(1, 100)
