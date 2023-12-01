@@ -119,16 +119,25 @@ void UCombatTabUserWidget::ItemFunction(int Cost, int LockedButtonsIndex, int Fi
 
 void UCombatTabUserWidget::Attack1ButtonOnClicked()
 {
-	//Timer works but find a way of only doing it if unlocked, maybe put it in the attack function?
+	//If the button can be clicked
 	if (bCanClick == true)
 	{
+		//The button now can't be clicked until Button Timer Reset is called
 		bCanClick = false;
+
+		//Calling the Attack Function
 		AttackFunction(0, 0, 0, 5, "Attack 1 Used");
-		//Changing the original text and changing the button name text
+		
+		//If the button is unlocked 
 		if (LockedButtons[0] == false)
 		{
+			//Set the button text to on cooldown
 			Attack1TextBlock->SetText(FText::FromString("cooldown"));
 
+			//FTimerDelegate Delegate;
+			//Delegate.BindUFunction(this, "ChangeButtonText", Attack1TextBlock, "Attack 1");
+
+			//Do for one second, after the second is finished ButtonTimerReset is called
 			GetWorld()->GetTimerManager().SetTimer(
 				ButtonPressTimerHandle,
 				this,
@@ -143,9 +152,10 @@ void UCombatTabUserWidget::Attack2ButtonOnClicked()
 {
 	AttackFunction(1000, 1, 1, 10, "Attack 2 Used");
 
+	//Changing the original text and changing the button name text
 	if (LockedButtons[1] == false)
 	{
-		Attack2TextBlock->SetText(FText::FromString("Attack 2"));
+		Attack2TextBlock->SetText(FText::FromString("Attack 2"));	
 	}
 }
 
@@ -220,7 +230,15 @@ void UCombatTabUserWidget::ButtonTimerReset()
 	bCanClick = true;
 	GetWorld()->GetTimerManager().ClearTimer(ButtonPressTimerHandle);
 
-	Attack1TextBlock->SetText(FText::FromString("Attack 1"));
+	//SetText here for buttons
+	ChangeButtonText(Attack1TextBlock, "Attack 1");
+}
+
+
+
+void UCombatTabUserWidget::ChangeButtonText(UTextBlock* ButtonName, FString ButtonText)
+{
+	ButtonName->SetText(FText::FromString(ButtonText));
 }
 
 void UCombatTabUserWidget::IdleTimerReset()

@@ -170,6 +170,10 @@ protected:
 	UFUNCTION()
 		void ButtonTimerReset();
 
+
+	UFUNCTION()
+		void ChangeButtonText(class UTextBlock* ButtonName, FString ButtonText);
+
 	UFUNCTION()
 		void IdleTimerReset();
 
