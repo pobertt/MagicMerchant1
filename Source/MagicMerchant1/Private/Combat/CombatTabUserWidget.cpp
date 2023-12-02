@@ -134,9 +134,13 @@ void UCombatTabUserWidget::Attack1ButtonOnClicked()
 			//Set the all button text to on cooldown
 			CooldownText();
 
-			//This seems redundant currently but it helped me understand delegates 
+			//This all seems redundant currently but it helped me understand delegates 
+			//Seems redudant as if i am setting them all to go cooldown and then setting them back to their original text, 
+			//whats the point of the specific timer?
+
 			FTimerDelegate Delegate;
 
+			//Assigning the function to the timer and passing in parameters 
 			Delegate.BindUFunction(this, "ChangeButtonText", Attack1TextBlock, 1);
 
 			//Set this specific timer back to the original text
@@ -146,7 +150,6 @@ void UCombatTabUserWidget::Attack1ButtonOnClicked()
 				//&UCombatTabUserWidget::ButtonTimerReset,
 				1.0f,
 				false);
-
 
 			//setting them all back to their original text
 			GetWorld()->GetTimerManager().SetTimer(
@@ -303,8 +306,6 @@ void UCombatTabUserWidget::Item4ButtonOnClicked()
 	{
 		Item4TextBlock->SetText(FText::FromString("Item 4"));
 	}
-
-	
 }
 
 //Button Functions
