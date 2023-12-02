@@ -134,14 +134,15 @@ void UCombatTabUserWidget::Attack1ButtonOnClicked()
 			//Set the button text to on cooldown
 			Attack1TextBlock->SetText(FText::FromString("cooldown"));
 
-			//FTimerDelegate Delegate;
-			//Delegate.BindUFunction(this, "ChangeButtonText", Attack1TextBlock, "Attack 1");
+			FTimerDelegate Delegate;
+
+			Delegate.BindUFunction(this, "ChangeButtonText", Attack1TextBlock, 1);
 
 			//Do for one second, after the second is finished ButtonTimerReset is called
 			GetWorld()->GetTimerManager().SetTimer(
 				ButtonPressTimerHandle,
-				this,
-				&UCombatTabUserWidget::ButtonTimerReset,
+				Delegate,
+				//&UCombatTabUserWidget::ButtonTimerReset,
 				1.0f,
 				false);
 		}
@@ -150,32 +151,70 @@ void UCombatTabUserWidget::Attack1ButtonOnClicked()
 
 void UCombatTabUserWidget::Attack2ButtonOnClicked()
 {
-	AttackFunction(1000, 1, 1, 10, "Attack 2 Used");
-
-	//Changing the original text and changing the button name text
-	if (LockedButtons[1] == false)
+	if (bCanClick == true)
 	{
-		Attack2TextBlock->SetText(FText::FromString("Attack 2"));	
+		bCanClick = false;
+		AttackFunction(1000, 1, 1, 10, "Attack 2 Used");
+
+		if (LockedButtons[1] == false)
+		{
+			Attack2TextBlock->SetText(FText::FromString("cooldown"));
+
+			FTimerDelegate Delegate;
+			Delegate.BindUFunction(this, "ChangeButtonText", Attack2TextBlock, 2);
+
+			GetWorld()->GetTimerManager().SetTimer(
+				ButtonPressTimerHandle,
+				Delegate,
+				1.0f,
+				false);
+		}
 	}
 }
 
 void UCombatTabUserWidget::Attack3ButtonOnClicked()
 {
-	AttackFunction(2500, 2, 2, 25, "Attack 3 Used");
-
-	if (LockedButtons[2] == false)
+	if (bCanClick == true)
 	{
-		Attack3TextBlock->SetText(FText::FromString("Attack 3"));
+		bCanClick = false;
+		AttackFunction(2500, 2, 2, 25, "Attack 3 Used");
+
+		if (LockedButtons[2] == false)
+		{
+			Attack2TextBlock->SetText(FText::FromString("cooldown"));
+
+			FTimerDelegate Delegate;
+			Delegate.BindUFunction(this, "ChangeButtonText", Attack3TextBlock, 3);
+
+			GetWorld()->GetTimerManager().SetTimer(
+				ButtonPressTimerHandle,
+				Delegate,
+				1.0f,
+				false);
+		}
 	}
 }
 
 void UCombatTabUserWidget::Attack4ButtonOnClicked()
 {
-	AttackFunction(5000, 3, 3, 50, "Attack 4 Used");
-
-	if (LockedButtons[3] == false)
+	if (bCanClick == true)
 	{
-		Attack4TextBlock->SetText(FText::FromString("Attack 4"));
+		bCanClick = false;
+		AttackFunction(5000, 3, 3, 50, "Attack 4 Used");
+
+		if (LockedButtons[3] == false)
+		{
+			Attack2TextBlock->SetText(FText::FromString("cooldown"));
+
+			FTimerDelegate Delegate;
+			Delegate.BindUFunction(this, "ChangeButtonText", Attack4TextBlock, 4);
+
+			GetWorld()->GetTimerManager().SetTimer(
+				ButtonPressTimerHandle,
+				Delegate,
+				1.0f,
+				false);
+		}
 	}
 }
 
@@ -229,16 +268,29 @@ void UCombatTabUserWidget::ButtonTimerReset()
 {
 	bCanClick = true;
 	GetWorld()->GetTimerManager().ClearTimer(ButtonPressTimerHandle);
-
 	//SetText here for buttons
-	ChangeButtonText(Attack1TextBlock, "Attack 1");
 }
 
 
 
-void UCombatTabUserWidget::ChangeButtonText(UTextBlock* ButtonName, FString ButtonText)
+void UCombatTabUserWidget::ChangeButtonText(UTextBlock* ButtonName, int ButtonNum)
 {
-	ButtonName->SetText(FText::FromString(ButtonText));
+	//And a timer reset
+	bCanClick = true;
+	GetWorld()->GetTimerManager().ClearTimer(ButtonPressTimerHandle);
+
+	switch (ButtonNum) 
+	{
+		case 1:
+			ButtonName->SetText(FText::FromString("Attack 1"));
+		case 2:
+			ButtonName->SetText(FText::FromString("Attack 2"));
+		case 3:
+			ButtonName->SetText(FText::FromString("Attack 3"));
+		case 4:
+			ButtonName->SetText(FText::FromString("Attack 4"));
+
+	}
 }
 
 void UCombatTabUserWidget::IdleTimerReset()
