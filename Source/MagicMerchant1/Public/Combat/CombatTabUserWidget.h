@@ -167,7 +167,6 @@ protected:
 	UFUNCTION()
 		void CooldownText();
 
-
 	//Timer Functions
 
 	UFUNCTION()
