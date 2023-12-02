@@ -181,7 +181,7 @@ void UCombatTabUserWidget::Attack3ButtonOnClicked()
 
 		if (LockedButtons[2] == false)
 		{
-			Attack2TextBlock->SetText(FText::FromString("cooldown"));
+			Attack3TextBlock->SetText(FText::FromString("cooldown"));
 
 			FTimerDelegate Delegate;
 			Delegate.BindUFunction(this, "ChangeButtonText", Attack3TextBlock, 3);
@@ -204,7 +204,7 @@ void UCombatTabUserWidget::Attack4ButtonOnClicked()
 
 		if (LockedButtons[3] == false)
 		{
-			Attack2TextBlock->SetText(FText::FromString("cooldown"));
+			Attack4TextBlock->SetText(FText::FromString("cooldown"));
 
 			FTimerDelegate Delegate;
 			Delegate.BindUFunction(this, "ChangeButtonText", Attack4TextBlock, 4);
@@ -283,12 +283,16 @@ void UCombatTabUserWidget::ChangeButtonText(UTextBlock* ButtonName, int ButtonNu
 	{
 		case 1:
 			ButtonName->SetText(FText::FromString("Attack 1"));
+			break;
 		case 2:
 			ButtonName->SetText(FText::FromString("Attack 2"));
+			break;
 		case 3:
 			ButtonName->SetText(FText::FromString("Attack 3"));
+			break;
 		case 4:
 			ButtonName->SetText(FText::FromString("Attack 4"));
+			break;
 
 	}
 }
