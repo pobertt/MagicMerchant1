@@ -22,6 +22,10 @@ class MAGICMERCHANT1_API AMagicMerchant1GameModeBase : public AGameModeBase
 	UPROPERTY()
 	class ABaseEnemy* BaseEnemyRef;
 
+	//Player Reference
+	UPROPERTY()
+	class ABetterPlayerCharacter* PlayerRef;
+
 public:
 	UFUNCTION(BlueprintCallable)
 	void AddCombatWidget();
@@ -37,6 +41,9 @@ public:
 
 	UFUNCTION()
 	void SetEnemyRef(AActor* enemy);
+
+	UFUNCTION()
+	void SetPlayerRef(ACharacter* player);
 
 protected:
 	UPROPERTY(EditAnywhere, Category = "Class Types")

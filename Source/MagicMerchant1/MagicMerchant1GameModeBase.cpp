@@ -72,6 +72,9 @@ void AMagicMerchant1GameModeBase::AddCombatWidget()
 	//Creating combat widget
 	CombatWidget = Cast<UCombatTabUserWidget>(CreateWidget(GetWorld(), WidgetClass));
 	CombatWidget->AddToViewport();
+
+	//When the combat widget is redadded it will create a new enemy
+	PlayerRef->MakeEnemy();
 }
 
 void AMagicMerchant1GameModeBase::RemoveCombatWidget()
@@ -82,7 +85,8 @@ void AMagicMerchant1GameModeBase::RemoveCombatWidget()
 
 	if (BaseEnemyRef->IsValidLowLevel())
 	{
-		BaseEnemyRef->Destroy();
+		//Blueprint is doing this:
+		//BaseEnemyRef->Destroy();
 		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Blue, "Enemy Valid");
 	}
 	else {
@@ -106,4 +110,9 @@ void AMagicMerchant1GameModeBase::RemoveMainUIWidget()
 void AMagicMerchant1GameModeBase::SetEnemyRef(AActor* enemy)
 {
 	BaseEnemyRef = Cast<ABaseEnemy>(enemy);
+}
+
+void AMagicMerchant1GameModeBase::SetPlayerRef(ACharacter* player)
+{
+	PlayerRef = Cast<ABetterPlayerCharacter>(player);
 }

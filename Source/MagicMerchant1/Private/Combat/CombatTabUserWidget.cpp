@@ -390,8 +390,6 @@ void UCombatTabUserWidget::IdleFunction()
 				1.0f,
 				true);
 	}
-
-
 }
 
 void UCombatTabUserWidget::BackButtonOnClicked()

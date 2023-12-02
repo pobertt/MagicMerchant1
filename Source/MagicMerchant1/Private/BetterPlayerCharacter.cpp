@@ -82,18 +82,9 @@ int32 ABetterPlayerCharacter::SubLvl()
 
 void ABetterPlayerCharacter::MakeEnemy()
 {
-	//Timer for making enemy does not work
 	if (bEnemyRespawn == true)
 	{
 		bEnemyRespawn = false;
-
-		//doesn't work
-		GetWorld()->GetTimerManager().SetTimer(
-			EnemyRespawnTimerHandle,
-			this,
-			&ABetterPlayerCharacter::EnemySpawnDelay,
-			5.0f,
-			false);
 
 		//SpawnActor BaseEnemy var Info
 		FVector Location(0, 0, 0);
@@ -102,11 +93,29 @@ void ABetterPlayerCharacter::MakeEnemy()
 
 		if (!BaseEnemyRef->IsValidLowLevel())
 		{
-			//Creating new reference to Base Enemy
-			//BaseEnemyRef = Cast<ABaseEnemy>(GetWorld()->SpawnActor<ABaseEnemy>(Location, Rotation, SpawnInfo));
-			BaseEnemyRef = Cast<ABaseEnemy>(GetWorld()->SpawnActor<AFireTypeEnemy>(Location, Rotation, SpawnInfo));
+			//Creating new reference to Enemy
 
+			int8 Num = FMath::RandRange(0, 3);
 
+			switch (Num)
+			{
+			case 1:
+				BaseEnemyRef = Cast<ABaseEnemy>(GetWorld()->SpawnActor<AFireTypeEnemy>(Location, Rotation, SpawnInfo));
+				GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, "1");
+				break;
+			case 2:
+				BaseEnemyRef = Cast<ABaseEnemy>(GetWorld()->SpawnActor<AGrassTypeEnemy>(Location, Rotation, SpawnInfo));
+				GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Green, "2");
+				break;
+			case 3:
+				BaseEnemyRef = Cast<ABaseEnemy>(GetWorld()->SpawnActor<AWaterTypeEnemy>(Location, Rotation, SpawnInfo));
+				GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Blue, "3");
+				break;
+			default:
+				BaseEnemyRef = Cast<ABaseEnemy>(GetWorld()->SpawnActor<ABaseEnemy>(Location, Rotation, SpawnInfo));
+				GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Yellow, "Base Enemy");
+				break;
+			}
 		}
 
 		//Setting isAlive to true when made
@@ -136,8 +145,6 @@ void ABetterPlayerCharacter::EnemyKilled()
 
 		//Destroying the enemy when killed (so we dont have overlapping enemy spawns, only want 1 enemy at a time)
 		BaseEnemyRef->Destroy();
-
-
 
 		//calling enemy respawn
 		EnemyRespawn();
