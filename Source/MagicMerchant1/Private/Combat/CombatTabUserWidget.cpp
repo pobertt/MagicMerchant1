@@ -131,8 +131,8 @@ void UCombatTabUserWidget::Attack1ButtonOnClicked()
 		//If the button is unlocked 
 		if (LockedButtons[0] == false)
 		{
-			//Set the button text to on cooldown
-			Attack1TextBlock->SetText(FText::FromString("cooldown"));
+			//Set the all button text to on cooldown
+			CooldownText();
 
 			FTimerDelegate Delegate;
 
@@ -158,7 +158,7 @@ void UCombatTabUserWidget::Attack2ButtonOnClicked()
 
 		if (LockedButtons[1] == false)
 		{
-			Attack2TextBlock->SetText(FText::FromString("cooldown"));
+			CooldownText();
 
 			FTimerDelegate Delegate;
 			Delegate.BindUFunction(this, "ChangeButtonText", Attack2TextBlock, 2);
@@ -181,7 +181,7 @@ void UCombatTabUserWidget::Attack3ButtonOnClicked()
 
 		if (LockedButtons[2] == false)
 		{
-			Attack3TextBlock->SetText(FText::FromString("cooldown"));
+			CooldownText();
 
 			FTimerDelegate Delegate;
 			Delegate.BindUFunction(this, "ChangeButtonText", Attack3TextBlock, 3);
@@ -204,7 +204,7 @@ void UCombatTabUserWidget::Attack4ButtonOnClicked()
 
 		if (LockedButtons[3] == false)
 		{
-			Attack4TextBlock->SetText(FText::FromString("cooldown"));
+			CooldownText();
 
 			FTimerDelegate Delegate;
 			Delegate.BindUFunction(this, "ChangeButtonText", Attack4TextBlock, 4);
@@ -266,12 +266,11 @@ void UCombatTabUserWidget::Item4ButtonOnClicked()
 
 void UCombatTabUserWidget::ButtonTimerReset()
 {
+	//Not used rn
 	bCanClick = true;
 	GetWorld()->GetTimerManager().ClearTimer(ButtonPressTimerHandle);
 	//SetText here for buttons
 }
-
-
 
 void UCombatTabUserWidget::ChangeButtonText(UTextBlock* ButtonName, int ButtonNum)
 {
@@ -345,5 +344,28 @@ void UCombatTabUserWidget::IdleButtonOnClicked()
 	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, "Idle Clicked");
 	
 	IdleFunction();
+}
+
+void UCombatTabUserWidget::CooldownText()
+{
+	if (LockedButtons[0] == false)
+	{
+		Attack1TextBlock->SetText(FText::FromString("cooldown"));
+	}
+
+	if (LockedButtons[1] == false)
+	{
+		Attack2TextBlock->SetText(FText::FromString("cooldown"));
+	}
+
+	if (LockedButtons[2] == false)
+	{
+		Attack3TextBlock->SetText(FText::FromString("cooldown"));
+	}
+
+	if (LockedButtons[3] == false)
+	{
+		Attack4TextBlock->SetText(FText::FromString("cooldown"));
+	}
 }
 

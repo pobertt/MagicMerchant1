@@ -164,12 +164,14 @@ protected:
 	UFUNCTION()
 		void IdleButtonOnClicked();
 
+	UFUNCTION()
+		void CooldownText();
+
 
 	//Timer Functions
 
 	UFUNCTION()
 		void ButtonTimerReset();
-
 
 	UFUNCTION()
 		void ChangeButtonText(class UTextBlock* ButtonName, int ButtonNum);
