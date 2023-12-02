@@ -94,8 +94,9 @@ void ABetterPlayerCharacter::MakeEnemy()
 		if (!BaseEnemyRef->IsValidLowLevel())
 		{
 			//Creating new reference to Enemy
-
-			int8 Num = FMath::RandRange(0, 3);
+			
+			//Spawning a random enemy 
+			int8 Num = FMath::RandRange(1, 3);
 
 			switch (Num)
 			{

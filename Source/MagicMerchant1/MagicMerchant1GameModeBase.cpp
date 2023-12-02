@@ -74,7 +74,7 @@ void AMagicMerchant1GameModeBase::AddCombatWidget()
 	CombatWidget->AddToViewport();
 
 	//When the combat widget is redadded it will create a new enemy
-	PlayerRef->MakeEnemy();
+	//PlayerRef->MakeEnemy();
 }
 
 void AMagicMerchant1GameModeBase::RemoveCombatWidget()

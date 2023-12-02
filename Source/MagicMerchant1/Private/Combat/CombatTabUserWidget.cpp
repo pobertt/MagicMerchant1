@@ -185,7 +185,6 @@ void UCombatTabUserWidget::Attack2ButtonOnClicked()
 					1.0f,
 					false);
 
-
 				GetWorld()->GetTimerManager().SetTimer(
 					ButtonPressTimerHandle,
 					this,
