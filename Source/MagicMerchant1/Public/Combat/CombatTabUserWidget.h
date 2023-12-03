@@ -24,12 +24,6 @@ class MAGICMERCHANT1_API UCombatTabUserWidget : public UUserWidget
 protected:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = CombatWidgetVariables, meta = (AllowPrivateAccess = "true"))
-		bool Locked = true;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = CombatWidgetVariables, meta = (AllowPrivateAccess = "true"))
-		uint8 FirstClick = 1;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = CombatWidgetVariables, meta = (AllowPrivateAccess = "true"))
 		bool Idle = false;
 
 	//Time variables
@@ -121,7 +115,7 @@ protected:
 
 	//Attack Functions
 
-	UFUNCTION()
+	UFUNCTION(BlueprintCallable)
 		void AttackFunction(int Cost, int LockedButtonsIndex, int FirstClickArrayIndex, int Dmg, FString AttackUsed);
 
 	UFUNCTION()
