@@ -194,7 +194,6 @@ void UCombatTabUserWidget::Attack2ButtonOnClicked()
 			}
 		}
 	}
-	
 }
 
 void UCombatTabUserWidget::Attack3ButtonOnClicked()
@@ -252,7 +251,6 @@ void UCombatTabUserWidget::Attack4ButtonOnClicked()
 					Delegate,
 					5.0f,
 					false);
-
 
 				GetWorld()->GetTimerManager().SetTimer(
 					ButtonPressTimerHandle,
