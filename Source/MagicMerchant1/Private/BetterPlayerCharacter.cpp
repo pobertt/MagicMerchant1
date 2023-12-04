@@ -82,6 +82,7 @@ int32 ABetterPlayerCharacter::SubLvl()
 
 void ABetterPlayerCharacter::MakeEnemy()
 {
+
 	if (bEnemyRespawn == true)
 	{
 		bEnemyRespawn = false;

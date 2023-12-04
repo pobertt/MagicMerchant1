@@ -6,7 +6,7 @@
 #include "GameFramework/Character.h"
 #include "Combat/BaseEnemy.h"
 #include "Math/UnrealMathUtility.h"
-// #include "MagicMerchant1/MagicMerchant1GameModeBase.h"
+//#include "MagicMerchant1/MagicMerchant1GameModeBase.h"
 #include "Combat\CombatTabUserWidget.h"
 #include "TimerManager.h"
 #include "Engine.h"
@@ -21,6 +21,10 @@ public:
 	// Sets default values for this character's properties
 
 	ABetterPlayerCharacter();
+
+	//Base Enemy Reference
+	UPROPERTY()
+	class ABaseEnemy* BaseEnemyRef;
 
 	//Player Stats
 
@@ -119,10 +123,6 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = BaseEnemy)
 		void EnemySpawnDelay();
-
-	//Base Enemy Reference
-	UPROPERTY(BlueprintReadWrite)
-	class ABaseEnemy* BaseEnemyRef;
 
 protected:
 	// Called when the game starts or when spawned
