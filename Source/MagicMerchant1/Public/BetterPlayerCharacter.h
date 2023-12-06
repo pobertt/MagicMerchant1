@@ -26,6 +26,10 @@ public:
 	UPROPERTY()
 	class ABaseEnemy* BaseEnemyRef;
 
+	//Combat Widget Reference
+	UPROPERTY(VisibleInstanceOnly, Category = "Runtime")
+		class UCombatTabUserWidget* CombatWidget;
+
 	//Player Stats
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = playerStats, meta = (AllowPrivateAccess = "true"))
