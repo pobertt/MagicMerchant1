@@ -119,7 +119,7 @@ protected:
 		void AttackFunction(int Cost, int LockedButtonsIndex, int FirstClickArrayIndex, int Dmg, FString AttackUsed);
 
 	UFUNCTION()
-		void ItemFunction(int Cost, int LockedButtonsIndex, int FirstClickArrayIndex);
+		void ItemFunction(int Cost, int LockedButtonsIndex, int FirstClickArrayIndex, FString ItemUsed);
 
 	UFUNCTION()
 		void Attack1ButtonOnClicked();

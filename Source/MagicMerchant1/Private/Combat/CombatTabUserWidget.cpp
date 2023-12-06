@@ -94,7 +94,7 @@ void UCombatTabUserWidget::AttackFunction(int Cost, int LockedButtonsIndex, int 
 	}
 }
 
-void UCombatTabUserWidget::ItemFunction(int Cost, int LockedButtonsIndex, int FirstClickArrayIndex)
+void UCombatTabUserWidget::ItemFunction(int Cost, int LockedButtonsIndex, int FirstClickArrayIndex, FString ItemUsed)
 {
 	if (PlayerRef->money < Cost && LockedButtons[LockedButtonsIndex] == true)
 	{
@@ -112,7 +112,7 @@ void UCombatTabUserWidget::ItemFunction(int Cost, int LockedButtonsIndex, int Fi
 
 	if (LockedButtons[LockedButtonsIndex] == false && FirstClickArray[FirstClickArrayIndex] == false)
 	{
-		TextLabel->SetText(FText::FromString("Item consumed"));
+		TextLabel->SetText(FText::FromString(ItemUsed));
 		//item consumed function goes here
 	}
 }
@@ -267,7 +267,7 @@ void UCombatTabUserWidget::Attack4ButtonOnClicked()
 
 void UCombatTabUserWidget::Item1ButtonOnClicked()
 {
-	ItemFunction(0, 4, 4);
+	ItemFunction(0, 4, 4, "Item 1 Used");
 	
 	if (LockedButtons[4] == false)
 	{
@@ -277,7 +277,7 @@ void UCombatTabUserWidget::Item1ButtonOnClicked()
 
 void UCombatTabUserWidget::Item2ButtonOnClicked()
 {
-	ItemFunction(2000, 5, 5);
+	ItemFunction(2000, 5, 5, "Item 2 Used");
 	
 	if (LockedButtons[5] == false)
 	{
@@ -287,7 +287,7 @@ void UCombatTabUserWidget::Item2ButtonOnClicked()
 
 void UCombatTabUserWidget::Item3ButtonOnClicked()
 {
-	ItemFunction(5000, 5, 5);
+	ItemFunction(5000, 5, 5, "Item 3 Used");
 
 	if (LockedButtons[5] == false)
 	{
@@ -297,7 +297,7 @@ void UCombatTabUserWidget::Item3ButtonOnClicked()
 
 void UCombatTabUserWidget::Item4ButtonOnClicked()
 {
-	ItemFunction(10000, 6, 6);
+	ItemFunction(10000, 6, 6, "Item 4 Used");
 
 	if (LockedButtons[6] == false)
 	{
