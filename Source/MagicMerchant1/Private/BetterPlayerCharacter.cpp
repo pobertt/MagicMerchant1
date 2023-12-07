@@ -8,7 +8,11 @@ ABetterPlayerCharacter::ABetterPlayerCharacter()
 {
  	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
-	hp = 100;
+
+	FullHp = 100.0f;
+	hp = FullHp;
+	HealthPercentage = 1.0f;
+
 	mp = 100;
 	money = 10000.0f;
 	currency2 = 0.f;
@@ -189,6 +193,54 @@ void ABetterPlayerCharacter::EnemySpawnDelay()
 	GetWorld()->GetTimerManager().ClearTimer(EnemyRespawnTimerHandle);
 }
 
+float ABetterPlayerCharacter::GetHealth()
+{
+	return HealthPercentage;
+}
+
+float ABetterPlayerCharacter::UpdateHealth(float HealthChange)
+{
+	return 0.0f;
+}
+
+FText ABetterPlayerCharacter::GetHealthIntText()
+{
+	int32 HP = FMath::RoundHalfFromZero(HealthPercentage * 100);
+
+	FString HPS = FString::FromInt(HP);
+
+	FString HealthHUD = HPS + FString(TEXT("%"));
+
+	FText HPText = FText::FromString(HealthHUD);
+
+	return HPText;
+}
+
+void ABetterPlayerCharacter::DamageTimer()
+{
+	GetWorldTimerManager().SetTimer(
+		MemberTimerHandle,
+		this,
+		&ABetterPlayerCharacter::SetDamageState,
+		1.5f,
+		false
+	);
+}
+
+void ABetterPlayerCharacter::SetDamageState()
+{
+	bCanBeDamaged = true;
+}
+
+void ABetterPlayerCharacter::RecieveDamage(float dmg)
+{
+	bCanBeDamaged = false;
+
+	UpdateHealth(-dmg);
+
+	DamageTimer();
+}
+
 // Called when the game starts or when spawned
 void ABetterPlayerCharacter::BeginPlay()
 {
@@ -201,6 +253,8 @@ void ABetterPlayerCharacter::BeginPlay()
 void ABetterPlayerCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+
+	MyTimeline.TickTimeline(DeltaTime);
 
 }
 

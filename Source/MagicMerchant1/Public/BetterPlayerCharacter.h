@@ -30,10 +30,24 @@ public:
 	UPROPERTY(VisibleInstanceOnly, Category = "Runtime")
 		class UCombatTabUserWidget* CombatWidget;
 
-	//Player Stats
+	//Health Variables
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = playerStats, meta = (AllowPrivateAccess = "true"))
-		int32 hp;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = HealthStats, meta = (AllowPrivateAccess = "true"))
+		float hp;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = HealthStats, meta = (AllowPrivateAccess = "true"))
+		float FullHp;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = HealthStats, meta = (AllowPrivateAccess = "true"))
+		float HealthPercentage;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = HealthStats, meta = (AllowPrivateAccess = "true"))
+		float PreviousHealth;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = HealthStats, meta = (AllowPrivateAccess = "true"))
+		bool bCanBeDamaged = true;
+
+	//Player Stats
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = playerStats, meta = (AllowPrivateAccess = "true"))
 		int32 mp;
@@ -127,6 +141,35 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = BaseEnemy)
 		void EnemySpawnDelay();
+
+	//Time variables
+
+	FTimeline MyTimeline;
+	float CurveFloatValue;
+	float TimelineValue;
+	FTimerHandle MemberTimerHandle;
+
+	//Health Functions
+
+	UFUNCTION(BlueprintPure, Category = "Health")
+		float GetHealth();
+
+	UFUNCTION(BlueprintPure, Category = "Health")
+		float UpdateHealth(float HealthChange);
+
+	UFUNCTION(BlueprintPure, Category = "Health")
+		FText GetHealthIntText();
+
+	//Damage Player Functions
+
+	UFUNCTION()
+		void DamageTimer();
+
+	UFUNCTION()
+		void SetDamageState();
+
+	UFUNCTION()
+		void RecieveDamage(float dmg);
 
 protected:
 	// Called when the game starts or when spawned
