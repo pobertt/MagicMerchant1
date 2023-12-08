@@ -120,6 +120,7 @@ void ABetterPlayerCharacter::MakeEnemy()
 			default:
 				BaseEnemyRef = Cast<ABaseEnemy>(GetWorld()->SpawnActor<ABaseEnemy>(Location, Rotation, SpawnInfo));
 				GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Yellow, "Base Enemy");
+
 				break;
 			}
 		}
