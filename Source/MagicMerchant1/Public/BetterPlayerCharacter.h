@@ -44,9 +44,6 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = HealthStats, meta = (AllowPrivateAccess = "true"))
 		float PreviousHealth;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = HealthStats, meta = (AllowPrivateAccess = "true"))
-		bool bCanBeDamaged = true;
-
 	//Player Stats
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = playerStats, meta = (AllowPrivateAccess = "true"))

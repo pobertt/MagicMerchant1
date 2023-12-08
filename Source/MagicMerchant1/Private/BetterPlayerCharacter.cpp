@@ -200,7 +200,15 @@ float ABetterPlayerCharacter::GetHealth()
 
 float ABetterPlayerCharacter::UpdateHealth(float HealthChange)
 {
-	return 0.0f;
+	hp += HealthChange;
+
+	hp = FMath::Clamp(hp, 0.0f, FullHp);
+
+	PreviousHealth = HealthPercentage;
+
+	HealthPercentage = hp /FullHp;
+
+	return HealthChange;
 }
 
 FText ABetterPlayerCharacter::GetHealthIntText()
@@ -229,12 +237,12 @@ void ABetterPlayerCharacter::DamageTimer()
 
 void ABetterPlayerCharacter::SetDamageState()
 {
-	bCanBeDamaged = true;
+	//bCanBeDamaged = true;
 }
 
 void ABetterPlayerCharacter::RecieveDamage(float dmg)
 {
-	bCanBeDamaged = false;
+	//bCanBeDamaged = false;
 
 	UpdateHealth(-dmg);
 
