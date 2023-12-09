@@ -6,6 +6,26 @@
 #include "Blueprint/UserWidget.h"
 #include "Blueprint/WidgetLayoutLibrary.h"
 
+AMagicMerchant1GameModeBase::AMagicMerchant1GameModeBase()
+{
+
+}
+
+EGamePlayState AMagicMerchant1GameModeBase::GetCurrentState() const
+{
+	return EGamePlayState();
+}
+
+
+void AMagicMerchant1GameModeBase::SetCurrentState(EGamePlayState NewState)
+{
+
+}
+
+void AMagicMerchant1GameModeBase::HandleNewState(EGamePlayState NewState)
+{
+
+}
 
 
 void AMagicMerchant1GameModeBase::BeginPlay()
@@ -65,7 +85,9 @@ void AMagicMerchant1GameModeBase::BeginPlay()
 	}
 }
 
-
+void AMagicMerchant1GameModeBase::Tick(float DeltaTime)
+{
+}
 
 void AMagicMerchant1GameModeBase::AddCombatWidget()
 {
