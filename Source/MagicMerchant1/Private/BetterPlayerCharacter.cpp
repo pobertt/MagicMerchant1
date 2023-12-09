@@ -8,7 +8,13 @@ ABetterPlayerCharacter::ABetterPlayerCharacter()
 {
  	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
-	hp = 100;
+
+	Health = 100.0f;
+
+	HealthRegen = 0.5f;
+
+	HealthRate = 3.0f;
+
 	mp = 100;
 	money = 10000.0f;
 	currency2 = 0.f;
@@ -18,11 +24,30 @@ ABetterPlayerCharacter::ABetterPlayerCharacter()
 	basicAttackDMG = 10;
 }
 
-//Adding to player stats
-int32 ABetterPlayerCharacter::AddHp()
+void ABetterPlayerCharacter::HealthRegenBar()
 {
-	hp++;
-	return hp;
+	if (Health < 100)
+	{
+		AddHp(0.1f);
+		
+		//Timer is not getting called
+		//Health Regen and Health Rate are useless
+		/*
+		GetWorld()->GetTimerManager().SetTimer(
+			HealthRateTimerHandle,
+			this,
+			&ABetterPlayerCharacter::HealthTimerReset,
+			HealthRate,
+			false);
+		*/
+	}
+}
+
+//Adding to player stats
+float ABetterPlayerCharacter::AddHp(float AddHealth)
+{
+	Health = Health + AddHealth;
+	return Health;
 }
 
 int32 ABetterPlayerCharacter::AddMp()
@@ -52,8 +77,8 @@ int32 ABetterPlayerCharacter::AddLvl()
 //Subtracting from player stats
 int32 ABetterPlayerCharacter::SubHp()
 {
-	hp--;
-	return hp;
+	Health = Health - 20;
+	return Health;
 }
 
 int32 ABetterPlayerCharacter::SubMp()
@@ -158,6 +183,8 @@ void ABetterPlayerCharacter::EnemyRespawn()
 		//If enemy is dead
 		if (BaseEnemyRef->isAlive == false)
 		{
+			bEnemyRespawn = true;
+
 			//Setting things back to original value
 			InitBaseEnemy();
 
@@ -183,18 +210,25 @@ void ABetterPlayerCharacter::InitBaseEnemy()
 	BaseEnemyRef->isAlive = false;
 }
 
+//Not in use
 void ABetterPlayerCharacter::EnemySpawnDelay()
 {
 	bEnemyRespawn = true;
 	GetWorld()->GetTimerManager().ClearTimer(EnemyRespawnTimerHandle);
 }
 
+void ABetterPlayerCharacter::HealthTimerReset()
+{
+	GetWorld()->GetTimerManager().ClearTimer(HealthRateTimerHandle);
+	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Yellow, "Health Timer Reset");
+}
+
 // Called when the game starts or when spawned
 void ABetterPlayerCharacter::BeginPlay()
 {
 	Super::BeginPlay();
-	SayHey();
 
+	SayHey();
 }
 
 // Called every frame
@@ -202,6 +236,7 @@ void ABetterPlayerCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
+	HealthRegenBar();
 }
 
 // Called to bind functionality to input

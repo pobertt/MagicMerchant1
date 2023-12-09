@@ -30,10 +30,20 @@ public:
 	UPROPERTY(VisibleInstanceOnly, Category = "Runtime")
 		class UCombatTabUserWidget* CombatWidget;
 
-	//Player Stats
+	//Health Stats
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = playerStats, meta = (AllowPrivateAccess = "true"))
-		int32 hp;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = HealthStats, meta = (AllowPrivateAccess = "true"))
+		float Health;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = HealthStats, meta = (AllowPrivateAccess = "true"))
+		float HealthRegen;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = HealthStats, meta = (AllowPrivateAccess = "true"))
+		float HealthRate;
+
+	FTimerHandle HealthRateTimerHandle;
+
+	//Player Stats
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = playerStats, meta = (AllowPrivateAccess = "true"))
 		int32 mp;
@@ -72,8 +82,11 @@ public:
 
 	//Declaring functions to add to player stats
 
+	UFUNCTION(BlueprintCallable, Category = HealthStats)
+		void HealthRegenBar();
+
 	UFUNCTION(BlueprintCallable, Category = playerStats)
-		int32 AddHp();
+		float AddHp(float AddHealth);
 
 	UFUNCTION(BlueprintCallable, Category = playerStats)
 		int32 AddMp();
@@ -127,6 +140,11 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = BaseEnemy)
 		void EnemySpawnDelay();
+
+	//Timer Functions
+
+	UFUNCTION()
+		void HealthTimerReset();
 
 protected:
 	// Called when the game starts or when spawned
