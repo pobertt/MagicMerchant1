@@ -176,6 +176,7 @@ void ABetterPlayerCharacter::EnemyKilled()
 		//calling enemy respawn
 		EnemyRespawn();
 		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Yellow, "Enemy Made");
+
 }
 
 void ABetterPlayerCharacter::EnemyRespawn()
