@@ -13,46 +13,23 @@ AMagicMerchant1GameModeBase::AMagicMerchant1GameModeBase()
 
 EGamePlayState AMagicMerchant1GameModeBase::GetCurrentState() const
 {
-	return CurrentState;
+	return EGamePlayState();
 }
 
 
 void AMagicMerchant1GameModeBase::SetCurrentState(EGamePlayState NewState)
 {
-	CurrentState = NewState;
-	HandleNewState(CurrentState);
+
 }
 
 void AMagicMerchant1GameModeBase::HandleNewState(EGamePlayState NewState)
 {
-	switch (NewState)
-	{
-		case EGamePlayState::EPlaying:
-		{
-			//do nothing
-			break;
-		}
-		case EGamePlayState::EGameOver:
-		{
-			UGameplayStatics::OpenLevel(this, FName(*GetWorld()->GetName()), false);
-			break;
-		}
-		default:
-		case EGamePlayState::EUnknown:
-		{
-			//do nothing
-			break;
-		}
-	}
+
 }
 
 
 void AMagicMerchant1GameModeBase::BeginPlay()
 {
-	Super::BeginPlay();
-
-	SetCurrentState(EGamePlayState::EPlaying);
-
 	//Creating CombatWidget and checking if it exists	
 	if (IsValid(WidgetClass))
 	{
@@ -110,17 +87,6 @@ void AMagicMerchant1GameModeBase::BeginPlay()
 
 void AMagicMerchant1GameModeBase::Tick(float DeltaTime)
 {
-	Super::Tick(DeltaTime);
-
-	GetWorld()->GetMapName();
-
-	if (PlayerRef)
-	{
-		if (FMath::IsNearlyZero(PlayerRef->GetHealth(), 0.001f))
-		{
-			SetCurrentState(EGamePlayState::EGameOver);
-		}
-	}
 }
 
 void AMagicMerchant1GameModeBase::AddCombatWidget()

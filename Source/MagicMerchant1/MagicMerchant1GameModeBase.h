@@ -23,16 +23,16 @@ class MAGICMERCHANT1_API AMagicMerchant1GameModeBase : public AGameModeBase
 {
 	GENERATED_BODY()
 
-public:
-	AMagicMerchant1GameModeBase();
-
 	//Base Enemy Reference
 	UPROPERTY()
-		class ABaseEnemy* BaseEnemyRef;
+	class ABaseEnemy* BaseEnemyRef;
 
 	//Player Reference
 	UPROPERTY()
-		class ABetterPlayerCharacter* PlayerRef;
+	class ABetterPlayerCharacter* PlayerRef;
+
+public:
+	AMagicMerchant1GameModeBase();
 
 	//Returns the current playing state
 	UFUNCTION(BlueprintPure, Category = "Health")
