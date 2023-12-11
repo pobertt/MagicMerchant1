@@ -75,9 +75,9 @@ int32 ABetterPlayerCharacter::AddLvl()
 }
 
 //Subtracting from player stats
-int32 ABetterPlayerCharacter::SubHp()
+float ABetterPlayerCharacter::SubHp()
 {
-	Health = Health - 20;
+	if (Health >= 20.f) Health = Health - 20;
 	return Health;
 }
 

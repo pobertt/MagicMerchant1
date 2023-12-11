@@ -103,7 +103,7 @@ public:
 	//Declaring functions to subtract from player stats
 
 	UFUNCTION(BlueprintCallable, Category = playerStats)
-		int32 SubHp();
+		float SubHp();
 
 	UFUNCTION(BlueprintCallable, Category = playerStats)
 		int32 SubMp();
