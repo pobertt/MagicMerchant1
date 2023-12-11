@@ -183,7 +183,10 @@ private:
 
 	class ABaseEnemy* BaseEnemyRef;
 
-	TArray<bool> LockedButtons;
+	class UMyGameInstance* GameInstanceRef;
 
-	TArray<bool> FirstClickArray;
+
+	//TArray<bool> LockedButtons;
+
+	//TArray<bool> FirstClickArray;
 };

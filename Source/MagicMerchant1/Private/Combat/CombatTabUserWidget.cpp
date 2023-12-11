@@ -8,11 +8,15 @@
 
 void UCombatTabUserWidget::NativeConstruct()
 {
+	/*
 	for (int i = 0; i < 9; i++)
 	{
 		LockedButtons.Push(true);
 		FirstClickArray.Push(true);
 	}
+	*/
+
+
 	if (Attack1Button && Attack2Button && Attack3Button && Attack4Button && Item1Button && Item2Button && Item3Button && Item4Button && BackButton && IdleButton )
 	{
 		//delegate calls, function will be called from click
@@ -39,6 +43,8 @@ void UCombatTabUserWidget::NativeConstruct()
 
 	GamemodeRef = Cast<AMagicMerchant1GameModeBase>(GetWorld()->GetAuthGameMode());
 	PlayerRef = Cast<ABetterPlayerCharacter>(GetWorld()->GetFirstPlayerController()->GetPawn());
+	GameInstanceRef = Cast<UMyGameInstance>(GetWorld()->GetGameInstance());
+	
 
 	PlayerRef->MakeEnemy();
 	BaseEnemyRef = PlayerRef->BaseEnemyRef;
@@ -49,32 +55,33 @@ void UCombatTabUserWidget::NativeConstruct()
 void UCombatTabUserWidget::AttackFunction(int Cost, int LockedButtonsIndex, int FirstClickArrayIndex, int Dmg, FString AttackUsed)
 {
 	//Checks the cost of the button and whether the button is in the locked state
-	if (PlayerRef->money < Cost && LockedButtons[LockedButtonsIndex] == true)
+	if (PlayerRef->money < Cost && GameInstanceRef->LockedButtons[LockedButtonsIndex] == true)
 	{
 		//If true then say button is LOCKED
-		TextLabel->SetText(FText::FromString("LOCKED"));
+		// TextLabel->SetText(FText::FromString("LOCKED"));
 	}
 
 	//Move onto this statemnent if player has enough money for the button 
 	//(will always purchase if player has enough money anyways)
-	else if (FirstClickArray[FirstClickArrayIndex] == true) {
+	else if (GameInstanceRef->FirstClickArray[FirstClickArrayIndex] == true) {
 
 		//Unlock's the button
-		LockedButtons[LockedButtonsIndex] = false;
+		GameInstanceRef->LockedButtons[LockedButtonsIndex] = false;
 
 		//Minusing the cost of the button from player money
 		PlayerRef->money = PlayerRef->SubMoney(Cost);
 
 		//Output text saying it is purchased
 		TextLabel->SetText(FText::FromString("Purchased"));
+		GameInstanceRef->ButtonText[FirstClickArrayIndex] = "Attack " + FString::FormatAsNumber(FirstClickArrayIndex + 1);
 
 		//First Click has been consumed
-		FirstClickArray[FirstClickArrayIndex] = false;
+		GameInstanceRef->FirstClickArray[FirstClickArrayIndex] = false;
 		return;
 	}
 
 	//If button is unlocked and the first click (purchase) is consumed 
-	if (LockedButtons[LockedButtonsIndex] == false && FirstClickArray[FirstClickArrayIndex] == false)
+	if (GameInstanceRef->LockedButtons[LockedButtonsIndex] == false && GameInstanceRef->FirstClickArray[FirstClickArrayIndex] == false)
 	{
 		//Checking if HP is greater than 0
 		if (BaseEnemyRef->CurrentHP > 0)
@@ -96,21 +103,21 @@ void UCombatTabUserWidget::AttackFunction(int Cost, int LockedButtonsIndex, int 
 
 void UCombatTabUserWidget::ItemFunction(int Cost, int LockedButtonsIndex, int FirstClickArrayIndex, FString ItemUsed)
 {
-	if (PlayerRef->money < Cost && LockedButtons[LockedButtonsIndex] == true)
+	if (PlayerRef->money < Cost && GameInstanceRef->LockedButtons[LockedButtonsIndex] == true)
 	{
 		TextLabel->SetText(FText::FromString("LOCKED"));
 	}
-	else if (FirstClickArray[FirstClickArrayIndex] == true) {
-		LockedButtons[LockedButtonsIndex] = false;
+	else if (GameInstanceRef->FirstClickArray[FirstClickArrayIndex] == true) {
+		GameInstanceRef->LockedButtons[LockedButtonsIndex] = false;
 
 		PlayerRef->money = PlayerRef->SubMoney(Cost);
 		TextLabel->SetText(FText::FromString("Purchased"));
 
-		FirstClickArray[FirstClickArrayIndex] = false;
+		GameInstanceRef->FirstClickArray[FirstClickArrayIndex] = false;
 		return;
 	}
 
-	if (LockedButtons[LockedButtonsIndex] == false && FirstClickArray[FirstClickArrayIndex] == false)
+	if (GameInstanceRef->LockedButtons[LockedButtonsIndex] == false && GameInstanceRef->FirstClickArray[FirstClickArrayIndex] == false)
 	{
 		TextLabel->SetText(FText::FromString(ItemUsed));
 		//item consumed function goes here
@@ -129,10 +136,11 @@ void UCombatTabUserWidget::Attack1ButtonOnClicked()
 		AttackFunction(0, 0, 0, 5, "Attack 1 Used");
 		
 		//If the button is unlocked 
-		if (LockedButtons[0] == false)
+		if (GameInstanceRef->LockedButtons[0] == false)
 		{
 			//Set the all button text to on cooldown
 			CooldownText();
+			// GameInstanceRef->ButtonText[0] = "Cooldown";
 
 			//This all seems redundant currently but it helped me understand delegates 
 			//Seems redudant as if i am setting them all to go cooldown and then setting them back to their original text, 
@@ -172,7 +180,7 @@ void UCombatTabUserWidget::Attack2ButtonOnClicked()
 			bCanClick = false;
 			AttackFunction(1000, 1, 1, 10, "Attack 2 Used");
 
-			if (LockedButtons[1] == false)
+			if (GameInstanceRef->LockedButtons[1] == false)
 			{
 				CooldownText();
 
@@ -205,7 +213,7 @@ void UCombatTabUserWidget::Attack3ButtonOnClicked()
 			bCanClick = false;
 			AttackFunction(2500, 2, 2, 25, "Attack 3 Used");
 
-			if (LockedButtons[2] == false)
+			if (GameInstanceRef->LockedButtons[2] == false)
 			{
 				CooldownText();
 
@@ -239,7 +247,7 @@ void UCombatTabUserWidget::Attack4ButtonOnClicked()
 			bCanClick = false;
 			AttackFunction(5000, 3, 3, 50, "Attack 4 Used");
 
-			if (LockedButtons[3] == false)
+			if (GameInstanceRef->LockedButtons[3] == false)
 			{
 				CooldownText();
 
@@ -269,7 +277,7 @@ void UCombatTabUserWidget::Item1ButtonOnClicked()
 {
 	ItemFunction(0, 4, 4, "Item 1 Used");
 	
-	if (LockedButtons[4] == false)
+	if (GameInstanceRef->LockedButtons[4] == false)
 	{
 		Item1TextBlock->SetText(FText::FromString("Item 1"));
 	}
@@ -279,7 +287,7 @@ void UCombatTabUserWidget::Item2ButtonOnClicked()
 {
 	ItemFunction(2000, 5, 5, "Item 2 Used");
 	
-	if (LockedButtons[5] == false)
+	if (GameInstanceRef->LockedButtons[5] == false)
 	{
 		Item2TextBlock->SetText(FText::FromString("Item 2"));
 	}
@@ -289,7 +297,7 @@ void UCombatTabUserWidget::Item3ButtonOnClicked()
 {
 	ItemFunction(5000, 5, 5, "Item 3 Used");
 
-	if (LockedButtons[5] == false)
+	if (GameInstanceRef->LockedButtons[5] == false)
 	{
 		Item3TextBlock->SetText(FText::FromString("Item 3"));
 	}
@@ -299,7 +307,7 @@ void UCombatTabUserWidget::Item4ButtonOnClicked()
 {
 	ItemFunction(10000, 6, 6, "Item 4 Used");
 
-	if (LockedButtons[6] == false)
+	if (GameInstanceRef->LockedButtons[6] == false)
 	{
 		Item4TextBlock->SetText(FText::FromString("Item 4"));
 	}
@@ -312,22 +320,22 @@ void UCombatTabUserWidget::ButtonTimerReset()
 	bCanClick = true;
 	GetWorld()->GetTimerManager().ClearTimer(ButtonPressTimerHandle);
 	
-	if (LockedButtons[0] == false)
+	if (GameInstanceRef->LockedButtons[0] == false)
 	{
 		Attack1TextBlock->SetText(FText::FromString("Attack 1"));
 	}
 
-	if (LockedButtons[1] == false)
+	if (GameInstanceRef->LockedButtons[1] == false)
 	{
 		Attack2TextBlock->SetText(FText::FromString("Attack 2"));
 	}
 
-	if (LockedButtons[2] == false)
+	if (GameInstanceRef->LockedButtons[2] == false)
 	{
 		Attack3TextBlock->SetText(FText::FromString("Attack 3"));
 	}
 
-	if (LockedButtons[3] == false)
+	if (GameInstanceRef->LockedButtons[3] == false)
 	{
 		Attack4TextBlock->SetText(FText::FromString("Attack 4"));
 	}
@@ -407,22 +415,22 @@ void UCombatTabUserWidget::IdleButtonOnClicked()
 
 void UCombatTabUserWidget::CooldownText()
 {
-	if (LockedButtons[0] == false)
+	if (GameInstanceRef->LockedButtons[0] == false)
 	{
 		Attack1TextBlock->SetText(FText::FromString("cooldown"));
 	}
 
-	if (LockedButtons[1] == false)
+	if (GameInstanceRef->LockedButtons[1] == false)
 	{
 		Attack2TextBlock->SetText(FText::FromString("cooldown"));
 	}
 
-	if (LockedButtons[2] == false)
+	if (GameInstanceRef->LockedButtons[2] == false)
 	{
 		Attack3TextBlock->SetText(FText::FromString("cooldown"));
 	}
 
-	if (LockedButtons[3] == false)
+	if (GameInstanceRef->LockedButtons[3] == false)
 	{
 		Attack4TextBlock->SetText(FText::FromString("cooldown"));
 	}

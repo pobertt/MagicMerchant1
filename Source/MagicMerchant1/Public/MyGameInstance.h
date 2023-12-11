@@ -14,5 +14,55 @@ class MAGICMERCHANT1_API UMyGameInstance : public UGameInstance
 {
 	GENERATED_BODY()
 
+public:
+
+	//Constructor 
+	UMyGameInstance();
+
+	//References 
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+	class AMagicMerchant1GameModeBase* GamemodeRef;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+	class ABetterPlayerCharacter* PlayerRef;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+	class ABaseEnemy* BaseEnemyRef;
+
+	TArray<bool> LockedButtons;
+
+	TArray<bool> FirstClickArray;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+	TArray<FString> ButtonText;
+private:
+
+	int32 NumButtons;
 
 };
+
+/*
+Native construct for Widget
+{
+	Get reference to Game logic;
+	AttackButtons.GetWhatIsUnlocked(GameLogicRef.Unlocks());
+	Enemy Alive ?
+}
+
+Game Logic Class "GameInstance Class"
+
+properties:
+Player Reference;
+Enemy Reference :
+Player Unlocks;
+Score ? ;
+
+initializer function()
+*/
+
+//make enemy function?
+//or maybe make enemy function in enemy and call it here on creation
+
+//Locked button states and general unlocking states
+
+//maybe item and attack function in here so it is called when idle is on
