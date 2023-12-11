@@ -34,13 +34,6 @@ class MAGICMERCHANT1_API AMagicMerchant1GameModeBase : public AGameModeBase
 public:
 	AMagicMerchant1GameModeBase();
 
-	//Returns the current playing state
-	UFUNCTION(BlueprintPure, Category = "Health")
-	EGamePlayState GetCurrentState() const;
-
-	//Sets a new playing state
-	void SetCurrentState(EGamePlayState NewState);
-
 	UFUNCTION(BlueprintCallable)
 	void AddCombatWidget();
 
@@ -66,9 +59,6 @@ public:
 protected:
 	//Keeps track of the current playing state
 	EGamePlayState CurrentState;
-
-	//Handle any function calls that rely upon changing the playing state of our game
-	void HandleNewState(EGamePlayState NewState);
 
 	UPROPERTY(EditAnywhere, Category = "Class Types")
 	//specifying a base class in c++ and assigning a specific class inside of blueprints 

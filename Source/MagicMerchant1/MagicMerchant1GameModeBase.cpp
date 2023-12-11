@@ -11,23 +11,6 @@ AMagicMerchant1GameModeBase::AMagicMerchant1GameModeBase()
 
 }
 
-EGamePlayState AMagicMerchant1GameModeBase::GetCurrentState() const
-{
-	return EGamePlayState();
-}
-
-
-void AMagicMerchant1GameModeBase::SetCurrentState(EGamePlayState NewState)
-{
-
-}
-
-void AMagicMerchant1GameModeBase::HandleNewState(EGamePlayState NewState)
-{
-
-}
-
-
 void AMagicMerchant1GameModeBase::BeginPlay()
 {
 	//Creating CombatWidget and checking if it exists	
