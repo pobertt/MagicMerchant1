@@ -35,6 +35,9 @@ public:
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	TArray<FString> ButtonText;
+
+	UPROPERTY()
+		int32 InitialCost;
 private:
 
 	int32 NumButtons;

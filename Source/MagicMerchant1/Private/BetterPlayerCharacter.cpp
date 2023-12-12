@@ -107,7 +107,7 @@ int32 ABetterPlayerCharacter::SubLvl()
 
 void ABetterPlayerCharacter::MakeEnemy()
 {
-
+	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Yellow, "Enemy Made (MakeEnemyFunc)");
 	if (bEnemyRespawn == true)
 	{
 		bEnemyRespawn = false;
@@ -117,37 +117,43 @@ void ABetterPlayerCharacter::MakeEnemy()
 		FRotator Rotation(0, 0, 0);
 		FActorSpawnParameters SpawnInfo;
 
-		if (!BaseEnemyRef->IsValidLowLevel())
-		{
-			//Creating new reference to Enemy
-			
-			//Spawning a random enemy 
-			int8 Num = FMath::RandRange(1, 3);
+		
+		//Spawning a random enemy 
+		int8 Num = FMath::RandRange(1, 3);
 
-			switch (Num)
-			{
-			case 1:
-				BaseEnemyRef = Cast<ABaseEnemy>(GetWorld()->SpawnActor<AFireTypeEnemy>(Location, Rotation, SpawnInfo));
-				GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, "1");
-				break;
-			case 2:
-				BaseEnemyRef = Cast<ABaseEnemy>(GetWorld()->SpawnActor<AGrassTypeEnemy>(Location, Rotation, SpawnInfo));
-				GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Green, "2");
-				break;
-			case 3:
-				BaseEnemyRef = Cast<ABaseEnemy>(GetWorld()->SpawnActor<AWaterTypeEnemy>(Location, Rotation, SpawnInfo));
-				GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Blue, "3");
-				break;
-			default:
-				BaseEnemyRef = Cast<ABaseEnemy>(GetWorld()->SpawnActor<ABaseEnemy>(Location, Rotation, SpawnInfo));
-				GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Yellow, "Base Enemy");
-				break;
-			}
+		switch (Num)
+		{
+		case 1:
+		{
+			// AFireTypeEnemy* FireTypeEnemy = (GetWorld()->SpawnActor<AFireTypeEnemy>(Location, Rotation, SpawnInfo));
+			BaseEnemyRef = (GetWorld()->SpawnActor<AFireTypeEnemy>(Location, Rotation, SpawnInfo));
+			GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, "1");
+		}
+		break;
+		case 2:
+		{
+			// AGrassTypeEnemy* GrassTypeEnemy = (GetWorld()->SpawnActor<AGrassTypeEnemy>(Location, Rotation, SpawnInfo));
+			BaseEnemyRef = (GetWorld()->SpawnActor<AGrassTypeEnemy>(Location, Rotation, SpawnInfo));
+			GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Green, "2");
+		}
+		break;
+		case 3:
+		{
+			// AWaterTypeEnemy* WaterTypeEnemy = (GetWorld()->SpawnActor<AWaterTypeEnemy>(Location, Rotation, SpawnInfo));
+			BaseEnemyRef = (GetWorld()->SpawnActor<AWaterTypeEnemy>(Location, Rotation, SpawnInfo));
+			GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Blue, "3");
+		}
+		break;
+		default:
+		{
+			BaseEnemyRef = Cast<ABaseEnemy>(GetWorld()->SpawnActor<ABaseEnemy>(Location, Rotation, SpawnInfo));
+			GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Yellow, "Base Enemy");
+		}
+		break;
 		}
 
 		//Setting isAlive to true when made
 		BaseEnemyRef->isAlive = true;
-		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Yellow, "Enemy Made");
 	}
 }
 
@@ -172,26 +178,29 @@ void ABetterPlayerCharacter::EnemyKilled()
 
 		//Destroying the enemy when killed (so we dont have overlapping enemy spawns, only want 1 enemy at a time)
 		BaseEnemyRef->Destroy();
+		
+		bEnemyRespawn = true;
 
-		//calling enemy respawn
-		EnemyRespawn();
-		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Yellow, "Enemy Made");
-
-}
-
-void ABetterPlayerCharacter::EnemyRespawn()
-{
 		//If enemy is dead
 		if (BaseEnemyRef->isAlive == false)
 		{
-			bEnemyRespawn = true;
-
-			//Setting things back to original value
+			//Reinitialising values
 			InitBaseEnemy();
 
 			//Create a new enemy 
 			MakeEnemy();
-		}	
+			GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Yellow, "Enemy Made (KilledFunc)");
+		}
+		//calling enemy respawn
+		//EnemyRespawn();
+
+}
+
+//Not in use
+void ABetterPlayerCharacter::EnemySpawnDelay()
+{
+	bEnemyRespawn = true;
+	GetWorld()->GetTimerManager().ClearTimer(EnemyRespawnTimerHandle);
 }
 
 void ABetterPlayerCharacter::InitBaseEnemy()
@@ -207,15 +216,6 @@ void ABetterPlayerCharacter::InitBaseEnemy()
 	BaseEnemyRef->DefenseMultiplier = BaseEnemyRef->DefenseMultiplier;
 
 	BaseEnemyRef->Value = 10;
-
-	BaseEnemyRef->isAlive = false;
-}
-
-//Not in use
-void ABetterPlayerCharacter::EnemySpawnDelay()
-{
-	bEnemyRespawn = true;
-	GetWorld()->GetTimerManager().ClearTimer(EnemyRespawnTimerHandle);
 }
 
 void ABetterPlayerCharacter::HealthTimerReset()

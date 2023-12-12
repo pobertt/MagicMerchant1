@@ -133,13 +133,10 @@ public:
 		void EnemyKilled();
 
 	UFUNCTION(BlueprintCallable, Category = BaseEnemy)
-		void EnemyRespawn();
+		void EnemySpawnDelay();
 
 	UFUNCTION(BlueprintCallable, Category = BaseEnemy)
 		void InitBaseEnemy();
-
-	UFUNCTION(BlueprintCallable, Category = BaseEnemy)
-		void EnemySpawnDelay();
 
 	//Timer Functions
 

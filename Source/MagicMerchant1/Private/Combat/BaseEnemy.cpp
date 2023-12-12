@@ -61,6 +61,7 @@ void ABaseEnemy::Tick(float DeltaTime)
 AFireTypeEnemy::AFireTypeEnemy()
 {
 	SetType("Fire");
+
 }
 
 AGrassTypeEnemy::AGrassTypeEnemy()

@@ -58,9 +58,8 @@ void UCombatTabUserWidget::AttackFunction(int Cost, int LockedButtonsIndex, int 
 	if (PlayerRef->money < Cost && GameInstanceRef->LockedButtons[LockedButtonsIndex] == true)
 	{
 		//If true then say button is LOCKED
-		// TextLabel->SetText(FText::FromString("LOCKED"));
+		TextLabel->SetText(FText::FromString("LOCKED"));
 	}
-
 	//Move onto this statemnent if player has enough money for the button 
 	//(will always purchase if player has enough money anyways)
 	else if (GameInstanceRef->FirstClickArray[FirstClickArrayIndex] == true) {
@@ -112,6 +111,8 @@ void UCombatTabUserWidget::ItemFunction(int Cost, int LockedButtonsIndex, int Fi
 
 		PlayerRef->money = PlayerRef->SubMoney(Cost);
 		TextLabel->SetText(FText::FromString("Purchased"));
+
+		GameInstanceRef->ButtonText[FirstClickArrayIndex] = "Item " + FString::FormatAsNumber(FirstClickArrayIndex - 3);
 
 		GameInstanceRef->FirstClickArray[FirstClickArrayIndex] = false;
 		return;
@@ -279,7 +280,7 @@ void UCombatTabUserWidget::Item1ButtonOnClicked()
 	
 	if (GameInstanceRef->LockedButtons[4] == false)
 	{
-		Item1TextBlock->SetText(FText::FromString("Item 1"));
+		//Item1TextBlock->SetText(FText::FromString("Item 1"));
 	}
 }
 
@@ -289,27 +290,27 @@ void UCombatTabUserWidget::Item2ButtonOnClicked()
 	
 	if (GameInstanceRef->LockedButtons[5] == false)
 	{
-		Item2TextBlock->SetText(FText::FromString("Item 2"));
+		//Item2TextBlock->SetText(FText::FromString("Item 2"));
 	}
 }
 
 void UCombatTabUserWidget::Item3ButtonOnClicked()
 {
-	ItemFunction(5000, 5, 5, "Item 3 Used");
+	ItemFunction(5000, 6, 6, "Item 3 Used");
 
-	if (GameInstanceRef->LockedButtons[5] == false)
+	if (GameInstanceRef->LockedButtons[6] == false)
 	{
-		Item3TextBlock->SetText(FText::FromString("Item 3"));
+		//Item3TextBlock->SetText(FText::FromString("Item 3"));
 	}
 }
 
 void UCombatTabUserWidget::Item4ButtonOnClicked()
 {
-	ItemFunction(10000, 6, 6, "Item 4 Used");
+	ItemFunction(10000, 7, 7, "Item 4 Used");
 
-	if (GameInstanceRef->LockedButtons[6] == false)
+	if (GameInstanceRef->LockedButtons[7] == false)
 	{
-		Item4TextBlock->SetText(FText::FromString("Item 4"));
+		//Item4TextBlock->SetText(FText::FromString("Item 4"));
 	}
 }
 
