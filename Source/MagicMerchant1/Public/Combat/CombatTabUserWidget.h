@@ -21,7 +21,7 @@ class MAGICMERCHANT1_API UCombatTabUserWidget : public UUserWidget
 {
 	GENERATED_BODY()
 	
-protected:
+public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = CombatWidgetVariables, meta = (AllowPrivateAccess = "true"))
 		bool Idle = false;

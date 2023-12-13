@@ -151,7 +151,6 @@ void ABetterPlayerCharacter::MakeEnemy()
 		}
 		break;
 		}
-
 		//Setting isAlive to true when made
 		BaseEnemyRef->isAlive = true;
 	}
@@ -166,6 +165,13 @@ void ABetterPlayerCharacter::AttackEnemy(int Dmg)
 
 	//Clamp??
 	BaseEnemyRef->CurrentHP = FMath::Clamp(MyFloat, 0.0f, BaseEnemyRef->MaxHP);
+
+	if (BaseEnemyRef->CurrentHP == 0)
+	{
+		//Kill the enemy if health is 0
+		EnemyKilled();
+		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Yellow, "Enemy Killed");
+	}
 }
 
 void ABetterPlayerCharacter::EnemyKilled()
@@ -187,8 +193,14 @@ void ABetterPlayerCharacter::EnemyKilled()
 			//Reinitialising values
 			InitBaseEnemy();
 
+			GetWorld()->GetTimerManager().SetTimer(
+				EnemyRespawnTimerHandle,
+				this,
+				&ABetterPlayerCharacter::MakeEnemy,
+				3.0f,
+				false);
+
 			//Create a new enemy 
-			MakeEnemy();
 			GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Yellow, "Enemy Made (KilledFunc)");
 		}
 		//calling enemy respawn
@@ -216,6 +228,8 @@ void ABetterPlayerCharacter::InitBaseEnemy()
 	BaseEnemyRef->DefenseMultiplier = BaseEnemyRef->DefenseMultiplier;
 
 	BaseEnemyRef->Value = 10;
+
+	BaseEnemyRef->isAlive = false;
 }
 
 void ABetterPlayerCharacter::HealthTimerReset()

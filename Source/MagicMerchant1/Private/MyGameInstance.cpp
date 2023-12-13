@@ -4,6 +4,19 @@
 UMyGameInstance::UMyGameInstance() : NumButtons(9), InitialCost(0)
 {
 
+	//GamemodeRef = Cast<AMagicMerchant1GameModeBase>(GetWorld()->GetAuthGameMode());
+
+	/*
+	if (GamemodeRef->CombatWidget->Idle == true)
+	{
+		GamemodeRef->CombatWidget->IdleButtonTextBlock->SetText(FText::FromString("Idle: Off"));
+	}
+	else if (GamemodeRef->CombatWidget->Idle == false)
+	{
+		GamemodeRef->CombatWidget->IdleButtonTextBlock->SetText(FText::FromString("Idle: On"));
+	}
+	*/
+
 	for (int i = 0; i < NumButtons; i++)
 	{
 		LockedButtons.Push(true);
@@ -25,7 +38,7 @@ UMyGameInstance::UMyGameInstance() : NumButtons(9), InitialCost(0)
 		}
 		else if (i == 3)
 		{
-			InitialCost = 0;
+			InitialCost = 1000;
 		}
 		else if (i == 4)
 		{

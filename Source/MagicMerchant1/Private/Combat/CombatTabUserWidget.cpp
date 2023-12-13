@@ -92,10 +92,8 @@ void UCombatTabUserWidget::AttackFunction(int Cost, int LockedButtonsIndex, int 
 		}
 		else if (BaseEnemyRef->CurrentHP == 0)
 		{
-			//Kill the enemy if health is 0
-			PlayerRef->EnemyKilled();
 			TextLabel->SetText(FText::FromString("Enemy Killed"));
-			GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Yellow, "Enemy Killed");
+			EnemyHPText->SetText(FText::AsNumber(BaseEnemyRef->CurrentHP));
 		}
 	}
 }
@@ -134,7 +132,7 @@ void UCombatTabUserWidget::Attack1ButtonOnClicked()
 		bCanClick = false;
 
 		//Calling the Attack Function
-		AttackFunction(0, 0, 0, 5, "Attack 1 Used");
+		AttackFunction(0, 0, 0, 99 , "Attack 1 Used");
 		
 		//If the button is unlocked 
 		if (GameInstanceRef->LockedButtons[0] == false)
@@ -174,7 +172,7 @@ void UCombatTabUserWidget::Attack1ButtonOnClicked()
 
 void UCombatTabUserWidget::Attack2ButtonOnClicked()
 {
-	if (Idle == false) 
+	if (Idle == false)
 	{
 		if (bCanClick == true)
 		{
@@ -276,7 +274,7 @@ void UCombatTabUserWidget::Attack4ButtonOnClicked()
 
 void UCombatTabUserWidget::Item1ButtonOnClicked()
 {
-	ItemFunction(0, 4, 4, "Item 1 Used");
+	ItemFunction(1000, 4, 4, "Item 1 Used");
 	
 	if (GameInstanceRef->LockedButtons[4] == false)
 	{

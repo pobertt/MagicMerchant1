@@ -23,7 +23,7 @@ public:
 	ABetterPlayerCharacter();
 
 	//Base Enemy Reference
-	UPROPERTY()
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	class ABaseEnemy* BaseEnemyRef;
 
 	//Combat Widget Reference

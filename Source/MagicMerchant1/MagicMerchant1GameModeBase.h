@@ -23,6 +23,8 @@ class MAGICMERCHANT1_API AMagicMerchant1GameModeBase : public AGameModeBase
 {
 	GENERATED_BODY()
 
+public:
+
 	//Base Enemy Reference
 	UPROPERTY()
 	class ABaseEnemy* BaseEnemyRef;
@@ -31,7 +33,10 @@ class MAGICMERCHANT1_API AMagicMerchant1GameModeBase : public AGameModeBase
 	UPROPERTY()
 	class ABetterPlayerCharacter* PlayerRef;
 
-public:
+	//Combat Widget Reference
+	UPROPERTY(VisibleInstanceOnly, Category = "Runtime")
+	class UCombatTabUserWidget* CombatWidget;
+
 	AMagicMerchant1GameModeBase();
 
 	UFUNCTION(BlueprintCallable)
@@ -68,7 +73,4 @@ protected:
 	//specifying a base class in c++ and assigning a specific class inside of blueprints 
 	TSubclassOf<UUserWidget> MainUIClass;
 
-	//Combat Widget Reference
-	UPROPERTY(VisibleInstanceOnly, Category = "Runtime")
-	class UCombatTabUserWidget* CombatWidget;
 };

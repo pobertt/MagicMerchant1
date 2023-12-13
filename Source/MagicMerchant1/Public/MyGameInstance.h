@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "MagicMerchant1\MagicMerchant1GameModeBase.h"
 #include "Engine/GameInstance.h"
 #include "MyGameInstance.generated.h"
 
@@ -20,6 +21,7 @@ public:
 	UMyGameInstance();
 
 	//References 
+
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	class AMagicMerchant1GameModeBase* GamemodeRef;
 
@@ -28,6 +30,10 @@ public:
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	class ABaseEnemy* BaseEnemyRef;
+
+	//Combat Widget Reference
+	UPROPERTY(VisibleInstanceOnly, Category = "Runtime")
+	class UCombatTabUserWidget* CombatWidget;
 
 	TArray<bool> LockedButtons;
 
@@ -38,6 +44,7 @@ public:
 
 	UPROPERTY()
 		int32 InitialCost;
+
 private:
 
 	int32 NumButtons;
