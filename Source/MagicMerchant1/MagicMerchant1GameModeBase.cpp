@@ -18,16 +18,6 @@ void AMagicMerchant1GameModeBase::BeginPlay()
 	{
 		//Creating CombatWidget - Cast 
 		CombatWidget = Cast<UCombatTabUserWidget>(CreateWidget(GetWorld(), WidgetClass));
-	
-		/*
-		* 
-		//Grabbing reference to main ui blueprint
-		static ConstructorHelpers::FClassFinder<UUserWidget> MainUI(TEXT("/Game/UserInterface/WBP_UI.WBP_UI_C"));
-		
-		UBlueprintGeneratedClass* MainUI = Cast<UBlueprintGeneratedClass>(UUserWidget::StaticClass());
-
-		UBlueprint* MainUIBP = Cast<UBlueprint>(MainUI->ClassGeneratedBy);
-		*/
 
 		/*
 		FString bpResource = "/Game/Blueprints/BP_Wall_A.BP_Wall_A";
@@ -43,12 +33,13 @@ void AMagicMerchant1GameModeBase::BeginPlay()
 		UI = Cast<UUserWidget>(CreateWidget(GetWorld(), GeneratedMainUIBP));
 		*/
 		/*
-		static ConstructorHelpers::FClassFinder<UUserWidget> MainUI(TEXT("/Game/UserInterface/WBP_UI"));
+		static ConstructorHelpers::FClassFinder<UUserWidget> MainUI(TEXT("/Game/UserInterface/WBP_UI.WBP_UI"));
 		MainUIClass = MainUI.Class;
 		
 		if (MainUI.Succeeded())
 		{
 			UE_LOG(LogTemp, Warning, TEXT("succeeded"));
+			AddMainUIWidget();
 		}
 		else {
 			UE_LOG(LogTemp, Warning, TEXT("not succeeded"));
