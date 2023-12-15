@@ -158,19 +158,21 @@ void ABetterPlayerCharacter::MakeEnemy()
 
 void ABetterPlayerCharacter::AttackEnemy(int Dmg)
 {
-	UE_LOG(LogTemp, Warning, TEXT("AttackEnemy function worked"));
+	if (BaseEnemyRef->isAlive == true) {
+		UE_LOG(LogTemp, Warning, TEXT("AttackEnemy function worked"));
 
-	//when called minus enemy current hp by how much damage
-	MyFloat = BaseEnemyRef->CurrentHP - Dmg;
+		//when called minus enemy current hp by how much damage
+		MyFloat = BaseEnemyRef->CurrentHP - Dmg;
 
-	//Clamp??
-	BaseEnemyRef->CurrentHP = FMath::Clamp(MyFloat, 0.0f, BaseEnemyRef->MaxHP);
+		//Clamp??
+		BaseEnemyRef->CurrentHP = FMath::Clamp(MyFloat, 0.0f, BaseEnemyRef->MaxHP);
 
-	if (BaseEnemyRef->CurrentHP == 0)
-	{
-		//Kill the enemy if health is 0
-		EnemyKilled();
-		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Yellow, "Enemy Killed");
+		if (BaseEnemyRef->CurrentHP == 0)
+		{
+			//Kill the enemy if health is 0
+			EnemyKilled();
+			GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Yellow, "Enemy Killed");
+		}
 	}
 }
 

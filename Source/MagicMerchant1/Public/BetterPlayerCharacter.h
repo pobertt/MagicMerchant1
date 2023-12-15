@@ -4,7 +4,8 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
-#include "Combat/BaseEnemy.h"
+#include "Combat\BaseEnemy.h"
+#include "Combat\MagicTypes.h"
 #include "Math/UnrealMathUtility.h"
 //#include "MagicMerchant1/MagicMerchant1GameModeBase.h"
 #include "Combat\CombatTabUserWidget.h"
