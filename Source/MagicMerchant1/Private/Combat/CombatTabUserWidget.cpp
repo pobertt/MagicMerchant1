@@ -8,15 +8,6 @@
 
 void UCombatTabUserWidget::NativeConstruct()
 {
-	/*
-	for (int i = 0; i < 9; i++)
-	{
-		LockedButtons.Push(true);
-		FirstClickArray.Push(true);
-	}
-	*/
-
-
 	if (Attack1Button && Attack2Button && Attack3Button && Attack4Button && Item1Button && Item2Button && Item3Button && Item4Button && BackButton && IdleButton )
 	{
 		//delegate calls, function will be called from click

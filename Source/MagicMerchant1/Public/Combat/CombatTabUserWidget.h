@@ -76,9 +76,6 @@ public:
 	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
 		class UTextBlock* EnemyHPText;
 
-	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
-		class UImage* BaseEnemyImg;
-
 	//Combat Tab Widget Button Variables
 
 	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
