@@ -47,7 +47,7 @@ public:
 		FString EnemyType;
 
 	UFUNCTION(BlueprintCallable, Category = BaseEnemy)
-	void ResetHealth();
+	void HealthRegen();
 	
 	UFUNCTION(BlueprintCallable, Category = BaseEnemy)
 		void InitBaseEnemy();
@@ -73,6 +73,9 @@ class MAGICMERCHANT1_API AFireTypeEnemy : public ABaseEnemy
 
 public:
 	AFireTypeEnemy();
+
+	// Called every frame
+	virtual void Tick(float DeltaTime) override;
 };
 
 UCLASS()
@@ -82,6 +85,9 @@ class MAGICMERCHANT1_API AGrassTypeEnemy : public ABaseEnemy
 
 public:
 	AGrassTypeEnemy();
+
+	// Called every frame
+	virtual void Tick(float DeltaTime) override;
 };
 
 UCLASS()
@@ -91,4 +97,7 @@ class MAGICMERCHANT1_API AWaterTypeEnemy : public ABaseEnemy
 
 public:
 	AWaterTypeEnemy();
+
+	// Called every frame
+	virtual void Tick(float DeltaTime) override;
 };

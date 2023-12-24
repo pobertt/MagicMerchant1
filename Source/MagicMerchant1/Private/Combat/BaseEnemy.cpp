@@ -27,9 +27,12 @@ ABaseEnemy::ABaseEnemy()
 	isAlive = false;
 }
 
-void ABaseEnemy::ResetHealth()
+void ABaseEnemy::HealthRegen()
 {
-	//CurrentHP = MaxHP;
+	if (CurrentHP < MaxHP)
+	{
+		CurrentHP = CurrentHP + 0.1f;
+	}
 }
 
 void ABaseEnemy::InitBaseEnemy()
@@ -66,6 +69,7 @@ void ABaseEnemy::BeginPlay()
 {
 	Super::BeginPlay();
 	
+	HealthRegen();
 }
 
 // Called every frame
@@ -81,13 +85,34 @@ AFireTypeEnemy::AFireTypeEnemy()
 
 }
 
+void AFireTypeEnemy::Tick(float DeltaTime)
+{
+	Super::BeginPlay();
+
+	HealthRegen();
+}
+
 AGrassTypeEnemy::AGrassTypeEnemy()
 {
 	SetType("Grass");
 }
 
+void AGrassTypeEnemy::Tick(float DeltaTime)
+{
+	Super::BeginPlay();
+
+	HealthRegen();
+}
+
 AWaterTypeEnemy::AWaterTypeEnemy()
 {
 	SetType("Water");
+}
+
+void AWaterTypeEnemy::Tick(float DeltaTime)
+{
+	Super::BeginPlay();
+
+	HealthRegen();
 }
 
