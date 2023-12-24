@@ -193,7 +193,7 @@ void ABetterPlayerCharacter::EnemyKilled()
 		if (BaseEnemyRef->isAlive == false)
 		{
 			//Reinitialising values
-			InitBaseEnemy();
+			BaseEnemyRef->InitBaseEnemy();
 
 			GetWorld()->GetTimerManager().SetTimer(
 				EnemyRespawnTimerHandle,
@@ -215,23 +215,6 @@ void ABetterPlayerCharacter::EnemySpawnDelay()
 {
 	bEnemyRespawn = true;
 	GetWorld()->GetTimerManager().ClearTimer(EnemyRespawnTimerHandle);
-}
-
-void ABetterPlayerCharacter::InitBaseEnemy()
-{
-	BaseEnemyRef->MaxHP = BaseEnemyRef->MaxHP;
-	BaseEnemyRef->CurrentHP = BaseEnemyRef->MaxHP;
-	BaseEnemyRef->HPRegen = BaseEnemyRef->HPRegen;
-
-	BaseEnemyRef->BaseAttack = BaseEnemyRef->BaseAttack;
-	BaseEnemyRef->AttackMultiplier = BaseEnemyRef->AttackMultiplier;
-
-	BaseEnemyRef->Defense = BaseEnemyRef->Defense;
-	BaseEnemyRef->DefenseMultiplier = BaseEnemyRef->DefenseMultiplier;
-
-	BaseEnemyRef->Value = 10;
-
-	BaseEnemyRef->isAlive = false;
 }
 
 void ABetterPlayerCharacter::HealthTimerReset()

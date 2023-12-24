@@ -32,6 +32,23 @@ void ABaseEnemy::ResetHealth()
 	//CurrentHP = MaxHP;
 }
 
+void ABaseEnemy::InitBaseEnemy()
+{
+	MaxHP = MaxHP;
+	CurrentHP = MaxHP;
+	HPRegen = HPRegen;
+
+	BaseAttack = BaseAttack;
+	AttackMultiplier = AttackMultiplier;
+
+	Defense = Defense;
+	DefenseMultiplier = DefenseMultiplier;
+
+	Value = 10;
+
+	isAlive = false;
+}
+
 //These functions are for player combat spells, to know what type the enemy is
 
 void ABaseEnemy::SetType(FString Type)

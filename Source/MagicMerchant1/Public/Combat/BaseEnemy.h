@@ -48,6 +48,9 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = BaseEnemy)
 	void ResetHealth();
+	
+	UFUNCTION(BlueprintCallable, Category = BaseEnemy)
+		void InitBaseEnemy();
 
 	UFUNCTION(BlueprintCallable, Category = TypeEnemy)
 	void SetType(FString Type);

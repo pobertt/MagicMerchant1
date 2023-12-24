@@ -136,9 +136,6 @@ public:
 	UFUNCTION(BlueprintCallable, Category = BaseEnemy)
 		void EnemySpawnDelay();
 
-	UFUNCTION(BlueprintCallable, Category = BaseEnemy)
-		void InitBaseEnemy();
-
 	//Timer Functions
 
 	UFUNCTION()
