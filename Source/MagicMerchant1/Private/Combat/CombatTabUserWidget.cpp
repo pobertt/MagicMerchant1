@@ -271,8 +271,12 @@ void UCombatTabUserWidget::Item1ButtonOnClicked()
 		Item1TextBlock->SetText(FText::FromString(
 			"Damage: " + FString::FormatAsNumber(Attack1Damage) +
 			"\nMP: " + FString::FormatAsNumber(Attack1MPCost) +
-			"\nCost: "));
+			"\nCost: " + FString::FormatAsNumber(Item1Cost)));
 	}
+
+	Attack1Damage += 1;
+	Attack1MPCost -= 1;
+	Item1Cost += 10;
 }
 
 void UCombatTabUserWidget::Item2ButtonOnClicked()

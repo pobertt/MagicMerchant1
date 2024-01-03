@@ -111,14 +111,26 @@ public:
 	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
 		class UButton* Item1Button;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = ButtonUpgrades, meta = (AllowPrivateAccess = "true"))
+		float Item1Cost = 25.0f;
+
 	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
 		class UButton* Item2Button;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = ButtonUpgrades, meta = (AllowPrivateAccess = "true"))
+		float Item2Cost = 25.0f;
 
 	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
 		class UButton* Item3Button;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = ButtonUpgrades, meta = (AllowPrivateAccess = "true"))
+		float Item3Cost = 25.0f;
+
 	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
 		class UButton* Item4Button;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = ButtonUpgrades, meta = (AllowPrivateAccess = "true"))
+		float Item4Cost = 25.0f;
 
 	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
 		class UButton* IdleButton;
