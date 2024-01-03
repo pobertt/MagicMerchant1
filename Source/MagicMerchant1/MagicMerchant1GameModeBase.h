@@ -6,7 +6,6 @@
 #include "GameFramework/GameModeBase.h"
 #include "Public/Combat/CombatTabUserWidget.h"
 #include "Combat/BaseEnemy.h"
-#include "BetterPlayerCharacter.h"
 #include "MagicMerchant1GameModeBase.generated.h"
 
 //enum to store the current state of gameplay
@@ -29,10 +28,6 @@ public:
 	UPROPERTY()
 	class ABaseEnemy* BaseEnemyRef;
 
-	//Player Reference
-	UPROPERTY()
-	class ABetterPlayerCharacter* PlayerRef;
-
 	//Combat Widget Reference
 	UPROPERTY(VisibleInstanceOnly, Category = "Runtime")
 	class UCombatTabUserWidget* CombatWidget;
@@ -54,8 +49,6 @@ public:
 	UFUNCTION()
 	void SetEnemyRef(AActor* enemy);
 
-	UFUNCTION()
-	void SetPlayerRef(ACharacter* player);
 
 	virtual void BeginPlay() override;
 
@@ -72,5 +65,7 @@ protected:
 	UPROPERTY(EditAnywhere, Category = "Class Types")
 	//specifying a base class in c++ and assigning a specific class inside of blueprints 
 	TSubclassOf<UUserWidget> MainUIClass;
+
+
 
 };

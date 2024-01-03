@@ -117,17 +117,18 @@ void ABetterPlayerCharacter::MakeEnemy()
 		FRotator Rotation(0, 0, 0);
 		FActorSpawnParameters SpawnInfo;
 
-		
 		//Spawning a random enemy 
-		int8 Num = FMath::RandRange(1, 3);
+		SpawnNum = FMath::RandRange(1, 3);
 
-		switch (Num)
+		switch (SpawnNum)
 		{
 		case 1:
 		{
 			// AFireTypeEnemy* FireTypeEnemy = (GetWorld()->SpawnActor<AFireTypeEnemy>(Location, Rotation, SpawnInfo));
 			BaseEnemyRef = (GetWorld()->SpawnActor<AFireTypeEnemy>(Location, Rotation, SpawnInfo));
 			GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, "1");
+			GameInstanceRef->SetEnemyUIType(SpawnNum);
+
 		}
 		break;
 		case 2:
@@ -135,6 +136,8 @@ void ABetterPlayerCharacter::MakeEnemy()
 			// AGrassTypeEnemy* GrassTypeEnemy = (GetWorld()->SpawnActor<AGrassTypeEnemy>(Location, Rotation, SpawnInfo));
 			BaseEnemyRef = (GetWorld()->SpawnActor<AGrassTypeEnemy>(Location, Rotation, SpawnInfo));
 			GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Green, "2");
+			GameInstanceRef->SetEnemyUIType(SpawnNum);
+
 		}
 		break;
 		case 3:
@@ -142,6 +145,8 @@ void ABetterPlayerCharacter::MakeEnemy()
 			// AWaterTypeEnemy* WaterTypeEnemy = (GetWorld()->SpawnActor<AWaterTypeEnemy>(Location, Rotation, SpawnInfo));
 			BaseEnemyRef = (GetWorld()->SpawnActor<AWaterTypeEnemy>(Location, Rotation, SpawnInfo));
 			GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Blue, "3");
+			GameInstanceRef->SetEnemyUIType(SpawnNum);
+
 		}
 		break;
 		default:
@@ -229,6 +234,8 @@ void ABetterPlayerCharacter::BeginPlay()
 	Super::BeginPlay();
 
 	SayHey();
+	GameInstanceRef = Cast<UMyGameInstance>(GetWorld()->GetGameInstance());
+	// GamemodeRef = Cast<AMagicMerchant1GameModeBase>(GetWorld()->GetAuthGameMode());
 }
 
 // Called every frame

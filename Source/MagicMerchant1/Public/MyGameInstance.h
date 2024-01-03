@@ -25,8 +25,8 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	class AMagicMerchant1GameModeBase* GamemodeRef;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
-	class ABetterPlayerCharacter* PlayerRef;
+	// UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+	// class ABetterPlayerCharacter* PlayerRef;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	class ABaseEnemy* BaseEnemyRef;
@@ -45,9 +45,15 @@ public:
 	UPROPERTY()
 		int32 InitialCost;
 
+	UFUNCTION()
+		void SetEnemyUIType(uint8 SpawnNum);
+
 private:
 
 	int32 NumButtons;
+
+	UPROPERTY(EditAnywhere, Category = "Class Types")
+		TSubclassOf<UUserWidget> FireEnemyUIClass;
 
 };
 

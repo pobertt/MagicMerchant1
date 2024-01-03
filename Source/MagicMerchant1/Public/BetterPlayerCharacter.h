@@ -7,8 +7,8 @@
 #include "Combat\BaseEnemy.h"
 #include "Combat\MagicTypes.h"
 #include "Math/UnrealMathUtility.h"
-//#include "MagicMerchant1/MagicMerchant1GameModeBase.h"
-#include "Combat\CombatTabUserWidget.h"
+// #include "MagicMerchant1/MagicMerchant1GameModeBase.h"
+#include "MagicMerchant1\Public\MyGameInstance.h"
 #include "TimerManager.h"
 #include "Engine.h"
 #include "BetterPlayerCharacter.generated.h"
@@ -27,9 +27,8 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	class ABaseEnemy* BaseEnemyRef;
 
-	//Combat Widget Reference
-	UPROPERTY(VisibleInstanceOnly, Category = "Runtime")
-		class UCombatTabUserWidget* CombatWidget;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+	class UMyGameInstance* GameInstanceRef;
 
 	//Health Stats
 
@@ -75,6 +74,9 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = BaseEnemy, meta = (AllowPrivateAccess = "true"))
 		float RespawnDelayTimer;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = BaseEnemy, meta = (AllowPrivateAccess = "true"))
+		uint8 SpawnNum;
 
 	//Inventory
 

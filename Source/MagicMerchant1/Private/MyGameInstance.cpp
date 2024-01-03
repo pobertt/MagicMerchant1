@@ -1,5 +1,8 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 #include "MyGameInstance.h"
+#include "UObject/ConstructorHelpers.h"
+#include "Blueprint/UserWidget.h"
+#include "Blueprint/WidgetLayoutLibrary.h"
 
 UMyGameInstance::UMyGameInstance() : NumButtons(9), InitialCost(0)
 {
@@ -16,6 +19,15 @@ UMyGameInstance::UMyGameInstance() : NumButtons(9), InitialCost(0)
 		GamemodeRef->CombatWidget->IdleButtonTextBlock->SetText(FText::FromString("Idle: On"));
 	}
 	*/
+
+	//Creating Enemy Widgets
+	static ConstructorHelpers::FClassFinder<UUserWidget> FireEnemy(TEXT("/Game/UserInterface/WBP_FireEnemy"));
+
+	if (FireEnemy.Succeeded())
+	{
+		FireEnemyUIClass = FireEnemy.Class;
+		UE_LOG(LogTemp, Warning, TEXT("UI CLASS FOUND"));
+	}
 
 	for (int i = 0; i < NumButtons; i++)
 	{
@@ -52,5 +64,26 @@ UMyGameInstance::UMyGameInstance() : NumButtons(9), InitialCost(0)
 		{
 			InitialCost = 10000;
 		}
+	}
+}
+
+void UMyGameInstance::SetEnemyUIType(uint8 SpawnNum)
+{
+	switch (SpawnNum)
+	{
+	case 1:
+	{
+		UUserWidget* FireEnemyUI = CreateWidget<UUserWidget>(GetWorld(), *FireEnemyUIClass);
+		FireEnemyUI->AddToViewport();
+		return;
+	}
+	case 2:
+	{
+		return;
+	}
+	case 3:
+	{
+		return;
+	}
 	}
 }

@@ -28,11 +28,9 @@ void UCombatTabUserWidget::NativeConstruct()
 
 		//Other Buttons 
 
-		BackButton->OnClicked.AddDynamic(this, &UCombatTabUserWidget::BackButtonOnClicked);
 		IdleButton->OnClicked.AddDynamic(this, &UCombatTabUserWidget::IdleButtonOnClicked);
 	}
 
-	GamemodeRef = Cast<AMagicMerchant1GameModeBase>(GetWorld()->GetAuthGameMode());
 	PlayerRef = Cast<ABetterPlayerCharacter>(GetWorld()->GetFirstPlayerController()->GetPawn());
 	GameInstanceRef = Cast<UMyGameInstance>(GetWorld()->GetGameInstance());
 	
@@ -385,15 +383,6 @@ void UCombatTabUserWidget::IdleFunction()
 				1.0f,
 				true);
 	}
-}
-
-void UCombatTabUserWidget::BackButtonOnClicked()
-{
-	TextLabel->SetText(FText::FromString("BackPressed"));
-	//BackButton pressed
-	GamemodeRef->RemoveCombatWidget();
-	//Display main ui again
-	GamemodeRef->AddMainUIWidget();
 }
 
 void UCombatTabUserWidget::IdleButtonOnClicked()

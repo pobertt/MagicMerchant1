@@ -3,7 +3,6 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "MagicMerchant1\MagicMerchant1GameModeBase.h"
 #include "Blueprint/UserWidget.h"
 #include "BetterPlayerCharacter.h"
 #include "Combat/BaseEnemy.h"
@@ -148,9 +147,6 @@ public:
 
 	UFUNCTION()
 		void IdleFunction();
-
-	UFUNCTION()
-		void BackButtonOnClicked();
 
 	UFUNCTION()
 		void IdleButtonOnClicked();
