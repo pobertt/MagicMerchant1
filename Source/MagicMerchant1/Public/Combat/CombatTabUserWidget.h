@@ -121,9 +121,6 @@ public:
 		class UButton* Item4Button;
 
 	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
-		class UButton* BackButton;
-
-	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
 		class UButton* IdleButton;
 
 	virtual void NativeConstruct() override;

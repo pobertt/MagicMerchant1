@@ -8,7 +8,7 @@
 
 void UCombatTabUserWidget::NativeConstruct()
 {
-	if (Attack1Button && Attack2Button && Attack3Button && Attack4Button && Item1Button && Item2Button && Item3Button && Item4Button && BackButton && IdleButton )
+	if (Attack1Button && Attack2Button && Attack3Button && Attack4Button && Item1Button && Item2Button && Item3Button && Item4Button && IdleButton )
 	{
 		//delegate calls, function will be called from click
 		
