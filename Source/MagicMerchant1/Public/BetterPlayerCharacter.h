@@ -28,7 +28,7 @@ public:
 	class ABaseEnemy* BaseEnemyRef;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
-	class UMyGameInstance* GameInstanceRef;
+		class UMyGameInstance* GameInstanceRef;
 
 	//Health Stats
 
@@ -46,7 +46,7 @@ public:
 	//Player Stats
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = playerStats, meta = (AllowPrivateAccess = "true"))
-		int32 mp;
+		float mp;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = playerStats, meta = (AllowPrivateAccess = "true"))
 		float money;
@@ -83,16 +83,21 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Inventory, meta = (AllowPrivateAccess = "true"))
 		class UDataTable* Inventory;
 
+	
+
 	//Declaring functions to add to player stats
 
 	UFUNCTION(BlueprintCallable, Category = HealthStats)
 		void HealthRegenBar();
 
+	UFUNCTION(BlueprintCallable, Category = MPStats)
+		void MPRegenBar();
+
 	UFUNCTION(BlueprintCallable, Category = playerStats)
 		float AddHp(float AddHealth);
 
 	UFUNCTION(BlueprintCallable, Category = playerStats)
-		int32 AddMp();
+		float AddMp(float AddMP);
 
 	UFUNCTION(BlueprintCallable, Category = playerStats)
 		float AddMoney(float Amount);
@@ -109,7 +114,7 @@ public:
 		float SubHp();
 
 	UFUNCTION(BlueprintCallable, Category = playerStats)
-		int32 SubMp();
+		float SubMp(float MPCost);
 
 	UFUNCTION(BlueprintCallable, Category = playerStats)
 		float SubMoney(int Cost);
@@ -130,7 +135,7 @@ public:
 		void MakeEnemy();
 
 	UFUNCTION(BlueprintCallable, Category = playerCombat)
-		void AttackEnemy(int Dmg);
+		void AttackEnemy(int Dmg, float MPCost, FString AttackType);
 
 	UFUNCTION(BlueprintCallable, Category = BaseEnemy)
 		void EnemyKilled();

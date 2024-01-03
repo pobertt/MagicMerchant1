@@ -70,24 +70,43 @@ public:
 	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
 		class UTextBlock* IdleButtonTextBlock;
 
-	//Enemy Variables
-
-	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
-		class UTextBlock* EnemyHPText;
-
 	//Combat Tab Widget Button Variables
 
 	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
 		class UButton* Attack1Button;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = ButtonUpgrades, meta = (AllowPrivateAccess = "true"))
+		float Attack1MPCost = 30.0f;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = ButtonUpgrades, meta = (AllowPrivateAccess = "true"))
+		uint8 Attack1Damage = 10;
+
 	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
 		class UButton* Attack2Button;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = ButtonUpgrades, meta = (AllowPrivateAccess = "true"))
+		float Attack2MPCost = 25.0f;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = ButtonUpgrades, meta = (AllowPrivateAccess = "true"))
+		uint8 Attack2Damage = 15;
 
 	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
 		class UButton* Attack3Button;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = ButtonUpgrades, meta = (AllowPrivateAccess = "true"))
+		float Attack3MPCost = 25.0f;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = ButtonUpgrades, meta = (AllowPrivateAccess = "true"))
+		uint8 Attack3Damage = 15;
+
 	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
 		class UButton* Attack4Button;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = ButtonUpgrades, meta = (AllowPrivateAccess = "true"))
+		float Attack4MPCost = 25.0f;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = ButtonUpgrades, meta = (AllowPrivateAccess = "true"))
+		uint8 Attack4Damage = 15;
 
 	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
 		class UButton* Item1Button;
@@ -112,8 +131,7 @@ public:
 	//Attack Functions
 
 	UFUNCTION(BlueprintCallable)
-		void AttackFunction(int Cost, int LockedButtonsIndex, int FirstClickArrayIndex, int Dmg, FString AttackUsed);
-
+		void AttackFunction(int Cost, int LockedButtonsIndex, int FirstClickArrayIndex, int Dmg, FString AttackUsed, float MPCost, FString AttackType);
 	UFUNCTION()
 		void ItemFunction(int Cost, int LockedButtonsIndex, int FirstClickArrayIndex, FString ItemUsed);
 

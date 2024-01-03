@@ -41,7 +41,7 @@ void UCombatTabUserWidget::NativeConstruct()
 
 //Attack Button Functions 
 
-void UCombatTabUserWidget::AttackFunction(int Cost, int LockedButtonsIndex, int FirstClickArrayIndex, int Dmg, FString AttackUsed)
+void UCombatTabUserWidget::AttackFunction(int Cost, int LockedButtonsIndex, int FirstClickArrayIndex, int Dmg, FString AttackUsed, float MPCost, FString AttackType)
 {
 	//Checks the cost of the button and whether the button is in the locked state
 	if (PlayerRef->money < Cost && GameInstanceRef->LockedButtons[LockedButtonsIndex] == true)
@@ -69,20 +69,19 @@ void UCombatTabUserWidget::AttackFunction(int Cost, int LockedButtonsIndex, int 
 	}
 
 	//If button is unlocked and the first click (purchase) is consumed 
-	if (GameInstanceRef->LockedButtons[LockedButtonsIndex] == false && GameInstanceRef->FirstClickArray[FirstClickArrayIndex] == false)
+	//and if mana can afford it 
+	if (GameInstanceRef->LockedButtons[LockedButtonsIndex] == false && GameInstanceRef->FirstClickArray[FirstClickArrayIndex] == false && PlayerRef->mp > MPCost)
 	{
 		//Checking if HP is greater than 0
 		if (BaseEnemyRef->CurrentHP > 0)
 		{
 			//If greater then deal dmg and print text
-			PlayerRef->AttackEnemy(Dmg);
+			PlayerRef->AttackEnemy(Dmg, MPCost, AttackType);
 			TextLabel->SetText(FText::FromString(AttackUsed));
-			EnemyHPText->SetText(FText::AsNumber(BaseEnemyRef->CurrentHP));
 		}
 		else if (BaseEnemyRef->CurrentHP == 0)
 		{
 			TextLabel->SetText(FText::FromString("Enemy Killed"));
-			EnemyHPText->SetText(FText::AsNumber(BaseEnemyRef->CurrentHP));
 		}
 	}
 }
@@ -109,6 +108,8 @@ void UCombatTabUserWidget::ItemFunction(int Cost, int LockedButtonsIndex, int Fi
 	{
 		TextLabel->SetText(FText::FromString(ItemUsed));
 		//item consumed function goes here
+
+
 	}
 }
 
@@ -121,7 +122,7 @@ void UCombatTabUserWidget::Attack1ButtonOnClicked()
 		bCanClick = false;
 
 		//Calling the Attack Function
-		AttackFunction(0, 0, 0, 99 , "Attack 1 Used");
+		AttackFunction(0, 0, 0, Attack1Damage ,"Normal Attack Used", Attack1MPCost, "Normal");
 		
 		//If the button is unlocked 
 		if (GameInstanceRef->LockedButtons[0] == false)
@@ -166,7 +167,7 @@ void UCombatTabUserWidget::Attack2ButtonOnClicked()
 		if (bCanClick == true)
 		{
 			bCanClick = false;
-			AttackFunction(1000, 1, 1, 10, "Attack 2 Used");
+			AttackFunction(2500, 1, 1, Attack2Damage, "Fire Attack Used", Attack2MPCost, "Fire");
 
 			if (GameInstanceRef->LockedButtons[1] == false)
 			{
@@ -199,7 +200,7 @@ void UCombatTabUserWidget::Attack3ButtonOnClicked()
 		if (bCanClick == true)
 		{
 			bCanClick = false;
-			AttackFunction(2500, 2, 2, 25, "Attack 3 Used");
+			AttackFunction(2500, 2, 2, Attack3Damage, "Grass Attack Used", Attack3MPCost, "Grass");
 
 			if (GameInstanceRef->LockedButtons[2] == false)
 			{
@@ -233,7 +234,7 @@ void UCombatTabUserWidget::Attack4ButtonOnClicked()
 		if (bCanClick == true)
 		{
 			bCanClick = false;
-			AttackFunction(5000, 3, 3, 50, "Attack 4 Used");
+			AttackFunction(2500, 3, 3, Attack4Damage, "Water Attack Used", Attack4MPCost, "Water");
 
 			if (GameInstanceRef->LockedButtons[3] == false)
 			{
@@ -245,14 +246,14 @@ void UCombatTabUserWidget::Attack4ButtonOnClicked()
 				GetWorld()->GetTimerManager().SetTimer(
 					ButtonPressTimerHandle,
 					Delegate,
-					5.0f,
+					1.0f,
 					false);
 
 				GetWorld()->GetTimerManager().SetTimer(
 					ButtonPressTimerHandle,
 					this,
 					&UCombatTabUserWidget::ButtonTimerReset,
-					5.0f,
+					1.0f,
 					false);
 			}
 		}
@@ -263,41 +264,44 @@ void UCombatTabUserWidget::Attack4ButtonOnClicked()
 
 void UCombatTabUserWidget::Item1ButtonOnClicked()
 {
-	ItemFunction(1000, 4, 4, "Item 1 Used");
+	ItemFunction(2500, 4, 4, "Purchased");
 	
 	if (GameInstanceRef->LockedButtons[4] == false)
 	{
-		//Item1TextBlock->SetText(FText::FromString("Item 1"));
+		Item1TextBlock->SetText(FText::FromString(
+			"Damage: " + FString::FormatAsNumber(Attack1Damage) +
+			"\nMP: " + FString::FormatAsNumber(Attack1MPCost) +
+			"\nCost: "));
 	}
 }
 
 void UCombatTabUserWidget::Item2ButtonOnClicked()
 {
-	ItemFunction(2000, 5, 5, "Item 2 Used");
+	ItemFunction(2500, 5, 5, "Purchased");
 	
 	if (GameInstanceRef->LockedButtons[5] == false)
 	{
-		//Item2TextBlock->SetText(FText::FromString("Item 2"));
+		Item2TextBlock->SetText(FText::FromString("Fire \nDamage \nUpgrade"));
 	}
 }
 
 void UCombatTabUserWidget::Item3ButtonOnClicked()
 {
-	ItemFunction(5000, 6, 6, "Item 3 Used");
+	ItemFunction(2500, 6, 6, "Purchased");
 
 	if (GameInstanceRef->LockedButtons[6] == false)
 	{
-		//Item3TextBlock->SetText(FText::FromString("Item 3"));
+		Item3TextBlock->SetText(FText::FromString("Grass \nDamage \nUpgrade"));
 	}
 }
 
 void UCombatTabUserWidget::Item4ButtonOnClicked()
 {
-	ItemFunction(10000, 7, 7, "Item 4 Used");
+	ItemFunction(2500, 7, 7, "Purchased");
 
 	if (GameInstanceRef->LockedButtons[7] == false)
 	{
-		//Item4TextBlock->SetText(FText::FromString("Item 4"));
+		Item4TextBlock->SetText(FText::FromString("Water \nDamage \nUpgrade"));
 	}
 }
 
@@ -310,22 +314,22 @@ void UCombatTabUserWidget::ButtonTimerReset()
 	
 	if (GameInstanceRef->LockedButtons[0] == false)
 	{
-		Attack1TextBlock->SetText(FText::FromString("Attack 1"));
+		Attack1TextBlock->SetText(FText::FromString("Normal \nAttack"));
 	}
 
 	if (GameInstanceRef->LockedButtons[1] == false)
 	{
-		Attack2TextBlock->SetText(FText::FromString("Attack 2"));
+		Attack2TextBlock->SetText(FText::FromString("Fire \nAttack"));
 	}
 
 	if (GameInstanceRef->LockedButtons[2] == false)
 	{
-		Attack3TextBlock->SetText(FText::FromString("Attack 3"));
+		Attack3TextBlock->SetText(FText::FromString("Grass \nAttack"));
 	}
 
 	if (GameInstanceRef->LockedButtons[3] == false)
 	{
-		Attack4TextBlock->SetText(FText::FromString("Attack 4"));
+		Attack4TextBlock->SetText(FText::FromString("Water \nAttack"));
 	}
 }
 
@@ -337,16 +341,16 @@ void UCombatTabUserWidget::ChangeButtonText(UTextBlock* ButtonName, int ButtonNu
 	switch (ButtonNum) 
 	{
 		case 1:
-			ButtonName->SetText(FText::FromString("Attack 1"));
+			ButtonName->SetText(FText::FromString("Normal Attack"));
 			break;
 		case 2:
-			ButtonName->SetText(FText::FromString("Attack 2"));
+			ButtonName->SetText(FText::FromString("Fire Attack"));
 			break;
 		case 3:
-			ButtonName->SetText(FText::FromString("Attack 3"));
+			ButtonName->SetText(FText::FromString("Grass Attack"));
 			break;
 		case 4:
-			ButtonName->SetText(FText::FromString("Attack 4"));
+			ButtonName->SetText(FText::FromString("Water Attack"));
 			break;
 	}
 }

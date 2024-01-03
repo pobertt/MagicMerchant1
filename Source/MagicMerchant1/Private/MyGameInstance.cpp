@@ -23,10 +23,17 @@ UMyGameInstance::UMyGameInstance() : NumButtons(9), InitialCost(0)
 	//Creating Enemy Widgets
 	static ConstructorHelpers::FClassFinder<UUserWidget> FireEnemy(TEXT("/Game/UserInterface/WBP_FireEnemy"));
 
-	if (FireEnemy.Succeeded())
+	static ConstructorHelpers::FClassFinder<UUserWidget> GrassEnemy(TEXT("/Game/UserInterface/WBP_GrassEnemy"));
+
+	static ConstructorHelpers::FClassFinder<UUserWidget> WaterEnemy(TEXT("/Game/UserInterface/WBP_WaterEnemy"));
+
+	if (FireEnemy.Succeeded() && GrassEnemy.Succeeded() && WaterEnemy.Succeeded())
 	{
 		FireEnemyUIClass = FireEnemy.Class;
-		UE_LOG(LogTemp, Warning, TEXT("UI CLASS FOUND"));
+
+		GrassEnemyUIClass = GrassEnemy.Class;
+
+		WaterEnemyUIClass = WaterEnemy.Class;
 	}
 
 	for (int i = 0; i < NumButtons; i++)
@@ -38,7 +45,7 @@ UMyGameInstance::UMyGameInstance() : NumButtons(9), InitialCost(0)
 
 		if (i == 0)
 		{
-			InitialCost = 1000;
+			InitialCost = 2500;
 		}
 		else if (i == 1) 
 		{
@@ -46,11 +53,11 @@ UMyGameInstance::UMyGameInstance() : NumButtons(9), InitialCost(0)
 		}
 		else if (i == 2)
 		{
-			InitialCost = 5000;
+			InitialCost = 2500;
 		}
 		else if (i == 3)
 		{
-			InitialCost = 1000;
+			InitialCost = 2500;
 		}
 		else if (i == 4)
 		{
@@ -58,11 +65,11 @@ UMyGameInstance::UMyGameInstance() : NumButtons(9), InitialCost(0)
 		}
 		else if (i == 5)
 		{
-			InitialCost = 5000;
+			InitialCost = 2500;
 		}
 		else if (i == 6)
 		{
-			InitialCost = 10000;
+			InitialCost = 2500;
 		}
 	}
 }
@@ -79,10 +86,14 @@ void UMyGameInstance::SetEnemyUIType(uint8 SpawnNum)
 	}
 	case 2:
 	{
+		UUserWidget* GrassEnemyUI = CreateWidget<UUserWidget>(GetWorld(), *GrassEnemyUIClass);
+		GrassEnemyUI->AddToViewport();
 		return;
 	}
 	case 3:
 	{
+		UUserWidget* WaterEnemyUI = CreateWidget<UUserWidget>(GetWorld(), *WaterEnemyUIClass);
+		WaterEnemyUI->AddToViewport();
 		return;
 	}
 	}

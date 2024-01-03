@@ -31,7 +31,7 @@ void ABaseEnemy::HealthRegen()
 {
 	if (CurrentHP < MaxHP)
 	{
-		CurrentHP = CurrentHP + 0.1f;
+		CurrentHP = CurrentHP + 0.0075f;
 	}
 }
 

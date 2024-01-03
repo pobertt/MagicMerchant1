@@ -11,11 +11,11 @@ ABetterPlayerCharacter::ABetterPlayerCharacter()
 
 	Health = 100.0f;
 
-	HealthRegen = 0.5f;
+	HealthRegen = 0.1f;
 
 	HealthRate = 3.0f;
 
-	mp = 100;
+	mp = 100.0f;
 	money = 10000.0f;
 	currency2 = 0.f;
 	lvl = 1;
@@ -28,8 +28,27 @@ void ABetterPlayerCharacter::HealthRegenBar()
 {
 	if (Health < 100)
 	{
-		AddHp(0.1f);
+		AddHp(HealthRegen);
 		
+		//Timer is not getting called
+		//Health Regen and Health Rate are useless
+		/*
+		GetWorld()->GetTimerManager().SetTimer(
+			HealthRateTimerHandle,
+			this,
+			&ABetterPlayerCharacter::HealthTimerReset,
+			HealthRate,
+			false);
+		*/
+	}
+}
+
+void ABetterPlayerCharacter::MPRegenBar()
+{
+	if (mp < 100)
+	{
+		AddMp(0.05f);
+
 		//Timer is not getting called
 		//Health Regen and Health Rate are useless
 		/*
@@ -50,9 +69,9 @@ float ABetterPlayerCharacter::AddHp(float AddHealth)
 	return Health;
 }
 
-int32 ABetterPlayerCharacter::AddMp()
+float ABetterPlayerCharacter::AddMp(float AddMP)
 {
-	mp++;
+	mp = mp + AddMP;
 	return mp;
 }
 
@@ -81,9 +100,10 @@ float ABetterPlayerCharacter::SubHp()
 	return Health;
 }
 
-int32 ABetterPlayerCharacter::SubMp()
+float ABetterPlayerCharacter::SubMp(float MPCost)
 {
-	mp--;
+	mp = mp - MPCost;
+
 	return mp;
 }
 
@@ -161,13 +181,32 @@ void ABetterPlayerCharacter::MakeEnemy()
 	}
 }
 
-void ABetterPlayerCharacter::AttackEnemy(int Dmg)
+void ABetterPlayerCharacter::AttackEnemy(int Dmg, float MPCost, FString AttackType)
 {
 	if (BaseEnemyRef->isAlive == true) {
 		UE_LOG(LogTemp, Warning, TEXT("AttackEnemy function worked"));
 
 		//when called minus enemy current hp by how much damage
-		MyFloat = BaseEnemyRef->CurrentHP - Dmg;
+		if (AttackType == "Fire") {
+			this->GetComponentByClass<UMagicTypes>()->FireDmg(Dmg);
+
+			MyFloat = BaseEnemyRef->CurrentHP - Dmg;
+		}
+		else if (AttackType == "Grass") {
+			this->GetComponentByClass<UMagicTypes>()->GrassDmg(Dmg);
+
+			MyFloat = BaseEnemyRef->CurrentHP - Dmg;
+		}
+		else if (AttackType == "Water") {
+			this->GetComponentByClass<UMagicTypes>()->WaterDmg(Dmg);
+
+			MyFloat = BaseEnemyRef->CurrentHP - Dmg;
+		}
+		else if (AttackType == "Normal") {
+			MyFloat = BaseEnemyRef->CurrentHP - Dmg;
+		}
+
+		SubMp(MPCost);
 
 		//Clamp??
 		BaseEnemyRef->CurrentHP = FMath::Clamp(MyFloat, 0.0f, BaseEnemyRef->MaxHP);
@@ -244,6 +283,8 @@ void ABetterPlayerCharacter::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 
 	HealthRegenBar();
+
+	MPRegenBar();
 }
 
 // Called to bind functionality to input

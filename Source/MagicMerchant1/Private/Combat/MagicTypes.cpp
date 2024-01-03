@@ -21,6 +21,7 @@ void UMagicTypes::BeginPlay()
 
 	// ...
 	
+
 }
 
 
@@ -34,6 +35,7 @@ void UMagicTypes::TickComponent(float DeltaTime, ELevelTick TickType, FActorComp
 
 int UMagicTypes::FireDmg(int Dmg)
 {
+	BaseEnemyRef = Cast<ABaseEnemy>(UGameplayStatics::GetActorOfClass(GetWorld(), ABaseEnemy::StaticClass()));
 	if (BaseEnemyRef->EnemyType == "Grass")
 	{
 		Dmg *= 2;
@@ -51,6 +53,7 @@ int UMagicTypes::FireDmg(int Dmg)
 
 int UMagicTypes::GrassDmg(int Dmg)
 {
+	BaseEnemyRef = Cast<ABaseEnemy>(UGameplayStatics::GetActorOfClass(GetWorld(), ABaseEnemy::StaticClass()));
 	if (BaseEnemyRef->EnemyType == "Water")
 	{
 		Dmg *= 2;
@@ -68,6 +71,7 @@ int UMagicTypes::GrassDmg(int Dmg)
 
 int UMagicTypes::WaterDmg(int Dmg)
 {
+	BaseEnemyRef = Cast<ABaseEnemy>(UGameplayStatics::GetActorOfClass(GetWorld(), ABaseEnemy::StaticClass()));
 	if (BaseEnemyRef->EnemyType == "Fire")
 	{
 		Dmg *= 2;

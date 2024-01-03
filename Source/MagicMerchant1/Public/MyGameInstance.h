@@ -55,6 +55,13 @@ private:
 	UPROPERTY(EditAnywhere, Category = "Class Types")
 		TSubclassOf<UUserWidget> FireEnemyUIClass;
 
+	UPROPERTY(EditAnywhere, Category = "Class Types")
+		TSubclassOf<UUserWidget> GrassEnemyUIClass;
+
+	UPROPERTY(EditAnywhere, Category = "Class Types")
+		TSubclassOf<UUserWidget> WaterEnemyUIClass;
+
+
 };
 
 /*

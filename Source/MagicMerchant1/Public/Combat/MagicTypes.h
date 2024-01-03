@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
 #include "BaseEnemy.h"
+#include "Kismet/GameplayStatics.h"
 #include "MagicTypes.generated.h"
 
 
