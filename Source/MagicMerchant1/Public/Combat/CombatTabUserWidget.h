@@ -76,61 +76,61 @@ public:
 		class UButton* Attack1Button;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = ButtonUpgrades, meta = (AllowPrivateAccess = "true"))
-		float Attack1MPCost = 30.0f;
+		float Attack1MPCost = 50.0f;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = ButtonUpgrades, meta = (AllowPrivateAccess = "true"))
-		uint8 Attack1Damage = 10;
+		int32 Attack1Damage = 10;
 
 	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
 		class UButton* Attack2Button;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = ButtonUpgrades, meta = (AllowPrivateAccess = "true"))
-		float Attack2MPCost = 25.0f;
+		float Attack2MPCost = 50.0f;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = ButtonUpgrades, meta = (AllowPrivateAccess = "true"))
-		uint8 Attack2Damage = 15;
+		int32 Attack2Damage = 15;
 
 	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
 		class UButton* Attack3Button;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = ButtonUpgrades, meta = (AllowPrivateAccess = "true"))
-		float Attack3MPCost = 25.0f;
+		float Attack3MPCost = 50.0f;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = ButtonUpgrades, meta = (AllowPrivateAccess = "true"))
-		uint8 Attack3Damage = 15;
+		int32 Attack3Damage = 15;
 
 	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
 		class UButton* Attack4Button;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = ButtonUpgrades, meta = (AllowPrivateAccess = "true"))
-		float Attack4MPCost = 25.0f;
+		float Attack4MPCost = 50.0f;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = ButtonUpgrades, meta = (AllowPrivateAccess = "true"))
-		uint8 Attack4Damage = 15;
+		int32 Attack4Damage = 15;
 
 	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
 		class UButton* Item1Button;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = ButtonUpgrades, meta = (AllowPrivateAccess = "true"))
-		float Item1Cost = 25.0f;
+		int32 Item1Cost = 25;
 
 	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
 		class UButton* Item2Button;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = ButtonUpgrades, meta = (AllowPrivateAccess = "true"))
-		float Item2Cost = 25.0f;
+		int32 Item2Cost = 25;
 
 	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
 		class UButton* Item3Button;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = ButtonUpgrades, meta = (AllowPrivateAccess = "true"))
-		float Item3Cost = 25.0f;
+		int32 Item3Cost = 25;
 
 	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
 		class UButton* Item4Button;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = ButtonUpgrades, meta = (AllowPrivateAccess = "true"))
-		float Item4Cost = 25.0f;
+		int32 Item4Cost = 25;
 
 	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
 		class UButton* IdleButton;
@@ -141,8 +141,9 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 		void AttackFunction(int Cost, int LockedButtonsIndex, int FirstClickArrayIndex, int Dmg, FString AttackUsed, float MPCost, FString AttackType);
+	
 	UFUNCTION()
-		void ItemFunction(int Cost, int LockedButtonsIndex, int FirstClickArrayIndex, FString ItemUsed);
+		void ItemFunction(int Cost, int LockedButtonsIndex, int FirstClickArrayIndex, FString ItemUsed, int Damage, float MPCost, int ItemCost);
 
 	UFUNCTION()
 		void Attack1ButtonOnClicked();
@@ -169,6 +170,9 @@ public:
 
 	UFUNCTION()
 		void Item4ButtonOnClicked();
+
+	UFUNCTION()
+		void ItemUpgrade(int Damage, float MPCost, int ItemCost);
 
 	//Button Functions
 
