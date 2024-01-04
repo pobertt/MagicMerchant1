@@ -22,13 +22,20 @@ struct FUpgradeProperties
 		
 public:
 	UPROPERTY()
-	int Damage = 15;
+		int Damage;
 
-	UPROPERTY()
-	float MPCost = 50.0f;	
+		UPROPERTY()
+		float MPCost;
 
-	UPROPERTY()
-	int ItemCost = 25;
+		UPROPERTY()
+		int ItemCost;
+
+		FUpgradeProperties(int InDamage = 15, float InMPCost = 50.f, int InItemCost = 25)
+		{
+			Damage = InDamage;
+			MPCost = InMPCost;
+			ItemCost = InItemCost;
+		};
 };
 
 UCLASS()
@@ -37,6 +44,9 @@ class MAGICMERCHANT1_API UCombatTabUserWidget : public UUserWidget
 	GENERATED_BODY()
 	
 public:
+
+	UPROPERTY()
+		TArray<FUpgradeProperties> UpgradeProperties;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = CombatWidgetVariables, meta = (AllowPrivateAccess = "true"))
 		bool Idle = false;
@@ -91,68 +101,42 @@ public:
 	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
 		class UButton* Attack1Button;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = ButtonUpgrades, meta = (AllowPrivateAccess = "true"))
-		float Attack1MPCost = 50.0f;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = ButtonUpgrades, meta = (AllowPrivateAccess = "true"))
-		int32 Attack1Damage = 10;
-
 	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
 		class UButton* Attack2Button;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = ButtonUpgrades, meta = (AllowPrivateAccess = "true"))
-		float Attack2MPCost = 50.0f;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = ButtonUpgrades, meta = (AllowPrivateAccess = "true"))
-		int32 Attack2Damage = 15;
 
 	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
 		class UButton* Attack3Button;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = ButtonUpgrades, meta = (AllowPrivateAccess = "true"))
-		float Attack3MPCost = 50.0f;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = ButtonUpgrades, meta = (AllowPrivateAccess = "true"))
-		int32 Attack3Damage = 15;
-
 	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
 		class UButton* Attack4Button;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = ButtonUpgrades, meta = (AllowPrivateAccess = "true"))
-		float Attack4MPCost = 50.0f;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = ButtonUpgrades, meta = (AllowPrivateAccess = "true"))
-		int32 Attack4Damage = 15;
 
 	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
 		class UButton* Item1Button;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = ButtonUpgrades, meta = (AllowPrivateAccess = "true"))
-		int32 Item1Cost = 25;
-
 	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
 		class UButton* Item2Button;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = ButtonUpgrades, meta = (AllowPrivateAccess = "true"))
-		int32 Item2Cost = 25;
 
 	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
 		class UButton* Item3Button;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = ButtonUpgrades, meta = (AllowPrivateAccess = "true"))
-		int32 Item3Cost = 25;
-
 	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
 		class UButton* Item4Button;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = ButtonUpgrades, meta = (AllowPrivateAccess = "true"))
-		int32 Item4Cost = 25;
 
 	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
 		class UButton* IdleButton;
 
 	UPROPERTY()
-		FUpgradeProperties UpgradeProperties;
+		FUpgradeProperties UpgradeProperties1;
+
+	UPROPERTY()
+		FUpgradeProperties UpgradeProperties2;
+
+	UPROPERTY()
+		FUpgradeProperties UpgradeProperties3;
+
+	UPROPERTY()
+		FUpgradeProperties UpgradeProperties4;
+
 
 	virtual void NativeConstruct() override;
 
@@ -162,7 +146,7 @@ public:
 		void AttackFunction(int Cost, int LockedButtonsIndex, int FirstClickArrayIndex, int Dmg, FString AttackUsed, float MPCost, FString AttackType);
 	
 	UFUNCTION()
-		void ItemFunction(int Cost, int LockedButtonsIndex, int FirstClickArrayIndex, FString ItemUsed);
+		void ItemFunction(int Cost, int LockedButtonsIndex, int FirstClickArrayIndex, FString ItemUsed, int Damage, float MPCost, int ItemCost, int ItemIndex);
 
 	UFUNCTION()
 		void Attack1ButtonOnClicked();
@@ -191,7 +175,7 @@ public:
 		void Item4ButtonOnClicked();
 
 	UFUNCTION()
-		void ItemUpgrade(int Damage, float MPCost, int ItemCost);
+		FUpgradeProperties ItemUpgrade(int Damage, float MPCost, int ItemCost, int ItemIndex);
 
 	//Button Functions
 
@@ -204,6 +188,7 @@ public:
 	UFUNCTION()
 		void CooldownText();
 
+
 	//Timer Functions
 
 	UFUNCTION()
@@ -214,7 +199,6 @@ public:
 
 	UFUNCTION()
 		void IdleTimerReset();
-
 
 private:
 
