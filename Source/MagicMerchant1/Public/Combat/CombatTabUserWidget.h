@@ -15,6 +15,22 @@
 /**
  * 
  */
+USTRUCT()
+struct FUpgradeProperties
+{
+	GENERATED_USTRUCT_BODY()
+		
+public:
+	UPROPERTY()
+	int Damage = 15;
+
+	UPROPERTY()
+	float MPCost = 50.0f;	
+
+	UPROPERTY()
+	int ItemCost = 25;
+};
+
 UCLASS()
 class MAGICMERCHANT1_API UCombatTabUserWidget : public UUserWidget
 {
@@ -135,6 +151,9 @@ public:
 	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
 		class UButton* IdleButton;
 
+	UPROPERTY()
+		FUpgradeProperties UpgradeProperties;
+
 	virtual void NativeConstruct() override;
 
 	//Attack Functions
@@ -143,7 +162,7 @@ public:
 		void AttackFunction(int Cost, int LockedButtonsIndex, int FirstClickArrayIndex, int Dmg, FString AttackUsed, float MPCost, FString AttackType);
 	
 	UFUNCTION()
-		void ItemFunction(int Cost, int LockedButtonsIndex, int FirstClickArrayIndex, FString ItemUsed, int Damage, float MPCost, int ItemCost);
+		void ItemFunction(int Cost, int LockedButtonsIndex, int FirstClickArrayIndex, FString ItemUsed);
 
 	UFUNCTION()
 		void Attack1ButtonOnClicked();

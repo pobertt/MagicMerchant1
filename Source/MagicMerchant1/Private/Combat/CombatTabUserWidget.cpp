@@ -33,7 +33,6 @@ void UCombatTabUserWidget::NativeConstruct()
 
 	PlayerRef = Cast<ABetterPlayerCharacter>(GetWorld()->GetFirstPlayerController()->GetPawn());
 	GameInstanceRef = Cast<UMyGameInstance>(GetWorld()->GetGameInstance());
-	
 
 	PlayerRef->MakeEnemy();
 	BaseEnemyRef = PlayerRef->BaseEnemyRef;
@@ -86,7 +85,7 @@ void UCombatTabUserWidget::AttackFunction(int Cost, int LockedButtonsIndex, int 
 	}
 }
 
-void UCombatTabUserWidget::ItemFunction(int Cost, int LockedButtonsIndex, int FirstClickArrayIndex, FString ItemUsed, int Damage, float MPCost, int ItemCost)
+void UCombatTabUserWidget::ItemFunction(int Cost, int LockedButtonsIndex, int FirstClickArrayIndex, FString ItemUsed)
 {
 	if (PlayerRef->money < Cost && GameInstanceRef->LockedButtons[LockedButtonsIndex] == true)
 	{
@@ -107,8 +106,6 @@ void UCombatTabUserWidget::ItemFunction(int Cost, int LockedButtonsIndex, int Fi
 	{
 		TextLabel->SetText(FText::FromString(ItemUsed));
 		//item consumed function goes here
-
-		ItemUpgrade(Damage, MPCost, ItemCost);
 
 	}
 }
@@ -264,8 +261,14 @@ void UCombatTabUserWidget::Attack4ButtonOnClicked()
 
 void UCombatTabUserWidget::Item1ButtonOnClicked()
 {
-	ItemFunction(2500, 4, 4, "Purchased", Attack1Damage, Attack1MPCost, Item1Cost);
-
+	ItemFunction(2500, 4, 4, "Purchased");
+	/*
+	Attack1Damage = UpgradeProperties.Damage;
+	Attack1MPCost = UpgradeProperties.MPCost;
+	Item1Cost = UpgradeProperties.ItemCost;
+	*/
+	ItemUpgrade(Attack1Damage, Attack1MPCost, Item1Cost);
+	
 	if (GameInstanceRef->LockedButtons[4] == false)
 	{
 		Item1TextBlock->SetText(FText::FromString(
@@ -277,8 +280,12 @@ void UCombatTabUserWidget::Item1ButtonOnClicked()
 
 void UCombatTabUserWidget::Item2ButtonOnClicked()
 {
-	ItemFunction(2500, 5, 5, "Purchased", Attack2Damage, Attack2MPCost, Item2Cost);
+	ItemFunction(2500, 5, 5, "Purchased");
 	
+	Attack2Damage = UpgradeProperties.Damage;
+	Attack2MPCost = UpgradeProperties.MPCost;
+	Item2Cost = UpgradeProperties.ItemCost;
+
 	if (GameInstanceRef->LockedButtons[5] == false)
 	{
 		Item2TextBlock->SetText(FText::FromString(
@@ -290,7 +297,11 @@ void UCombatTabUserWidget::Item2ButtonOnClicked()
 
 void UCombatTabUserWidget::Item3ButtonOnClicked()
 {
-	ItemFunction(2500, 6, 6, "Purchased", Attack3Damage, Attack3MPCost, Item3Cost);
+	ItemFunction(2500, 6, 6, "Purchased");
+
+	Attack3Damage = UpgradeProperties.Damage;
+	Attack3MPCost = UpgradeProperties.MPCost;
+	Item3Cost = UpgradeProperties.ItemCost;
 
 	if (GameInstanceRef->LockedButtons[6] == false)
 	{
@@ -303,7 +314,11 @@ void UCombatTabUserWidget::Item3ButtonOnClicked()
 
 void UCombatTabUserWidget::Item4ButtonOnClicked()
 {
-	ItemFunction(2500, 7, 7, "Purchased", Attack4Damage, Attack4MPCost, Item4Cost);
+	ItemFunction(2500, 7, 7, "Purchased");
+
+	Attack4Damage = UpgradeProperties.Damage;
+	Attack4MPCost = UpgradeProperties.MPCost;
+	Item4Cost = UpgradeProperties.ItemCost;
 
 	if (GameInstanceRef->LockedButtons[7] == false)
 	{
@@ -316,6 +331,8 @@ void UCombatTabUserWidget::Item4ButtonOnClicked()
 
 void UCombatTabUserWidget::ItemUpgrade(int Damage, float MPCost, int ItemCost)
 {
+	//FUpgradeProperties temp;
+
 	if (PlayerRef->money >= ItemCost) {
 		Damage += 1;
 		MPCost -= 0.5;
@@ -324,6 +341,12 @@ void UCombatTabUserWidget::ItemUpgrade(int Damage, float MPCost, int ItemCost)
 
 		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Yellow, FString::FormatAsNumber(ItemCost));
 	}
+
+	//temp.Damage = Damage;
+	//temp.MPCost = MPCost;
+	//temp.ItemCost = ItemCost;
+
+	//return temp;
 }
 
 //Button Functions
