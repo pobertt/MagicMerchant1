@@ -83,6 +83,8 @@ AFireTypeEnemy::AFireTypeEnemy()
 {
 	SetType("Fire");
 
+	MaxHP = 15;
+	CurrentHP = MaxHP;
 }
 
 void AFireTypeEnemy::Tick(float DeltaTime)
@@ -95,6 +97,9 @@ void AFireTypeEnemy::Tick(float DeltaTime)
 AGrassTypeEnemy::AGrassTypeEnemy()
 {
 	SetType("Grass");
+
+	MaxHP = 30;
+	CurrentHP = MaxHP;
 }
 
 void AGrassTypeEnemy::Tick(float DeltaTime)
@@ -107,6 +112,9 @@ void AGrassTypeEnemy::Tick(float DeltaTime)
 AWaterTypeEnemy::AWaterTypeEnemy()
 {
 	SetType("Water");
+
+	MaxHP = 45;
+	CurrentHP = MaxHP;
 }
 
 void AWaterTypeEnemy::Tick(float DeltaTime)
