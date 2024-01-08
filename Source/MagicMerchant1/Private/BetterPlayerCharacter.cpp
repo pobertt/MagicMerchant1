@@ -94,9 +94,9 @@ int32 ABetterPlayerCharacter::AddLvl()
 }
 
 //Subtracting from player stats
-float ABetterPlayerCharacter::SubHp()
+float ABetterPlayerCharacter::SubHp(int Dmg)
 {
-	if (Health >= 20.f) Health = Health - 20;
+	Health = Health - Dmg;
 	return Health;
 }
 
@@ -178,6 +178,17 @@ void ABetterPlayerCharacter::MakeEnemy()
 		}
 		//Setting isAlive to true when made
 		BaseEnemyRef->isAlive = true;
+
+		if (BaseEnemyRef->isAlive == true && BaseEnemyRef->IsValidLowLevelFast()) {
+			FTimerDelegate AttackPlayerDelegate;
+			AttackPlayerDelegate.BindUFunction(this, "AttackPlayer", BaseEnemyRef->BaseAttack);
+
+			GetWorld()->GetTimerManager().SetTimer(
+				AttackPlayerTimerHandle,
+				AttackPlayerDelegate,
+				3.0f,
+				true);
+		}
 	}
 }
 
@@ -219,6 +230,13 @@ void ABetterPlayerCharacter::AttackEnemy(int Dmg, float MPCost, FString AttackTy
 	}
 	else {
 		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Emerald, TEXT("Enemy Ref is not valid"));
+	}
+}
+
+void ABetterPlayerCharacter::AttackPlayer(int Dmg)
+{
+	if (BaseEnemyRef->isAlive == true && Health > 0) {
+		SubHp(Dmg);
 	}
 }
 
@@ -287,6 +305,7 @@ void ABetterPlayerCharacter::Tick(float DeltaTime)
 	HealthRegenBar();
 
 	MPRegenBar();
+
 }
 
 // Called to bind functionality to input

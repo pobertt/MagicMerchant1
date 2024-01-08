@@ -85,7 +85,7 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Inventory, meta = (AllowPrivateAccess = "true"))
 		class UDataTable* Inventory;
 
-	
+	FTimerHandle AttackPlayerTimerHandle;
 
 	//Declaring functions to add to player stats
 
@@ -113,7 +113,7 @@ public:
 	//Declaring functions to subtract from player stats
 
 	UFUNCTION(BlueprintCallable, Category = playerStats)
-		float SubHp();
+		float SubHp(int Dmg);
 
 	UFUNCTION(BlueprintCallable, Category = playerStats)
 		float SubMp(float MPCost);
@@ -138,6 +138,9 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = playerCombat)
 		void AttackEnemy(int Dmg, float MPCost, FString AttackType);
+
+	UFUNCTION(BlueprintCallable, Category = playerCombat)
+		void AttackPlayer(int Dmg);
 
 	UFUNCTION(BlueprintCallable, Category = BaseEnemy)
 		void EnemyKilled();
