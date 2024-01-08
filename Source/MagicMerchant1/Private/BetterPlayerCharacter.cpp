@@ -183,7 +183,7 @@ void ABetterPlayerCharacter::MakeEnemy()
 
 void ABetterPlayerCharacter::AttackEnemy(int Dmg, float MPCost, FString AttackType)
 {
-	if (BaseEnemyRef->isAlive == true) {
+	if (BaseEnemyRef->isAlive == true && BaseEnemyRef->IsValidLowLevelFast()) {
 		UE_LOG(LogTemp, Warning, TEXT("AttackEnemy function worked"));
 
 		if (AttackType == "Fire") {
@@ -216,6 +216,9 @@ void ABetterPlayerCharacter::AttackEnemy(int Dmg, float MPCost, FString AttackTy
 			EnemyKilled();
 			GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Yellow, "Enemy Killed");
 		}
+	}
+	else {
+		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Emerald, TEXT("Enemy Ref is not valid"));
 	}
 }
 

@@ -13,6 +13,8 @@
 #include "Engine.h"
 #include "BetterPlayerCharacter.generated.h"
 
+
+
 UCLASS()
 class MAGICMERCHANT1_API ABetterPlayerCharacter : public ACharacter
 {
