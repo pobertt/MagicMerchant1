@@ -14,17 +14,17 @@ ABaseEnemy::ABaseEnemy()
 	CurrentHP = MaxHP;
 	HPRegen = 0.0005f;
 
-	BaseAttack = 10;
-	AttackMultiplier = 1;
-
-	Defense = 0;
-	DefenseMultiplier = 1;
+	BaseAttack = 5;
+	AttackMultiplier = 2;
 
 	Value = 10;
 
 	EnemyType = "Base";
 
 	isAlive = false;
+
+	EnemyCounter = 0;
+
 }
 
 void ABaseEnemy::HealthRegen()
@@ -35,8 +35,10 @@ void ABaseEnemy::HealthRegen()
 	}
 }
 
-void ABaseEnemy::InitBaseEnemy()
+void ABaseEnemy::InitBaseEnemy(int32 counter)
 {
+	EnemyCounter += counter;
+
 	MaxHP = MaxHP;
 	CurrentHP = MaxHP;
 	HPRegen = HPRegen;
@@ -44,10 +46,29 @@ void ABaseEnemy::InitBaseEnemy()
 	BaseAttack = BaseAttack;
 	AttackMultiplier = AttackMultiplier;
 
-	Defense = Defense;
-	DefenseMultiplier = DefenseMultiplier;
-
 	Value = 10;
+
+	isAlive = false;
+
+	if (EnemyCounter < 5) {
+		
+	}
+	else {
+		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, "ENEMY UPGRADED");
+		EnemyUpgrade();
+	}
+}
+
+void ABaseEnemy::EnemyUpgrade()
+{
+	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Green, "EnemyUPgrade(FunctionCalled)");
+	BaseAttack = BaseAttack * AttackMultiplier;
+
+	MaxHP = MaxHP + 5;
+	CurrentHP = MaxHP + 5;
+	HPRegen = HPRegen + 5;
+
+	Value = 10000;
 
 	isAlive = false;
 }

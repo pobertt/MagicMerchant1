@@ -22,6 +22,7 @@ ABetterPlayerCharacter::ABetterPlayerCharacter()
 
 	//Combat Stats
 	basicAttackDMG = 10;
+	EnemyCounter = 0;
 }
 
 void ABetterPlayerCharacter::HealthRegenBar()
@@ -127,6 +128,11 @@ int32 ABetterPlayerCharacter::SubLvl()
 
 void ABetterPlayerCharacter::MakeEnemy()
 {
+	if (BaseEnemyRef->isAlive == false) 
+	{
+		BaseEnemyRef->InitBaseEnemy(EnemyCounter);
+	}
+
 	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Yellow, "Enemy Made (MakeEnemyFunc)");
 	if (bEnemyRespawn == true)
 	{
@@ -148,7 +154,6 @@ void ABetterPlayerCharacter::MakeEnemy()
 			BaseEnemyRef = (GetWorld()->SpawnActor<AFireTypeEnemy>(Location, Rotation, SpawnInfo));
 			GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, "1");
 			GameInstanceRef->SetEnemyUIType(SpawnNum);
-
 		}
 		break;
 		case 2:
@@ -157,7 +162,6 @@ void ABetterPlayerCharacter::MakeEnemy()
 			BaseEnemyRef = (GetWorld()->SpawnActor<AGrassTypeEnemy>(Location, Rotation, SpawnInfo));
 			GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Green, "2");
 			GameInstanceRef->SetEnemyUIType(SpawnNum);
-
 		}
 		break;
 		case 3:
@@ -166,7 +170,6 @@ void ABetterPlayerCharacter::MakeEnemy()
 			BaseEnemyRef = (GetWorld()->SpawnActor<AWaterTypeEnemy>(Location, Rotation, SpawnInfo));
 			GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Blue, "3");
 			GameInstanceRef->SetEnemyUIType(SpawnNum);
-
 		}
 		break;
 		default:
@@ -176,10 +179,12 @@ void ABetterPlayerCharacter::MakeEnemy()
 		}
 		break;
 		}
+		
 		//Setting isAlive to true when made
 		BaseEnemyRef->isAlive = true;
 
 		if (BaseEnemyRef->isAlive == true && BaseEnemyRef->IsValidLowLevelFast()) {
+
 			FTimerDelegate AttackPlayerDelegate;
 			AttackPlayerDelegate.BindUFunction(this, "AttackPlayer", BaseEnemyRef->BaseAttack);
 
@@ -241,36 +246,34 @@ void ABetterPlayerCharacter::AttackPlayer(int Dmg)
 }
 
 void ABetterPlayerCharacter::EnemyKilled()
-{
-		//Set isAlive to false
-		BaseEnemyRef->isAlive = false;
+{		
+	//Set isAlive to false
+	BaseEnemyRef->isAlive = false;
 
-		//Give player however much money the enemy is worth
-		AddMoney(BaseEnemyRef->Value);
+	//Give player however much money the enemy is worth
+	AddMoney(BaseEnemyRef->Value);
 
-		//Destroying the enemy when killed (so we dont have overlapping enemy spawns, only want 1 enemy at a time)
-		BaseEnemyRef->Destroy();
+	//Destroying the enemy when killed (so we dont have overlapping enemy spawns, only want 1 enemy at a time)
+	BaseEnemyRef->Destroy();
 		
-		bEnemyRespawn = true;
+	bEnemyRespawn = true;
 
-		//If enemy is dead
-		if (BaseEnemyRef->isAlive == false)
-		{
-			//Reinitialising values
-			BaseEnemyRef->InitBaseEnemy();
+	//If enemy is dead
+	if (BaseEnemyRef->isAlive == false)
+	{
+		GetWorld()->GetTimerManager().SetTimer(
+			EnemyRespawnTimerHandle,
+			this,
+			&ABetterPlayerCharacter::MakeEnemy,
+			3.0f,
+			false);
 
-			GetWorld()->GetTimerManager().SetTimer(
-				EnemyRespawnTimerHandle,
-				this,
-				&ABetterPlayerCharacter::MakeEnemy,
-				3.0f,
-				false);
+		// Increasing Enemy Counter
+		EnemyCounter++;
 
-			//Create a new enemy 
-			GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Yellow, "Enemy Made (KilledFunc)");
-		}
-		//calling enemy respawn
-		//EnemyRespawn();
+		//Create a new enemy 
+		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Yellow, "Enemy Made (KilledFunc)");
+	}
 
 }
 

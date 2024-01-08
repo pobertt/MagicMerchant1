@@ -80,6 +80,11 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = BaseEnemy, meta = (AllowPrivateAccess = "true"))
 		uint8 SpawnNum;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = BaseEnemy, meta = (AllowPrivateAccess = "true"))
+		int32 EnemyCounter;
+
+
+
 	//Inventory
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Inventory, meta = (AllowPrivateAccess = "true"))

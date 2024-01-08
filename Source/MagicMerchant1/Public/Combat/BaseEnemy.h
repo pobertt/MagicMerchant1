@@ -32,16 +32,13 @@ public:
 		float AttackMultiplier;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = enemyStats, meta = (AllowPrivateAccess = "true"))
-		int32 Defense;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = enemyStats, meta = (AllowPrivateAccess = "true"))
-		float DefenseMultiplier;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = enemyStats, meta = (AllowPrivateAccess = "true"))
 		float Value;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = enemyStats, meta = (AllowPrivateAccess = "true"))
 		bool isAlive;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = enemyStats, meta = (AllowPrivateAccess = "true"))
+		int32 EnemyCounter;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = enemyStats, meta = (AllowPrivateAccess = "true"))
 		FString EnemyType;
@@ -50,7 +47,10 @@ public:
 	void HealthRegen();
 	
 	UFUNCTION(BlueprintCallable, Category = BaseEnemy)
-		void InitBaseEnemy();
+		void InitBaseEnemy(int32 counter);
+
+	UFUNCTION(BlueprintCallable, Category = BaseEnemy)
+		void EnemyUpgrade();
 
 	UFUNCTION(BlueprintCallable, Category = TypeEnemy)
 	void SetType(FString Type);
