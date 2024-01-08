@@ -10,9 +10,9 @@ ABaseEnemy::ABaseEnemy()
 	PrimaryActorTick.bCanEverTick = true;
 
 	//Base Enemy Stats
-	MaxHP = 100;
+	MaxHP = 20;
 	CurrentHP = MaxHP;
-	HPRegen = 0.5f;
+	HPRegen = 0.0005f;
 
 	BaseAttack = 10;
 	AttackMultiplier = 1;
@@ -31,7 +31,7 @@ void ABaseEnemy::HealthRegen()
 {
 	if (CurrentHP < MaxHP)
 	{
-		CurrentHP = CurrentHP + 0.0075f;
+		CurrentHP = CurrentHP + HPRegen;
 	}
 }
 
@@ -82,9 +82,6 @@ void ABaseEnemy::Tick(float DeltaTime)
 AFireTypeEnemy::AFireTypeEnemy()
 {
 	SetType("Fire");
-
-	MaxHP = 15;
-	CurrentHP = MaxHP;
 }
 
 void AFireTypeEnemy::Tick(float DeltaTime)
@@ -97,9 +94,6 @@ void AFireTypeEnemy::Tick(float DeltaTime)
 AGrassTypeEnemy::AGrassTypeEnemy()
 {
 	SetType("Grass");
-
-	MaxHP = 30;
-	CurrentHP = MaxHP;
 }
 
 void AGrassTypeEnemy::Tick(float DeltaTime)
@@ -112,9 +106,6 @@ void AGrassTypeEnemy::Tick(float DeltaTime)
 AWaterTypeEnemy::AWaterTypeEnemy()
 {
 	SetType("Water");
-
-	MaxHP = 45;
-	CurrentHP = MaxHP;
 }
 
 void AWaterTypeEnemy::Tick(float DeltaTime)

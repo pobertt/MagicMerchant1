@@ -186,7 +186,6 @@ void ABetterPlayerCharacter::AttackEnemy(int Dmg, float MPCost, FString AttackTy
 	if (BaseEnemyRef->isAlive == true) {
 		UE_LOG(LogTemp, Warning, TEXT("AttackEnemy function worked"));
 
-		//when called minus enemy current hp by how much damage
 		if (AttackType == "Fire") {
 			this->GetComponentByClass<UMagicTypes>()->FireDmg(Dmg);
 

@@ -126,7 +126,7 @@ void UCombatTabUserWidget::Attack1ButtonOnClicked()
 		bCanClick = false;
 
 		//Calling the Attack Function
-		AttackFunction(0, 0, 0, UpgradeProperties[0].MPCost,"Normal Attack Used", UpgradeProperties[0].MPCost, "Normal");
+		AttackFunction(0, 0, 0, UpgradeProperties[0].Damage,"Normal Attack Used", UpgradeProperties[0].MPCost, "Normal");
 		
 		//If the button is unlocked 
 		if (GameInstanceRef->LockedButtons[0] == false)
