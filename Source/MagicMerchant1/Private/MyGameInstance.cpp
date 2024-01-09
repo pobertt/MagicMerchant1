@@ -6,7 +6,6 @@
 
 UMyGameInstance::UMyGameInstance() : NumButtons(9), InitialCost(0)
 {
-
 	//GamemodeRef = Cast<AMagicMerchant1GameModeBase>(GetWorld()->GetAuthGameMode());
 
 	/*

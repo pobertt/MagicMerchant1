@@ -14,7 +14,7 @@ ABaseEnemy::ABaseEnemy()
 	CurrentHP = MaxHP;
 	HPRegen = 0.0005f;
 
-	BaseAttack = 5;
+	BaseAttack = 50;
 	AttackMultiplier = 2;
 
 	Value = 25;

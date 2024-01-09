@@ -126,6 +126,7 @@ int32 ABetterPlayerCharacter::SubLvl()
 	return lvl;
 }
 
+
 void ABetterPlayerCharacter::MakeEnemy()
 {
 	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Yellow, "Enemy Made (MakeEnemyFunc)");
@@ -245,6 +246,10 @@ void ABetterPlayerCharacter::AttackPlayer(int Dmg)
 	}
 	else if (BaseEnemyRef->isAlive == true && Health > 0) {
 		SubHp(Dmg);
+	}
+	else if (Health <= 0) {
+		AttackPlayerTimerHandle.Invalidate();
+		PlayerDead();
 	}
 }
 

@@ -136,6 +136,10 @@ public:
 		void SayHey();
 	void SayHey_Implementation() { };
 
+	UFUNCTION(BlueprintImplementableEvent, Category = PlayerDeath)
+		void PlayerDead();
+	void PlayerDead_Implementation() { GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, "The player is Dead"); };
+
 	//Enenmy Functions
 
 	UFUNCTION(BlueprintCallable, Category = BaseEnemy)
