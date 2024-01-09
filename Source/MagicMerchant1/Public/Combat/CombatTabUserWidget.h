@@ -30,7 +30,7 @@ public:
 		UPROPERTY()
 		int ItemCost;
 
-		FUpgradeProperties(int InDamage = 15, float InMPCost = 50.f, int InItemCost = 25)
+		FUpgradeProperties(int InDamage = 15, float InMPCost = 25.f, int InItemCost = 25)
 		{
 			Damage = InDamage;
 			MPCost = InMPCost;

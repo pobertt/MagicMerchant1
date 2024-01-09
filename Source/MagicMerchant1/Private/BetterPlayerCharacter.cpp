@@ -11,7 +11,7 @@ ABetterPlayerCharacter::ABetterPlayerCharacter()
 
 	Health = 100.0f;
 
-	HealthRegen = 0.1f;
+	HealthRegen = 0.05f;
 
 	HealthRate = 3.0f;
 
@@ -128,11 +128,6 @@ int32 ABetterPlayerCharacter::SubLvl()
 
 void ABetterPlayerCharacter::MakeEnemy()
 {
-	if (BaseEnemyRef->isAlive == false) 
-	{
-		BaseEnemyRef->InitBaseEnemy(EnemyCounter);
-	}
-
 	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Yellow, "Enemy Made (MakeEnemyFunc)");
 	if (bEnemyRespawn == true)
 	{
@@ -162,24 +157,28 @@ void ABetterPlayerCharacter::MakeEnemy()
 			BaseEnemyRef = (GetWorld()->SpawnActor<AGrassTypeEnemy>(Location, Rotation, SpawnInfo));
 			GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Green, "2");
 			GameInstanceRef->SetEnemyUIType(SpawnNum);
+			
 		}
 		break;
 		case 3:
 		{
 			// AWaterTypeEnemy* WaterTypeEnemy = (GetWorld()->SpawnActor<AWaterTypeEnemy>(Location, Rotation, SpawnInfo));
 			BaseEnemyRef = (GetWorld()->SpawnActor<AWaterTypeEnemy>(Location, Rotation, SpawnInfo));
-			GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Blue, "3");
+			GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Blue, "3"); 
 			GameInstanceRef->SetEnemyUIType(SpawnNum);
+			
 		}
 		break;
 		default:
 		{
 			BaseEnemyRef = Cast<ABaseEnemy>(GetWorld()->SpawnActor<ABaseEnemy>(Location, Rotation, SpawnInfo));
 			GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Yellow, "Base Enemy");
+			
 		}
 		break;
 		}
-		
+		BaseEnemyRef->InitBaseEnemy(EnemyCounter);
+
 		//Setting isAlive to true when made
 		BaseEnemyRef->isAlive = true;
 
@@ -191,7 +190,7 @@ void ABetterPlayerCharacter::MakeEnemy()
 			GetWorld()->GetTimerManager().SetTimer(
 				AttackPlayerTimerHandle,
 				AttackPlayerDelegate,
-				3.0f,
+				1.5f,
 				true);
 		}
 	}
@@ -199,7 +198,8 @@ void ABetterPlayerCharacter::MakeEnemy()
 
 void ABetterPlayerCharacter::AttackEnemy(int Dmg, float MPCost, FString AttackType)
 {
-	if (BaseEnemyRef->isAlive == true && BaseEnemyRef->IsValidLowLevelFast()) {
+	// && BaseEnemyRef->IsValidLowLevelFast()
+	if (BaseEnemyRef->isAlive == true) {
 		UE_LOG(LogTemp, Warning, TEXT("AttackEnemy function worked"));
 
 		if (AttackType == "Fire") {
@@ -240,7 +240,10 @@ void ABetterPlayerCharacter::AttackEnemy(int Dmg, float MPCost, FString AttackTy
 
 void ABetterPlayerCharacter::AttackPlayer(int Dmg)
 {
-	if (BaseEnemyRef->isAlive == true && Health > 0) {
+	if (!BaseEnemyRef->IsValidLowLevel()) {
+		AttackPlayerTimerHandle.Invalidate();
+	}
+	else if (BaseEnemyRef->isAlive == true && Health > 0) {
 		SubHp(Dmg);
 	}
 }

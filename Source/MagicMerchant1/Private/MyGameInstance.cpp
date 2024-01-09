@@ -45,31 +45,31 @@ UMyGameInstance::UMyGameInstance() : NumButtons(9), InitialCost(0)
 
 		if (i == 0)
 		{
-			InitialCost = 2500;
+			InitialCost = 250;
 		}
 		else if (i == 1) 
 		{
-			InitialCost = 2500;
+			InitialCost = 250;
 		}
 		else if (i == 2)
 		{
-			InitialCost = 2500;
+			InitialCost = 250;
 		}
 		else if (i == 3)
 		{
-			InitialCost = 2500;
+			InitialCost = 50;
 		}
 		else if (i == 4)
 		{
-			InitialCost = 2500;
+			InitialCost = 250;
 		}
 		else if (i == 5)
 		{
-			InitialCost = 2500;
+			InitialCost = 250;
 		}
 		else if (i == 6)
 		{
-			InitialCost = 2500;
+			InitialCost = 250;
 		}
 	}
 }
