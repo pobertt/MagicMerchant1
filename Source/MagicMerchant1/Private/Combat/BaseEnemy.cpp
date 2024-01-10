@@ -14,7 +14,7 @@ ABaseEnemy::ABaseEnemy()
 	CurrentHP = MaxHP;
 	HPRegen = 0.0005f;
 
-	BaseAttack = 5;
+	BaseAttack = 5.f;
 	AttackMultiplier = 2;
 
 	Value = 25;
@@ -41,7 +41,6 @@ void ABaseEnemy::InitBaseEnemy(int32 counter)
 	CurrentHP = MaxHP;
 	HPRegen = HPRegen;
 
-	
 	AttackMultiplier = AttackMultiplier;
 
 	BaseAttack = BaseAttack;
@@ -63,8 +62,7 @@ void ABaseEnemy::InitBaseEnemy(int32 counter)
 
 void ABaseEnemy::EnemyUpgrade()
 {
-	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Green, "EnemyUPgrade(FunctionCalled)");
-	BaseAttack = BaseAttack * AttackMultiplier;
+	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Green, "EnemyUpgrade(FunctionCalled)");
 
 	MaxHP = MaxHP + (1 * EnemyCounter);
 	CurrentHP = CurrentHP + (1 * EnemyCounter);

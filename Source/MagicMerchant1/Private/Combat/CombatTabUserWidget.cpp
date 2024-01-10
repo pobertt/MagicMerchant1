@@ -40,9 +40,11 @@ void UCombatTabUserWidget::NativeConstruct()
 	BaseEnemyRef = PlayerRef->BaseEnemyRef;
 
 	UpgradeProperties.Init(FUpgradeProperties(), 4);
-	UpgradeProperties[0] = FUpgradeProperties(10, 50.f, 25);
+	UpgradeProperties[0] = FUpgradeProperties(5, 10.f, 50, 0.5f);
 
 	bCanClick.Init(true, 4);
+
+	ButtonPressTimerHandle.SetNum(4);	
 }
 
 //Attack Button Functions 
@@ -119,9 +121,9 @@ void UCombatTabUserWidget::Attack1ButtonOnClicked()
 
 			//Set this specific timer back to the original text
 			GetWorld()->GetTimerManager().SetTimer(
-				ButtonPressTimerHandle,
+				ButtonPressTimerHandle[0],
 				Delegate,
-				0.5f,
+				UpgradeProperties[0].CooldownTime,
 				false);
 		}
 	}
@@ -144,9 +146,9 @@ void UCombatTabUserWidget::Attack2ButtonOnClicked()
 				Delegate.BindUFunction(this, "ChangeButtonText", Attack2TextBlock, 1);
 
 				GetWorld()->GetTimerManager().SetTimer(
-					ButtonPressTimerHandle,
+					ButtonPressTimerHandle[1],
 					Delegate,
-					1.0f,
+					UpgradeProperties[1].CooldownTime,
 					false);
 			}
 		}
@@ -170,9 +172,9 @@ void UCombatTabUserWidget::Attack3ButtonOnClicked()
 				Delegate.BindUFunction(this, "ChangeButtonText", Attack3TextBlock, 2);
 
 				GetWorld()->GetTimerManager().SetTimer(
-					ButtonPressTimerHandle,
+					ButtonPressTimerHandle[2],
 					Delegate,
-					1.0f,
+					UpgradeProperties[2].CooldownTime,
 					false);
 			}
 		}
@@ -196,9 +198,9 @@ void UCombatTabUserWidget::Attack4ButtonOnClicked()
 				Delegate.BindUFunction(this, "ChangeButtonText", Attack4TextBlock, 3);
 
 				GetWorld()->GetTimerManager().SetTimer(
-					ButtonPressTimerHandle,
+					ButtonPressTimerHandle[3],
 					Delegate,
-					1.0f,
+					UpgradeProperties[3].CooldownTime,
 					false);
 			}
 		}
@@ -249,7 +251,7 @@ void UCombatTabUserWidget::IdleFunction()
 void UCombatTabUserWidget::ChangeButtonText(UTextBlock* ButtonName, int ButtonNum)
 {
 	bCanClick[ButtonNum] = true;
-	GetWorld()->GetTimerManager().ClearTimer(ButtonPressTimerHandle);
+	GetWorld()->GetTimerManager().ClearTimer(ButtonPressTimerHandle[ButtonNum]);
 
 	switch (ButtonNum)
 	{
@@ -290,7 +292,7 @@ void UCombatTabUserWidget::CooldownText(UTextBlock* ButtonName, int ButtonNum)
 
 //Item Button Functions
 
-void UCombatTabUserWidget::ItemFunction(int Cost, int LockedButtonsIndex, int FirstClickArrayIndex, FString ItemUsed, int Damage, float MPCost, int ItemCost, int ItemIndex)
+void UCombatTabUserWidget::ItemFunction(int Cost, int LockedButtonsIndex, int FirstClickArrayIndex, FString ItemUsed, int Damage, float MPCost, int ItemCost, float CooldownTime, int ItemIndex)
 {
 	if (PlayerRef->money < Cost && GameInstanceRef->LockedButtons[LockedButtonsIndex] == true)
 	{
@@ -312,7 +314,7 @@ void UCombatTabUserWidget::ItemFunction(int Cost, int LockedButtonsIndex, int Fi
 		TextLabel->SetText(FText::FromString(ItemUsed));
 		//item consumed function goes here
 
-		UpgradeProperties[ItemIndex] = ItemUpgrade(Damage, MPCost, ItemCost, ItemIndex);
+		UpgradeProperties[ItemIndex] = ItemUpgrade(Damage, MPCost, ItemCost, CooldownTime, ItemIndex);
 
 	}
 }
@@ -320,7 +322,7 @@ void UCombatTabUserWidget::ItemFunction(int Cost, int LockedButtonsIndex, int Fi
 void UCombatTabUserWidget::Item1ButtonOnClicked()
 {
 	ItemFunction(50, 4, 4, "Upgraded", UpgradeProperties[0].Damage, 
-		UpgradeProperties[0].MPCost, UpgradeProperties[0].ItemCost, 0);
+		UpgradeProperties[0].MPCost, UpgradeProperties[0].ItemCost, UpgradeProperties[0].CooldownTime, 0);
 
 	if (GameInstanceRef->LockedButtons[4] == false)
 	{
@@ -334,7 +336,7 @@ void UCombatTabUserWidget::Item1ButtonOnClicked()
 void UCombatTabUserWidget::Item2ButtonOnClicked()
 {
 	ItemFunction(250, 5, 5, "Upgraded", UpgradeProperties[1].Damage,
-		UpgradeProperties[1].MPCost, UpgradeProperties[1].ItemCost, 1);
+		UpgradeProperties[1].MPCost, UpgradeProperties[1].ItemCost, UpgradeProperties[1].CooldownTime, 1);
 
 	if (GameInstanceRef->LockedButtons[5] == false)
 	{
@@ -348,7 +350,7 @@ void UCombatTabUserWidget::Item2ButtonOnClicked()
 void UCombatTabUserWidget::Item3ButtonOnClicked()
 {
 	ItemFunction(250, 6, 6, "Upgraded", UpgradeProperties[2].Damage,
-		UpgradeProperties[2].MPCost, UpgradeProperties[2].ItemCost, 2);
+		UpgradeProperties[2].MPCost, UpgradeProperties[2].ItemCost, UpgradeProperties[2].CooldownTime, 2);
 
 
 	if (GameInstanceRef->LockedButtons[6] == false)
@@ -363,7 +365,7 @@ void UCombatTabUserWidget::Item3ButtonOnClicked()
 void UCombatTabUserWidget::Item4ButtonOnClicked()
 {
 	ItemFunction(250, 7, 7, "Upgraded", UpgradeProperties[3].Damage,
-		UpgradeProperties[3].MPCost, UpgradeProperties[3].ItemCost, 3);
+		UpgradeProperties[3].MPCost, UpgradeProperties[3].ItemCost, UpgradeProperties[3].CooldownTime, 3);
 
 	if (GameInstanceRef->LockedButtons[7] == false)
 	{
@@ -375,22 +377,35 @@ void UCombatTabUserWidget::Item4ButtonOnClicked()
 }
 
 
-FUpgradeProperties UCombatTabUserWidget::ItemUpgrade(int Damage, float MPCost, int ItemCost, int ItemIndex)
+FUpgradeProperties UCombatTabUserWidget::ItemUpgrade(int Damage, float MPCost, int ItemCost, float CooldownTime, int ItemIndex)
 {
 	FUpgradeProperties temp = UpgradeProperties[ItemIndex];
-
+	
 	if (PlayerRef->money >= ItemCost) {
+		/*
+		if (ItemIndex == 0) {
+			if (CooldownTime > 0.1f) {
+				CooldownTime = CooldownTime -= 1.f;
+				GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Yellow, FString::FormatAsNumber(CooldownTime));
+			}
+		}
+			*/
+		if (CooldownTime > 0.1f){
+			CooldownTime = CooldownTime -= 0.1f;
+		}
 		Damage += 1;
 		MPCost -= 0.5;
 		ItemCost = ItemCost + (ItemCost * 0.1);
+		
 		PlayerRef->money -= ItemCost;
 
-		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Yellow, FString::FormatAsNumber(ItemCost));
+		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Yellow, FString::FormatAsNumber(CooldownTime));
 	}
 
 	temp.Damage = Damage;
 	temp.MPCost = MPCost;
 	temp.ItemCost = ItemCost;
+	temp.CooldownTime = CooldownTime;
 
 	return temp;
 }

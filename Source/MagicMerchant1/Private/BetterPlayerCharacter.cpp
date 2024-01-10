@@ -16,7 +16,7 @@ ABetterPlayerCharacter::ABetterPlayerCharacter()
 	HealthRate = 3.0f;
 
 	mp = 100.0f;
-	money = 10000.0f;
+	money = 0.0f;
 	currency2 = 0.f;
 	lvl = 1;
 

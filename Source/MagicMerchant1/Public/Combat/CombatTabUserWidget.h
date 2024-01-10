@@ -21,21 +21,26 @@ struct FUpgradeProperties
 	GENERATED_USTRUCT_BODY()
 		
 public:
+	
 	UPROPERTY()
 		int Damage;
 
-		UPROPERTY()
+	UPROPERTY()
 		float MPCost;
 
-		UPROPERTY()
+	UPROPERTY()
 		int ItemCost;
 
-		FUpgradeProperties(int InDamage = 15, float InMPCost = 25.f, int InItemCost = 25)
-		{
-			Damage = InDamage;
-			MPCost = InMPCost;
-			ItemCost = InItemCost;
-		};
+	UPROPERTY()
+		float CooldownTime;
+
+	FUpgradeProperties(int InDamage = 15, float InMPCost = 25.f, int InItemCost = 25, float InCooldownTime = 5.0f)
+	{
+		Damage = InDamage;
+		MPCost = InMPCost;
+		ItemCost = InItemCost;
+		CooldownTime = InCooldownTime;
+	};
 };
 
 UCLASS()
@@ -145,7 +150,7 @@ public:
 		void AttackFunction(int Cost, int LockedButtonsIndex, int FirstClickArrayIndex, int Dmg, FString AttackUsed, float MPCost, FString AttackType);
 	
 	UFUNCTION()
-		void ItemFunction(int Cost, int LockedButtonsIndex, int FirstClickArrayIndex, FString ItemUsed, int Damage, float MPCost, int ItemCost, int ItemIndex);
+		void ItemFunction(int Cost, int LockedButtonsIndex, int FirstClickArrayIndex, FString ItemUsed, int Damage, float MPCost, int ItemCost, float CooldownTime, int ItemIndex);
 
 	UFUNCTION()
 		void Attack1ButtonOnClicked();
@@ -174,7 +179,7 @@ public:
 		void Item4ButtonOnClicked();
 
 	UFUNCTION()
-		FUpgradeProperties ItemUpgrade(int Damage, float MPCost, int ItemCost, int ItemIndex);
+		FUpgradeProperties ItemUpgrade(int Damage, float MPCost, int ItemCost, float CooldownTime, int ItemIndex);
 
 	//Button Functions
 
