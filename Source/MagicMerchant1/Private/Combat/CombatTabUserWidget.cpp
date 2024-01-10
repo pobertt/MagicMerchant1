@@ -41,6 +41,11 @@ void UCombatTabUserWidget::NativeConstruct()
 
 	UpgradeProperties.Init(FUpgradeProperties(), 4);
 	UpgradeProperties[0] = FUpgradeProperties(10, 50.f, 25);
+
+	bCanClick[0] = true;
+	bCanClick[1] = true;
+	bCanClick[2] = true;
+	bCanClick[3] = true;
 }
 
 //Attack Button Functions 
@@ -65,7 +70,6 @@ void UCombatTabUserWidget::AttackFunction(int Cost, int LockedButtonsIndex, int 
 
 		//Output text saying it is purchased
 		TextLabel->SetText(FText::FromString("Purchased"));
-		GameInstanceRef->ButtonText[FirstClickArrayIndex] = "Attack " + FString::FormatAsNumber(FirstClickArrayIndex + 1);
 
 		//First Click has been consumed
 		GameInstanceRef->FirstClickArray[FirstClickArrayIndex] = false;
@@ -89,6 +93,205 @@ void UCombatTabUserWidget::AttackFunction(int Cost, int LockedButtonsIndex, int 
 		}
 	}
 }
+
+void UCombatTabUserWidget::Attack1ButtonOnClicked()
+{
+	//If the button can be clicked
+	if (bCanClick[0] == true)
+	{
+		//The button now can't be clicked until Button Timer Reset is called
+		bCanClick[0] = false;
+
+		//Calling the Attack Function
+		AttackFunction(0, 0, 0, UpgradeProperties[0].Damage,"Normal Attack Used", UpgradeProperties[0].MPCost, "Normal");
+		
+		//If the button is unlocked 
+		if (GameInstanceRef->LockedButtons[0] == false)
+		{
+			//Set the specific button text to on cooldown
+			CooldownText(Attack1TextBlock, 1);
+
+			//This all seems redundant currently but it helped me understand delegates 
+			//Seems redudant as if i am setting them all to go cooldown and then setting them back to their original text, 
+			//whats the point of the specific timer?
+
+			FTimerDelegate Delegate;
+
+			//Assigning the function to the timer and passing in parameters 
+			Delegate.BindUFunction(this, "ChangeButtonText", Attack1TextBlock, 1);
+
+			//Set this specific timer back to the original text
+			GetWorld()->GetTimerManager().SetTimer(
+				ButtonPressTimerHandle,
+				Delegate,
+				0.5f,
+				false);
+		}
+	}
+}
+
+void UCombatTabUserWidget::Attack2ButtonOnClicked()
+{
+	if (Idle == false)
+	{
+		if (bCanClick[1] == true)
+		{
+			bCanClick[1] = false;
+			AttackFunction(250, 1, 1, UpgradeProperties[1].Damage, "Fire Attack Used", UpgradeProperties[1].MPCost, "Fire");
+
+			if (GameInstanceRef->LockedButtons[1] == false)
+			{
+				CooldownText(Attack2TextBlock, 2);
+
+				FTimerDelegate Delegate;
+				Delegate.BindUFunction(this, "ChangeButtonText", Attack2TextBlock, 2);
+
+				GetWorld()->GetTimerManager().SetTimer(
+					ButtonPressTimerHandle,
+					Delegate,
+					1.0f,
+					false);
+			}
+		}
+	}
+}
+
+void UCombatTabUserWidget::Attack3ButtonOnClicked()
+{
+	if (Idle == false)
+	{
+		if (bCanClick[2] == true)
+		{
+			bCanClick[2] = false;
+			AttackFunction(250, 2, 2, UpgradeProperties[2].Damage, "Grass Attack Used", UpgradeProperties[2].MPCost, "Grass");
+
+			if (GameInstanceRef->LockedButtons[2] == false)
+			{
+				CooldownText(Attack3TextBlock, 3);
+
+				FTimerDelegate Delegate;
+				Delegate.BindUFunction(this, "ChangeButtonText", Attack3TextBlock, 3);
+
+				GetWorld()->GetTimerManager().SetTimer(
+					ButtonPressTimerHandle,
+					Delegate,
+					1.0f,
+					false);
+			}
+		}
+	}
+}
+
+void UCombatTabUserWidget::Attack4ButtonOnClicked()
+{
+	if (Idle == false)
+	{
+		if (bCanClick[3] == true)
+		{
+			bCanClick[3] = false;
+			AttackFunction(250, 3, 3, UpgradeProperties[3].Damage, "Water Attack Used", UpgradeProperties[3].MPCost, "Water");
+
+			if (GameInstanceRef->LockedButtons[3] == false)
+			{
+				CooldownText(Attack4TextBlock, 4);
+
+				FTimerDelegate Delegate;
+				Delegate.BindUFunction(this, "ChangeButtonText", Attack4TextBlock, 4);
+
+				GetWorld()->GetTimerManager().SetTimer(
+					ButtonPressTimerHandle,
+					Delegate,
+					1.0f,
+					false);
+			}
+		}
+	}
+}
+
+void UCombatTabUserWidget::IdleButtonOnClicked()
+{
+	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, "Idle Clicked");
+
+	IdleFunction();
+}
+
+void UCombatTabUserWidget::IdleTimerReset()
+{
+	GetWorld()->GetTimerManager().ClearTimer(IdleFunctionTimerHandle);
+
+	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, "Idle Timer Reset Called");
+}
+
+void UCombatTabUserWidget::IdleFunction()
+{
+	//it did work but didnt call Attack1Button more than once because of return 
+	//but didnt know how to make it not infinite
+
+	//If Button is on turn it off
+	if (Idle == true)
+	{
+		Idle = false;
+		IdleButtonTextBlock->SetText(FText::FromString("Idle: Off"));
+
+		IdleTimerReset();
+	}
+	else if (Idle == false)
+	{
+		Idle = true;
+		IdleButtonTextBlock->SetText(FText::FromString("Idle: On"));
+
+		GetWorld()->GetTimerManager().SetTimer(
+			IdleFunctionTimerHandle,
+			this,
+			&UCombatTabUserWidget::Attack1ButtonOnClicked,
+			1.0f,
+			true);
+	}
+}
+
+void UCombatTabUserWidget::ChangeButtonText(UTextBlock* ButtonName, int ButtonNum)
+{
+	bCanClick[ButtonNum] = true;
+	GetWorld()->GetTimerManager().ClearTimer(ButtonPressTimerHandle);
+
+	switch (ButtonNum)
+	{
+	case 1:
+		ButtonName->SetText(FText::FromString("Normal \nAttack"));
+		break;
+	case 2:
+		ButtonName->SetText(FText::FromString("Fire \nAttack"));
+		break;
+	case 3:
+		ButtonName->SetText(FText::FromString("Grass \nAttack"));
+		break;
+	case 4:
+		ButtonName->SetText(FText::FromString("Water \nAttack"));
+		break;
+	}
+}
+
+void UCombatTabUserWidget::CooldownText(UTextBlock* ButtonName, int ButtonNum)
+{
+	switch (ButtonNum)
+	{
+	case 1:
+		ButtonName->SetText(FText::FromString("cooldown1"));
+		break;
+	case 2:
+		ButtonName->SetText(FText::FromString("cooldown2"));
+		break;
+	case 3:
+		ButtonName->SetText(FText::FromString("cooldown3"));
+		break;
+	case 4:
+		ButtonName->SetText(FText::FromString("cooldown4"));
+		break;
+	}
+}
+
+
+//Item Button Functions
 
 void UCombatTabUserWidget::ItemFunction(int Cost, int LockedButtonsIndex, int FirstClickArrayIndex, FString ItemUsed, int Damage, float MPCost, int ItemCost, int ItemIndex)
 {
@@ -116,155 +319,6 @@ void UCombatTabUserWidget::ItemFunction(int Cost, int LockedButtonsIndex, int Fi
 
 	}
 }
-
-void UCombatTabUserWidget::Attack1ButtonOnClicked()
-{
-	//If the button can be clicked
-	if (bCanClick == true)
-	{
-		//The button now can't be clicked until Button Timer Reset is called
-		bCanClick = false;
-
-		//Calling the Attack Function
-		AttackFunction(0, 0, 0, UpgradeProperties[0].Damage,"Normal Attack Used", UpgradeProperties[0].MPCost, "Normal");
-		
-		//If the button is unlocked 
-		if (GameInstanceRef->LockedButtons[0] == false)
-		{
-			//Set the all button text to on cooldown
-			CooldownText();
-			// GameInstanceRef->ButtonText[0] = "Cooldown";
-
-			//This all seems redundant currently but it helped me understand delegates 
-			//Seems redudant as if i am setting them all to go cooldown and then setting them back to their original text, 
-			//whats the point of the specific timer?
-
-			FTimerDelegate Delegate;
-
-			//Assigning the function to the timer and passing in parameters 
-			Delegate.BindUFunction(this, "ChangeButtonText", Attack1TextBlock, 1);
-
-			//Set this specific timer back to the original text
-			GetWorld()->GetTimerManager().SetTimer(
-				ButtonPressTimerHandle,
-				Delegate,
-				//&UCombatTabUserWidget::ButtonTimerReset,
-				1.0f,
-				false);
-
-			//setting them all back to their original text
-			GetWorld()->GetTimerManager().SetTimer(
-				ButtonPressTimerHandle,
-				this,
-				&UCombatTabUserWidget::ButtonTimerReset,
-				1.0f,
-				false);
-
-		}
-	}
-}
-
-void UCombatTabUserWidget::Attack2ButtonOnClicked()
-{
-	if (Idle == false)
-	{
-		if (bCanClick == true)
-		{
-			bCanClick = false;
-			AttackFunction(250, 1, 1, UpgradeProperties[1].Damage, "Fire Attack Used", UpgradeProperties[1].MPCost, "Fire");
-
-			if (GameInstanceRef->LockedButtons[1] == false)
-			{
-				CooldownText();
-
-				FTimerDelegate Delegate;
-				Delegate.BindUFunction(this, "ChangeButtonText", Attack2TextBlock, 2);
-
-				GetWorld()->GetTimerManager().SetTimer(
-					ButtonPressTimerHandle,
-					Delegate,
-					1.0f,
-					false);
-
-				GetWorld()->GetTimerManager().SetTimer(
-					ButtonPressTimerHandle,
-					this,
-					&UCombatTabUserWidget::ButtonTimerReset,
-					1.0f,
-					false);
-			}
-		}
-	}
-}
-
-void UCombatTabUserWidget::Attack3ButtonOnClicked()
-{
-	if (Idle == false)
-	{
-		if (bCanClick == true)
-		{
-			bCanClick = false;
-			AttackFunction(250, 2, 2, UpgradeProperties[2].Damage, "Grass Attack Used", UpgradeProperties[2].MPCost, "Grass");
-
-			if (GameInstanceRef->LockedButtons[2] == false)
-			{
-				CooldownText();
-
-				FTimerDelegate Delegate;
-				Delegate.BindUFunction(this, "ChangeButtonText", Attack3TextBlock, 3);
-
-				GetWorld()->GetTimerManager().SetTimer(
-					ButtonPressTimerHandle,
-					Delegate,
-					1.0f,
-					false);
-
-
-				GetWorld()->GetTimerManager().SetTimer(
-					ButtonPressTimerHandle,
-					this,
-					&UCombatTabUserWidget::ButtonTimerReset,
-					1.0f,
-					false);
-			}
-		}
-	}
-}
-
-void UCombatTabUserWidget::Attack4ButtonOnClicked()
-{
-	if (Idle == false)
-	{
-		if (bCanClick == true)
-		{
-			bCanClick = false;
-			AttackFunction(250, 3, 3, UpgradeProperties[3].Damage, "Water Attack Used", UpgradeProperties[3].MPCost, "Water");
-
-			if (GameInstanceRef->LockedButtons[3] == false)
-			{
-				CooldownText();
-
-				FTimerDelegate Delegate;
-				Delegate.BindUFunction(this, "ChangeButtonText", Attack4TextBlock, 4);
-
-				GetWorld()->GetTimerManager().SetTimer(
-					ButtonPressTimerHandle,
-					Delegate,
-					1.0f,
-					false);
-
-				GetWorld()->GetTimerManager().SetTimer(
-					ButtonPressTimerHandle,
-					this,
-					&UCombatTabUserWidget::ButtonTimerReset,
-					1.0f,
-					false);
-			}
-		}
-	}
-}
-
-//Item Button Functions
 
 void UCombatTabUserWidget::Item1ButtonOnClicked()
 {
@@ -343,119 +397,3 @@ FUpgradeProperties UCombatTabUserWidget::ItemUpgrade(int Damage, float MPCost, i
 
 	return temp;
 }
-
-//Button Functions
-
-void UCombatTabUserWidget::ButtonTimerReset()
-{
-	bCanClick = true;
-	GetWorld()->GetTimerManager().ClearTimer(ButtonPressTimerHandle);
-	
-	if (GameInstanceRef->LockedButtons[0] == false)
-	{
-		Attack1TextBlock->SetText(FText::FromString("Normal \nAttack"));
-	}
-
-	if (GameInstanceRef->LockedButtons[1] == false)
-	{
-		Attack2TextBlock->SetText(FText::FromString("Fire \nAttack"));
-	}
-
-	if (GameInstanceRef->LockedButtons[2] == false)
-	{
-		Attack3TextBlock->SetText(FText::FromString("Grass \nAttack"));
-	}
-
-	if (GameInstanceRef->LockedButtons[3] == false)
-	{
-		Attack4TextBlock->SetText(FText::FromString("Water \nAttack"));
-	}
-}
-
-void UCombatTabUserWidget::ChangeButtonText(UTextBlock* ButtonName, int ButtonNum)
-{
-	bCanClick = true;
-	GetWorld()->GetTimerManager().ClearTimer(ButtonPressTimerHandle);
-
-	switch (ButtonNum) 
-	{
-		case 1:
-			ButtonName->SetText(FText::FromString("Normal Attack"));
-			break;
-		case 2:
-			ButtonName->SetText(FText::FromString("Fire Attack"));
-			break;
-		case 3:
-			ButtonName->SetText(FText::FromString("Grass Attack"));
-			break;
-		case 4:
-			ButtonName->SetText(FText::FromString("Water Attack"));
-			break;
-	}
-}
-
-void UCombatTabUserWidget::IdleTimerReset()
-{
-	GetWorld()->GetTimerManager().ClearTimer(IdleFunctionTimerHandle);
-
-	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, "Idle Timer Reset Called");
-}
-
-
-void UCombatTabUserWidget::IdleFunction()
-{
-	//it did work but didnt call Attack1Button more than once because of return 
-	//but didnt know how to make it not infinite
-
-	//If Button is on turn it off
-	if (Idle == true)
-	{
-		Idle = false;
-		IdleButtonTextBlock->SetText(FText::FromString("Idle: Off"));
-
-		IdleTimerReset();
-	}
-	else if (Idle == false)
-	{
-		Idle = true;
-		IdleButtonTextBlock->SetText(FText::FromString("Idle: On"));
-
-		GetWorld()->GetTimerManager().SetTimer(
-				IdleFunctionTimerHandle,
-				this,
-				&UCombatTabUserWidget::Attack1ButtonOnClicked,
-				1.0f,
-				true);
-	}
-}
-
-void UCombatTabUserWidget::IdleButtonOnClicked()
-{
-	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, "Idle Clicked");
-	
-	IdleFunction();
-}
-
-void UCombatTabUserWidget::CooldownText()
-{
-	if (GameInstanceRef->LockedButtons[0] == false)
-	{
-		Attack1TextBlock->SetText(FText::FromString("cooldown"));
-	}
-
-	if (GameInstanceRef->LockedButtons[1] == false)
-	{
-		Attack2TextBlock->SetText(FText::FromString("cooldown"));
-	}
-
-	if (GameInstanceRef->LockedButtons[2] == false)
-	{
-		Attack3TextBlock->SetText(FText::FromString("cooldown"));
-	}
-
-	if (GameInstanceRef->LockedButtons[3] == false)
-	{
-		Attack4TextBlock->SetText(FText::FromString("cooldown"));
-	}
-}
-

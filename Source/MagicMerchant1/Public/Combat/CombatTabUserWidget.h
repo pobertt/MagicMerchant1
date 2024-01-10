@@ -54,7 +54,7 @@ public:
 	//Time variables
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = CombatWidgetVariables, meta = (AllowPrivateAccess = "true"))
-		bool bCanClick = true;
+		TArray<bool> bCanClick;
 
 	//Handles the delay between clicks
 	FTimerHandle ButtonPressTimerHandle;
@@ -186,13 +186,10 @@ public:
 		void IdleButtonOnClicked();
 
 	UFUNCTION()
-		void CooldownText();
+		void CooldownText(class UTextBlock* ButtonName, int ButtonNum);
 
 
 	//Timer Functions
-
-	UFUNCTION()
-		void ButtonTimerReset();
 
 	UFUNCTION()
 		void ChangeButtonText(class UTextBlock* ButtonName, int ButtonNum);

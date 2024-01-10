@@ -199,8 +199,7 @@ void ABetterPlayerCharacter::MakeEnemy()
 
 void ABetterPlayerCharacter::AttackEnemy(int Dmg, float MPCost, FString AttackType)
 {
-	// && BaseEnemyRef->IsValidLowLevelFast()
-	if (BaseEnemyRef->isAlive == true) {
+	if (BaseEnemyRef->isAlive == true && BaseEnemyRef->IsValidLowLevelFast()) {
 		UE_LOG(LogTemp, Warning, TEXT("AttackEnemy function worked"));
 
 		if (AttackType == "Fire") {

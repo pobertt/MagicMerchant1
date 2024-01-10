@@ -48,9 +48,9 @@ public:
 	UFUNCTION()
 		void SetEnemyUIType(uint8 SpawnNum);
 
-private:
-
 	int32 NumButtons;
+
+private:
 
 	UPROPERTY(EditAnywhere, Category = "Class Types")
 		TSubclassOf<UUserWidget> FireEnemyUIClass;
