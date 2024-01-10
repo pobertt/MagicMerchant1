@@ -14,7 +14,7 @@ ABaseEnemy::ABaseEnemy()
 	CurrentHP = MaxHP;
 	HPRegen = 0.0005f;
 
-	BaseAttack = 5.f;
+	BaseAttack = 5;
 	AttackMultiplier = 2;
 
 	Value = 25;
@@ -68,7 +68,7 @@ void ABaseEnemy::EnemyUpgrade()
 	CurrentHP = CurrentHP + (1 * EnemyCounter);
 	HPRegen = HPRegen + (HPRegen * EnemyCounter);
 	
-	AttackMultiplier = AttackMultiplier + (0.005 * EnemyCounter);
+	AttackMultiplier = AttackMultiplier + (0.05 * EnemyCounter);
 
 	BaseAttack = BaseAttack * AttackMultiplier;
 

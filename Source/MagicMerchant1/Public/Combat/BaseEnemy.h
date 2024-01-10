@@ -26,7 +26,7 @@ public:
 		float HPRegen;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = enemyStats, meta = (AllowPrivateAccess = "true"))
-		float BaseAttack;
+		int32 BaseAttack;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = enemyStats, meta = (AllowPrivateAccess = "true"))
 		float AttackMultiplier;
