@@ -53,12 +53,11 @@ public:
 
 	//Time variables
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = CombatWidgetVariables, meta = (AllowPrivateAccess = "true"))
-		TArray<bool> bCanClick;
+	TArray<bool> bCanClick;
 
 	//Handles the delay between clicks
-	FTimerHandle ButtonPressTimerHandle;
-
+	TArray<FTimerHandle> ButtonPressTimerHandle;
+	
 	FTimerHandle IdleFunctionTimerHandle;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = CombatWidgetVariables, meta = (AllowPrivateAccess = "true"))

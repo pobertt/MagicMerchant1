@@ -42,10 +42,7 @@ void UCombatTabUserWidget::NativeConstruct()
 	UpgradeProperties.Init(FUpgradeProperties(), 4);
 	UpgradeProperties[0] = FUpgradeProperties(10, 50.f, 25);
 
-	bCanClick[0] = true;
-	bCanClick[1] = true;
-	bCanClick[2] = true;
-	bCanClick[3] = true;
+	bCanClick.Init(true, 4);
 }
 
 //Attack Button Functions 
@@ -109,7 +106,7 @@ void UCombatTabUserWidget::Attack1ButtonOnClicked()
 		if (GameInstanceRef->LockedButtons[0] == false)
 		{
 			//Set the specific button text to on cooldown
-			CooldownText(Attack1TextBlock, 1);
+			CooldownText(Attack1TextBlock, 0);
 
 			//This all seems redundant currently but it helped me understand delegates 
 			//Seems redudant as if i am setting them all to go cooldown and then setting them back to their original text, 
@@ -118,7 +115,7 @@ void UCombatTabUserWidget::Attack1ButtonOnClicked()
 			FTimerDelegate Delegate;
 
 			//Assigning the function to the timer and passing in parameters 
-			Delegate.BindUFunction(this, "ChangeButtonText", Attack1TextBlock, 1);
+			Delegate.BindUFunction(this, "ChangeButtonText", Attack1TextBlock, 0);
 
 			//Set this specific timer back to the original text
 			GetWorld()->GetTimerManager().SetTimer(
@@ -141,10 +138,10 @@ void UCombatTabUserWidget::Attack2ButtonOnClicked()
 
 			if (GameInstanceRef->LockedButtons[1] == false)
 			{
-				CooldownText(Attack2TextBlock, 2);
+				CooldownText(Attack2TextBlock, 1);
 
 				FTimerDelegate Delegate;
-				Delegate.BindUFunction(this, "ChangeButtonText", Attack2TextBlock, 2);
+				Delegate.BindUFunction(this, "ChangeButtonText", Attack2TextBlock, 1);
 
 				GetWorld()->GetTimerManager().SetTimer(
 					ButtonPressTimerHandle,
@@ -167,10 +164,10 @@ void UCombatTabUserWidget::Attack3ButtonOnClicked()
 
 			if (GameInstanceRef->LockedButtons[2] == false)
 			{
-				CooldownText(Attack3TextBlock, 3);
+				CooldownText(Attack3TextBlock, 2);
 
 				FTimerDelegate Delegate;
-				Delegate.BindUFunction(this, "ChangeButtonText", Attack3TextBlock, 3);
+				Delegate.BindUFunction(this, "ChangeButtonText", Attack3TextBlock, 2);
 
 				GetWorld()->GetTimerManager().SetTimer(
 					ButtonPressTimerHandle,
@@ -193,10 +190,10 @@ void UCombatTabUserWidget::Attack4ButtonOnClicked()
 
 			if (GameInstanceRef->LockedButtons[3] == false)
 			{
-				CooldownText(Attack4TextBlock, 4);
+				CooldownText(Attack4TextBlock, 3);
 
 				FTimerDelegate Delegate;
-				Delegate.BindUFunction(this, "ChangeButtonText", Attack4TextBlock, 4);
+				Delegate.BindUFunction(this, "ChangeButtonText", Attack4TextBlock, 3);
 
 				GetWorld()->GetTimerManager().SetTimer(
 					ButtonPressTimerHandle,
@@ -256,16 +253,16 @@ void UCombatTabUserWidget::ChangeButtonText(UTextBlock* ButtonName, int ButtonNu
 
 	switch (ButtonNum)
 	{
-	case 1:
+	case 0:
 		ButtonName->SetText(FText::FromString("Normal \nAttack"));
 		break;
-	case 2:
+	case 1:
 		ButtonName->SetText(FText::FromString("Fire \nAttack"));
 		break;
-	case 3:
+	case 2:
 		ButtonName->SetText(FText::FromString("Grass \nAttack"));
 		break;
-	case 4:
+	case 3:
 		ButtonName->SetText(FText::FromString("Water \nAttack"));
 		break;
 	}
@@ -275,16 +272,16 @@ void UCombatTabUserWidget::CooldownText(UTextBlock* ButtonName, int ButtonNum)
 {
 	switch (ButtonNum)
 	{
-	case 1:
+	case 0:
 		ButtonName->SetText(FText::FromString("cooldown1"));
 		break;
-	case 2:
+	case 1:
 		ButtonName->SetText(FText::FromString("cooldown2"));
 		break;
-	case 3:
+	case 2:
 		ButtonName->SetText(FText::FromString("cooldown3"));
 		break;
-	case 4:
+	case 3:
 		ButtonName->SetText(FText::FromString("cooldown4"));
 		break;
 	}
