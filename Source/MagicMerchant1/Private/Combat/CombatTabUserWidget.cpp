@@ -311,7 +311,7 @@ void UCombatTabUserWidget::ItemFunction(int Cost, int LockedButtonsIndex, int Fi
 		PlayerRef->money = PlayerRef->SubMoney(Cost);
 		return;
 	}
-	if (GameInstanceRef->LockedButtons[LockedButtonsIndex] == false && GameInstanceRef->FirstClickArray[FirstClickArrayIndex] == false)
+	if (GameInstanceRef->LockedButtons[LockedButtonsIndex] == false && GameInstanceRef->FirstClickArray[FirstClickArrayIndex] == false && PlayerRef->money >= ItemCost)
 	{
 		TextLabel->SetText(FText::FromString(ItemUsed));
 		
@@ -383,33 +383,48 @@ FUpgradeProperties UCombatTabUserWidget::ItemUpgrade(int Damage, float MPCost, i
 {
 	FUpgradeProperties temp = UpgradeProperties[ItemIndex];
 	
-	if (PlayerRef->money >= ItemCost) {
-		/*
-		if (ItemIndex == 0) {
-			if (CooldownTime > 0.1f) {
-				CooldownTime = CooldownTime -= 1.f;
-				GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Yellow, FString::FormatAsNumber(CooldownTime));
+	if (PlayerRef->money >= ItemCost)
+	{
+		if (ItemIndex == 0)
+		{
+			if (CooldownTime > 0.1f)
+			{
+				CooldownTime = CooldownTime - 0.1f;
 			}
-		}
-			*/
-		if (CooldownTime > 0.1f){
-			CooldownTime = CooldownTime -= 0.1f;
-		}
-		if (MPCost > 0.0f) {
-			MPCost -= 0.5;
-		}
-		
-		Damage += 1;
-		
-		ItemCost = ItemCost + (ItemCost * 0.1);
+			if (MPCost > 0.0f)
+			{
+				MPCost = MPCost - 0.5;
+			}
 
-		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Yellow, FString::FormatAsNumber(CooldownTime));
+			Damage += 1;
+
+			ItemCost = ItemCost + (ItemCost * 0.1);
+
+			GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Yellow, FString::FormatAsNumber(CooldownTime));
+		}
+		else
+		{
+			if (CooldownTime > 0.1f)
+			{
+				CooldownTime = CooldownTime - 5.0f;
+			}
+			if (MPCost > 0.0f)
+			{
+				MPCost = MPCost - 5.0f;
+			}
+
+			Damage += 20;
+
+			ItemCost = ItemCost + (ItemCost * 0.1);
+		}
+
+		temp.Damage = Damage;
+		temp.MPCost = MPCost;
+		temp.ItemCost = ItemCost;
+		temp.CooldownTime = CooldownTime;
+
+		return temp;
 	}
-
-	temp.Damage = Damage;
-	temp.MPCost = MPCost;
-	temp.ItemCost = ItemCost;
-	temp.CooldownTime = CooldownTime;
 
 	return temp;
 }
