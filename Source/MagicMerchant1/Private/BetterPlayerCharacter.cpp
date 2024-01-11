@@ -137,7 +137,6 @@ void ABetterPlayerCharacter::MakeEnemy()
 	if (bEnemyRespawn == true)
 	{
 		bEnemyRespawn = false;
-
 		//SpawnActor BaseEnemy var Info
 		FVector Location(0, 0, 0);
 		FRotator Rotation(0, 0, 0);
@@ -184,10 +183,15 @@ void ABetterPlayerCharacter::MakeEnemy()
 		}
 		BaseEnemyRef->InitBaseEnemy(EnemyCounter);
 
+
 		//Setting isAlive to true when made
 		BaseEnemyRef->isAlive = true;
 
+
+		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Green, FString::FormatAsNumber(BaseEnemyRef->isAlive));
+
 		if (BaseEnemyRef->isAlive == true && BaseEnemyRef->IsValidLowLevelFast()) {
+
 
 			FTimerDelegate AttackPlayerDelegate;
 			AttackPlayerDelegate.BindUFunction(this, "AttackPlayer", BaseEnemyRef->BaseAttack);
@@ -254,6 +258,7 @@ void ABetterPlayerCharacter::AttackPlayer(int Dmg)
 		AttackPlayerTimerHandle.Invalidate();
 		PlayerDead();
 	}
+
 }
 
 void ABetterPlayerCharacter::EnemyKilled()

@@ -84,6 +84,7 @@ void UCombatTabUserWidget::AttackFunction(int Cost, int LockedButtonsIndex, int 
 		{
 			//If greater then deal dmg and print text
 			PlayerRef->AttackEnemy(Dmg, MPCost, AttackType);
+
 			TextLabel->SetText(FText::FromString(AttackUsed));
 		}
 		else if (BaseEnemyRef->CurrentHP == 0)
@@ -95,8 +96,9 @@ void UCombatTabUserWidget::AttackFunction(int Cost, int LockedButtonsIndex, int 
 
 void UCombatTabUserWidget::Attack1ButtonOnClicked()
 {
+	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Yellow, FString::FormatAsNumber(BaseEnemyRef->isAlive));
 	//If the button can be clicked
-	if (bCanClick[0] == true)
+	if (bCanClick[0] == true && BaseEnemyRef->isAlive)
 	{
 		//The button now can't be clicked until Button Timer Reset is called
 		bCanClick[0] = false;
@@ -105,14 +107,10 @@ void UCombatTabUserWidget::Attack1ButtonOnClicked()
 		AttackFunction(0, 0, 0, UpgradeProperties[0].Damage,"Normal Attack Used", UpgradeProperties[0].MPCost, "Normal");
 		
 		//If the button is unlocked 
-		if (GameInstanceRef->LockedButtons[0] == false && BaseEnemyRef->IsValidLowLevelFast())
+		if (GameInstanceRef->LockedButtons[0] == false)
 		{
 			//Set the specific button text to on cooldown
 			CooldownText(Attack1TextBlock, 0);
-
-			//This all seems redundant currently but it helped me understand delegates 
-			//Seems redudant as if i am setting them all to go cooldown and then setting them back to their original text, 
-			//whats the point of the specific timer?
 
 			FTimerDelegate Delegate;
 
@@ -275,16 +273,16 @@ void UCombatTabUserWidget::CooldownText(UTextBlock* ButtonName, int ButtonNum)
 	switch (ButtonNum)
 	{
 	case 0:
-		ButtonName->SetText(FText::FromString("cooldown1"));
+		ButtonName->SetText(FText::FromString("cooldown: \n" + FString::SanitizeFloat(UpgradeProperties[0].CooldownTime)));
 		break;
 	case 1:
-		ButtonName->SetText(FText::FromString("cooldown2"));
+		ButtonName->SetText(FText::FromString("cooldown: \n" + FString::SanitizeFloat(UpgradeProperties[1].CooldownTime)));
 		break;
 	case 2:
-		ButtonName->SetText(FText::FromString("cooldown3"));
+		ButtonName->SetText(FText::FromString("cooldown: \n" + FString::SanitizeFloat(UpgradeProperties[2].CooldownTime)));
 		break;
 	case 3:
-		ButtonName->SetText(FText::FromString("cooldown4"));
+		ButtonName->SetText(FText::FromString("cooldown: \n" + FString::SanitizeFloat(UpgradeProperties[3].CooldownTime)));
 		break;
 	}
 }
@@ -387,7 +385,7 @@ FUpgradeProperties UCombatTabUserWidget::ItemUpgrade(int Damage, float MPCost, i
 	{
 		if (ItemIndex == 0)
 		{
-			if (CooldownTime > 0.1f)
+			if (CooldownTime > 0.2f)
 			{
 				CooldownTime = CooldownTime - 0.1f;
 			}
@@ -399,21 +397,19 @@ FUpgradeProperties UCombatTabUserWidget::ItemUpgrade(int Damage, float MPCost, i
 			Damage += 1;
 
 			ItemCost = ItemCost + (ItemCost * 0.1);
-
-			GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Yellow, FString::FormatAsNumber(CooldownTime));
 		}
 		else
 		{
-			if (CooldownTime > 0.1f)
+			if (CooldownTime > 1.0f)
 			{
-				CooldownTime = CooldownTime - 5.0f;
+				CooldownTime = CooldownTime - 0.5f;
 			}
-			if (MPCost > 0.0f)
+			if (MPCost > 2.0f)
 			{
-				MPCost = MPCost - 5.0f;
+				MPCost = MPCost - 1.0f;
 			}
 
-			Damage += 20;
+			Damage += 1;
 
 			ItemCost = ItemCost + (ItemCost * 0.1);
 		}
