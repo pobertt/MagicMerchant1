@@ -105,7 +105,7 @@ void UCombatTabUserWidget::Attack1ButtonOnClicked()
 		AttackFunction(0, 0, 0, UpgradeProperties[0].Damage,"Normal Attack Used", UpgradeProperties[0].MPCost, "Normal");
 		
 		//If the button is unlocked 
-		if (GameInstanceRef->LockedButtons[0] == false)
+		if (GameInstanceRef->LockedButtons[0] == false && BaseEnemyRef->IsValidLowLevelFast())
 		{
 			//Set the specific button text to on cooldown
 			CooldownText(Attack1TextBlock, 0);
@@ -298,24 +298,26 @@ void UCombatTabUserWidget::ItemFunction(int Cost, int LockedButtonsIndex, int Fi
 	{
 		TextLabel->SetText(FText::FromString("LOCKED"));
 	}
-	else if (GameInstanceRef->FirstClickArray[FirstClickArrayIndex] == true) {
+	else if (GameInstanceRef->FirstClickArray[FirstClickArrayIndex] == true) 
+	{
 		GameInstanceRef->LockedButtons[LockedButtonsIndex] = false;
 
-		PlayerRef->money = PlayerRef->SubMoney(Cost);
+		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, FString::FormatAsNumber(ItemCost));
+
 		TextLabel->SetText(FText::FromString("Purchased"));
 
-		GameInstanceRef->ButtonText[FirstClickArrayIndex] = "Item " + FString::FormatAsNumber(FirstClickArrayIndex - 3);
-
 		GameInstanceRef->FirstClickArray[FirstClickArrayIndex] = false;
+
+		PlayerRef->money = PlayerRef->SubMoney(Cost);
 		return;
 	}
 	if (GameInstanceRef->LockedButtons[LockedButtonsIndex] == false && GameInstanceRef->FirstClickArray[FirstClickArrayIndex] == false)
 	{
 		TextLabel->SetText(FText::FromString(ItemUsed));
-		//item consumed function goes here
-
+		
 		UpgradeProperties[ItemIndex] = ItemUpgrade(Damage, MPCost, ItemCost, CooldownTime, ItemIndex);
 
+		PlayerRef->money = PlayerRef->SubMoney(ItemCost);
 	}
 }
 
@@ -393,11 +395,13 @@ FUpgradeProperties UCombatTabUserWidget::ItemUpgrade(int Damage, float MPCost, i
 		if (CooldownTime > 0.1f){
 			CooldownTime = CooldownTime -= 0.1f;
 		}
-		Damage += 1;
-		MPCost -= 0.5;
-		ItemCost = ItemCost + (ItemCost * 0.1);
+		if (MPCost > 0.0f) {
+			MPCost -= 0.5;
+		}
 		
-		PlayerRef->money -= ItemCost;
+		Damage += 1;
+		
+		ItemCost = ItemCost + (ItemCost * 0.1);
 
 		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Yellow, FString::FormatAsNumber(CooldownTime));
 	}
