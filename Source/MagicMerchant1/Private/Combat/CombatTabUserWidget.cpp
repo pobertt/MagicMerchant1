@@ -31,8 +31,6 @@ void UCombatTabUserWidget::NativeConstruct()
 		IdleButton->OnClicked.AddDynamic(this, &UCombatTabUserWidget::IdleButtonOnClicked);
 	}
 
-
-
 	PlayerRef = Cast<ABetterPlayerCharacter>(GetWorld()->GetFirstPlayerController()->GetPawn());
 	GameInstanceRef = Cast<UMyGameInstance>(GetWorld()->GetGameInstance());
 
