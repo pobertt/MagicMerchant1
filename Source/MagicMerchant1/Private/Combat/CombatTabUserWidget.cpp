@@ -45,6 +45,7 @@ void UCombatTabUserWidget::NativeConstruct()
 	bCanClick.Init(true, 4);
 
 	ButtonPressTimerHandle.SetNum(4);	
+
 }
 
 //Attack Button Functions 
@@ -80,7 +81,7 @@ void UCombatTabUserWidget::AttackFunction(int Cost, int LockedButtonsIndex, int 
 	if (GameInstanceRef->LockedButtons[LockedButtonsIndex] == false && GameInstanceRef->FirstClickArray[FirstClickArrayIndex] == false && PlayerRef->mp > MPCost)
 	{
 		//Checking if HP is greater than 0
-		if (BaseEnemyRef->CurrentHP >= 0)
+		if (BaseEnemyRef->CurrentHP >= 0 && BaseEnemyRef->IsValidLowLevel())
 		{
 			//If greater then deal dmg and print text
 			PlayerRef->AttackEnemy(Dmg, MPCost, AttackType);
@@ -96,10 +97,14 @@ void UCombatTabUserWidget::AttackFunction(int Cost, int LockedButtonsIndex, int 
 
 void UCombatTabUserWidget::Attack1ButtonOnClicked()
 {
-	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Yellow, FString::FormatAsNumber(BaseEnemyRef->isAlive));
+	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Yellow, FString::FormatAsNumber(bCanClick[0]));
+	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Orange, FString::FormatAsNumber(BaseEnemyRef->isAlive));
+
 	//If the button can be clicked
-	if (bCanClick[0] == true && BaseEnemyRef->isAlive)
+	//
+	if (bCanClick[0] == true)
 	{
+		
 		//The button now can't be clicked until Button Timer Reset is called
 		bCanClick[0] = false;
 

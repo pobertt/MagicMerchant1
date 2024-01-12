@@ -73,8 +73,6 @@ void ABaseEnemy::EnemyUpgrade()
 	BaseAttack = BaseAttack * AttackMultiplier;
 
 	Value = Value + (1 * EnemyCounter);
-
-	isAlive = false;
 }
 
 //These functions are for player combat spells, to know what type the enemy is

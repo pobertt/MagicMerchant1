@@ -263,7 +263,6 @@ void ABetterPlayerCharacter::AttackPlayer(int Dmg)
 
 void ABetterPlayerCharacter::EnemyKilled()
 {		
-	//Set isAlive to false
 	BaseEnemyRef->isAlive = false;
 
 	//Give player however much money the enemy is worth
@@ -271,7 +270,9 @@ void ABetterPlayerCharacter::EnemyKilled()
 
 	//Destroying the enemy when killed (so we dont have overlapping enemy spawns, only want 1 enemy at a time)
 	BaseEnemyRef->Destroy();
-		
+
+	GetWorld()->ClearGarbage();	
+
 	bEnemyRespawn = true;
 
 	//If enemy is dead
@@ -290,7 +291,6 @@ void ABetterPlayerCharacter::EnemyKilled()
 		//Create a new enemy 
 		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Yellow, "Enemy Made (KilledFunc)");
 	}
-
 }
 
 //Not in use
