@@ -97,11 +97,6 @@ void UCombatTabUserWidget::AttackFunction(int Cost, int LockedButtonsIndex, int 
 
 void UCombatTabUserWidget::Attack1ButtonOnClicked()
 {
-	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Yellow, FString::FormatAsNumber(bCanClick[0]));
-	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Orange, FString::FormatAsNumber(BaseEnemyRef->isAlive));
-
-	//If the button can be clicked
-	//
 	if (bCanClick[0] == true)
 	{
 		

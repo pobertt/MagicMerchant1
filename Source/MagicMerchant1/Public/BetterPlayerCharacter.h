@@ -90,6 +90,9 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Inventory, meta = (AllowPrivateAccess = "true"))
 		class UDataTable* Inventory;
 
+
+	FTimerDelegate AttackPlayerDelegate;
+
 	FTimerHandle AttackPlayerTimerHandle;
 
 	//Declaring functions to add to player stats

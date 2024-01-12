@@ -29,6 +29,17 @@ ABetterPlayerCharacter::ABetterPlayerCharacter()
 	EnemyCounter = 0;
 }
 
+// Called when the game starts or when spawned
+void ABetterPlayerCharacter::BeginPlay()
+{
+	Super::BeginPlay();
+
+	SayHey();
+	GameInstanceRef = Cast<UMyGameInstance>(GetWorld()->GetGameInstance());
+	// GamemodeRef = Cast<AMagicMerchant1GameModeBase>(GetWorld()->GetAuthGameMode());
+
+}
+
 void ABetterPlayerCharacter::HealthRegenBar()
 {
 	if (Health < 100)
@@ -137,6 +148,7 @@ void ABetterPlayerCharacter::MakeEnemy()
 	if (bEnemyRespawn == true)
 	{
 		bEnemyRespawn = false;
+
 		//SpawnActor BaseEnemy var Info
 		FVector Location(0, 0, 0);
 		FRotator Rotation(0, 0, 0);
@@ -153,47 +165,48 @@ void ABetterPlayerCharacter::MakeEnemy()
 			BaseEnemyRef = (GetWorld()->SpawnActor<AFireTypeEnemy>(Location, Rotation, SpawnInfo));
 			GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, "1");
 			GameInstanceRef->SetEnemyUIType(SpawnNum);
+			break;
 		}
-		break;
 		case 2:
 		{
 			// AGrassTypeEnemy* GrassTypeEnemy = (GetWorld()->SpawnActor<AGrassTypeEnemy>(Location, Rotation, SpawnInfo));
 			BaseEnemyRef = (GetWorld()->SpawnActor<AGrassTypeEnemy>(Location, Rotation, SpawnInfo));
 			GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Green, "2");
 			GameInstanceRef->SetEnemyUIType(SpawnNum);
+			break;
 			
 		}
-		break;
 		case 3:
 		{
 			// AWaterTypeEnemy* WaterTypeEnemy = (GetWorld()->SpawnActor<AWaterTypeEnemy>(Location, Rotation, SpawnInfo));
 			BaseEnemyRef = (GetWorld()->SpawnActor<AWaterTypeEnemy>(Location, Rotation, SpawnInfo));
 			GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Blue, "3"); 
 			GameInstanceRef->SetEnemyUIType(SpawnNum);
+			break;
 			
 		}
-		break;
 		default:
 		{
 			BaseEnemyRef = Cast<ABaseEnemy>(GetWorld()->SpawnActor<ABaseEnemy>(Location, Rotation, SpawnInfo));
 			GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Yellow, "Base Enemy");
+			break;
 			
 		}
-		break;
 		}
+
 		BaseEnemyRef->InitBaseEnemy(EnemyCounter);
 
 
 		//Setting isAlive to true when made
-		BaseEnemyRef->isAlive = true;
-
+		// BaseEnemyRef->isAlive = true;
+		// BaseEnemyRef->CurrentHP = FMath::Clamp(MyFloat, 0.0f, BaseEnemyRef->MaxHP);
 
 		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Green, FString::FormatAsNumber(BaseEnemyRef->isAlive));
 
 		if (BaseEnemyRef->isAlive == true && BaseEnemyRef->IsValidLowLevelFast()) {
 
 
-			FTimerDelegate AttackPlayerDelegate;
+			// FTimerDelegate AttackPlayerDelegate;
 			AttackPlayerDelegate.BindUFunction(this, "AttackPlayer", BaseEnemyRef->BaseAttack);
 
 			GetWorld()->GetTimerManager().SetTimer(
@@ -207,7 +220,7 @@ void ABetterPlayerCharacter::MakeEnemy()
 
 void ABetterPlayerCharacter::AttackEnemy(int Dmg, float MPCost, FString AttackType)
 {
-	if (BaseEnemyRef->isAlive == true && BaseEnemyRef->IsValidLowLevelFast()) {
+	if (BaseEnemyRef->isAlive == true) {
 		UE_LOG(LogTemp, Warning, TEXT("AttackEnemy function worked"));
 
 		if (AttackType == "Fire") {
@@ -234,7 +247,7 @@ void ABetterPlayerCharacter::AttackEnemy(int Dmg, float MPCost, FString AttackTy
 		//Clamp??
 		BaseEnemyRef->CurrentHP = FMath::Clamp(MyFloat, 0.0f, BaseEnemyRef->MaxHP);
 
-		if (BaseEnemyRef->CurrentHP == 0)
+		if (BaseEnemyRef->CurrentHP <= 0)
 		{
 			//Kill the enemy if health is 0
 			EnemyKilled();
@@ -248,7 +261,8 @@ void ABetterPlayerCharacter::AttackEnemy(int Dmg, float MPCost, FString AttackTy
 
 void ABetterPlayerCharacter::AttackPlayer(int Dmg)
 {
-	if (!BaseEnemyRef->IsValidLowLevel()) {
+	//|| BaseEnemyRef->isAlive == false
+	if (!BaseEnemyRef->IsValidLowLevel() ) {
 		AttackPlayerTimerHandle.Invalidate();
 	}
 	else if (BaseEnemyRef->isAlive == true && Health > 0) {
@@ -263,6 +277,8 @@ void ABetterPlayerCharacter::AttackPlayer(int Dmg)
 
 void ABetterPlayerCharacter::EnemyKilled()
 {		
+
+	// BaseEnemyRef->isAlive = true;
 	BaseEnemyRef->isAlive = false;
 
 	//Give player however much money the enemy is worth
@@ -275,6 +291,9 @@ void ABetterPlayerCharacter::EnemyKilled()
 
 	bEnemyRespawn = true;
 
+	// Increasing Enemy Counter
+	EnemyCounter++;
+
 	//If enemy is dead
 	if (BaseEnemyRef->isAlive == false)
 	{
@@ -285,12 +304,11 @@ void ABetterPlayerCharacter::EnemyKilled()
 			3.0f,
 			false);
 
-		// Increasing Enemy Counter
-		EnemyCounter++;
 
 		//Create a new enemy 
 		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Yellow, "Enemy Made (KilledFunc)");
 	}
+
 }
 
 //Not in use
@@ -306,15 +324,7 @@ void ABetterPlayerCharacter::HealthTimerReset()
 	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Yellow, "Health Timer Reset");
 }
 
-// Called when the game starts or when spawned
-void ABetterPlayerCharacter::BeginPlay()
-{
-	Super::BeginPlay();
 
-	SayHey();
-	GameInstanceRef = Cast<UMyGameInstance>(GetWorld()->GetGameInstance());
-	// GamemodeRef = Cast<AMagicMerchant1GameModeBase>(GetWorld()->GetAuthGameMode());
-}
 
 // Called every frame
 void ABetterPlayerCharacter::Tick(float DeltaTime)

@@ -47,7 +47,8 @@ void ABaseEnemy::InitBaseEnemy(int32 counter)
 
 	Value = 25;
 
-	isAlive = false;
+	isAlive = true;
+	// isAlive = false;
 
 	EnemyCounter = EnemyCounter + counter;
 
