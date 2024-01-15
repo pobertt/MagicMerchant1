@@ -77,16 +77,17 @@ void UCombatTabUserWidget::AttackFunction(int Cost, int LockedButtonsIndex, int 
 	//If button is unlocked and the first click (purchase) is consumed 
 	//and if mana can afford it 
 	if (GameInstanceRef->LockedButtons[LockedButtonsIndex] == false && GameInstanceRef->FirstClickArray[FirstClickArrayIndex] == false && PlayerRef->mp > MPCost)
-	{
+	{	
 		//Checking if HP is greater than 0
 		if (BaseEnemyRef->CurrentHP >= 0 && BaseEnemyRef->IsValidLowLevel())
 		{
+			GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Yellow, "Player Attack Enemy");
 			//If greater then deal dmg and print text
 			PlayerRef->AttackEnemy(Dmg, MPCost, AttackType);
 
 			TextLabel->SetText(FText::FromString(AttackUsed));
 		}
-		else if (BaseEnemyRef->CurrentHP == 0)
+		else
 		{
 			TextLabel->SetText(FText::FromString("Enemy Killed"));
 		}
@@ -97,7 +98,7 @@ void UCombatTabUserWidget::Attack1ButtonOnClicked()
 {
 	if (bCanClick[0] == true)
 	{
-		
+		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Yellow, "Enemy Is Alive: " + FString::FormatAsNumber(BaseEnemyRef->isAlive));
 		//The button now can't be clicked until Button Timer Reset is called
 		bCanClick[0] = false;
 

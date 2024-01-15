@@ -195,7 +195,7 @@ void ABetterPlayerCharacter::MakeEnemy()
 		}
 
 		BaseEnemyRef->InitBaseEnemy(EnemyCounter);
-
+	
 
 		//Setting isAlive to true when made
 		// BaseEnemyRef->isAlive = true;
@@ -220,6 +220,8 @@ void ABetterPlayerCharacter::MakeEnemy()
 
 void ABetterPlayerCharacter::AttackEnemy(int Dmg, float MPCost, FString AttackType)
 {
+	
+
 	if (BaseEnemyRef->isAlive == true) {
 		UE_LOG(LogTemp, Warning, TEXT("AttackEnemy function worked"));
 
@@ -286,8 +288,6 @@ void ABetterPlayerCharacter::EnemyKilled()
 
 	//Destroying the enemy when killed (so we dont have overlapping enemy spawns, only want 1 enemy at a time)
 	BaseEnemyRef->Destroy();
-
-	GetWorld()->ClearGarbage();	
 
 	bEnemyRespawn = true;
 

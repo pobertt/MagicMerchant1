@@ -21,7 +21,7 @@ ABaseEnemy::ABaseEnemy()
 
 	EnemyType = "Base";
 
-	isAlive = false;
+	isAlive = true;
 
 }
 
@@ -112,7 +112,11 @@ void AFireTypeEnemy::Tick(float DeltaTime)
 {
 	Super::BeginPlay();
 
-	HealthRegen();
+	if (CurrentHP > 0) HealthRegen();
+
+	if (isAlive == false) {
+		Destroy();
+	}
 }
 
 AGrassTypeEnemy::AGrassTypeEnemy()
@@ -124,7 +128,11 @@ void AGrassTypeEnemy::Tick(float DeltaTime)
 {
 	Super::BeginPlay();
 
-	HealthRegen();
+	if (CurrentHP > 0) HealthRegen();
+
+	if (isAlive == false) {
+		Destroy();
+	}
 }
 
 AWaterTypeEnemy::AWaterTypeEnemy()
@@ -136,6 +144,10 @@ void AWaterTypeEnemy::Tick(float DeltaTime)
 {
 	Super::BeginPlay();
 
-	HealthRegen();
+	if (CurrentHP > 0) HealthRegen();
+
+	if (isAlive == false) {
+		Destroy();
+	}
 }
 
