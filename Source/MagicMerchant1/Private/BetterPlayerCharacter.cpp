@@ -195,11 +195,6 @@ void ABetterPlayerCharacter::MakeEnemy()
 		}
 
 		BaseEnemyRef->InitBaseEnemy(EnemyCounter);
-	
-
-		//Setting isAlive to true when made
-		// BaseEnemyRef->isAlive = true;
-		// BaseEnemyRef->CurrentHP = FMath::Clamp(MyFloat, 0.0f, BaseEnemyRef->MaxHP);
 
 		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Green, FString::FormatAsNumber(BaseEnemyRef->isAlive));
 
@@ -220,25 +215,24 @@ void ABetterPlayerCharacter::MakeEnemy()
 
 void ABetterPlayerCharacter::AttackEnemy(int Dmg, float MPCost, FString AttackType)
 {
-	
-
 	if (BaseEnemyRef->isAlive == true) {
 		UE_LOG(LogTemp, Warning, TEXT("AttackEnemy function worked"));
 
 		if (AttackType == "Fire") {
-			this->GetComponentByClass<UMagicTypes>()->FireDmg(Dmg);
+			//this->GetComponentByClass<UMagicTypes>()->FireDmg(Dmg);
 
-			MyFloat = BaseEnemyRef->CurrentHP - Dmg;
+			// MyFloat = BaseEnemyRef->CurrentHP - Dmg;
+			MyFloat = BaseEnemyRef->CurrentHP - this->GetComponentByClass<UMagicTypes>()->FireDmg(Dmg);
 		}
 		else if (AttackType == "Grass") {
-			this->GetComponentByClass<UMagicTypes>()->GrassDmg(Dmg);
+			//this->GetComponentByClass<UMagicTypes>()->GrassDmg(Dmg);
 
-			MyFloat = BaseEnemyRef->CurrentHP - Dmg;
+			MyFloat = BaseEnemyRef->CurrentHP - this->GetComponentByClass<UMagicTypes>()->GrassDmg(Dmg);
 		}
 		else if (AttackType == "Water") {
-			this->GetComponentByClass<UMagicTypes>()->WaterDmg(Dmg);
+			//this->GetComponentByClass<UMagicTypes>()->WaterDmg(Dmg);
 
-			MyFloat = BaseEnemyRef->CurrentHP - Dmg;
+			MyFloat = BaseEnemyRef->CurrentHP - this->GetComponentByClass<UMagicTypes>()->WaterDmg(Dmg);
 		}
 		else if (AttackType == "Normal") {
 			MyFloat = BaseEnemyRef->CurrentHP - Dmg;
@@ -246,7 +240,6 @@ void ABetterPlayerCharacter::AttackEnemy(int Dmg, float MPCost, FString AttackTy
 
 		SubMp(MPCost);
 
-		//Clamp??
 		BaseEnemyRef->CurrentHP = FMath::Clamp(MyFloat, 0.0f, BaseEnemyRef->MaxHP);
 
 		if (BaseEnemyRef->CurrentHP <= 0)
