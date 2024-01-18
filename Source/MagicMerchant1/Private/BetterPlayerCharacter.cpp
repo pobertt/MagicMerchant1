@@ -17,8 +17,7 @@ ABetterPlayerCharacter::ABetterPlayerCharacter()
 
 	mp = 100.0f;
 
-	money = 10000.0f;
-	//FMath::Clamp(1000.0f, 0, money);
+	money = 0.0f;
 
 	currency2 = 0.f;
 
