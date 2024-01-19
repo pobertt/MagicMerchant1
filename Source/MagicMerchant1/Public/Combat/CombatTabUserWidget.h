@@ -34,7 +34,7 @@ public:
 	UPROPERTY()
 		float CooldownTime;
 
-	FUpgradeProperties(int InDamage = 25, float InMPCost = 25.f, int InItemCost = 100, float InCooldownTime = 10.0f)
+	FUpgradeProperties(int InDamage = 30, float InMPCost = 25.f, int InItemCost = 100, float InCooldownTime = 10.0f)
 	{
 		Damage = InDamage;
 		MPCost = InMPCost;

@@ -17,7 +17,7 @@ ABaseEnemy::ABaseEnemy()
 	BaseAttack = 5;
 	AttackMultiplier = 2;
 
-	Value = 25;
+	Value = 50;
 
 	EnemyType = "Base";
 
@@ -45,7 +45,7 @@ void ABaseEnemy::InitBaseEnemy(int32 counter)
 
 	BaseAttack = BaseAttack;
 
-	Value = 25;
+	Value = 50;
 
 	isAlive = true;
 	// isAlive = false;
