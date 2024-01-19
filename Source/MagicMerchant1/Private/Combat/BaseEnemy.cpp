@@ -65,15 +65,15 @@ void ABaseEnemy::EnemyUpgrade()
 {
 	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Green, "EnemyUpgrade(FunctionCalled)");
 
-	MaxHP = MaxHP + (1 * EnemyCounter);
-	CurrentHP = CurrentHP + (1 * EnemyCounter);
+	MaxHP = MaxHP + (1.5 * EnemyCounter);
+	CurrentHP = CurrentHP + (1.5 * EnemyCounter);
 	HPRegen = HPRegen + (HPRegen * EnemyCounter);
 	
-	AttackMultiplier = AttackMultiplier + (0.05 * EnemyCounter);
+	AttackMultiplier = AttackMultiplier + (0.5 * EnemyCounter);
 
 	BaseAttack = BaseAttack * AttackMultiplier;
 
-	Value = Value + (1 * EnemyCounter);
+	Value = Value + (1.5 * EnemyCounter);
 }
 
 //These functions are for player combat spells, to know what type the enemy is

@@ -266,7 +266,6 @@ void ABetterPlayerCharacter::AttackPlayer(int Dmg)
 		AttackPlayerTimerHandle.Invalidate();
 		PlayerDead();
 	}
-
 }
 
 void ABetterPlayerCharacter::EnemyKilled()
