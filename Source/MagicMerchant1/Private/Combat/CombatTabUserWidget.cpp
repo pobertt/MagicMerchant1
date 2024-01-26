@@ -38,7 +38,7 @@ void UCombatTabUserWidget::NativeConstruct()
 	BaseEnemyRef = PlayerRef->BaseEnemyRef;
 
 	UpgradeProperties.Init(FUpgradeProperties(), 4);
-	UpgradeProperties[0] = FUpgradeProperties(5, 15.f, 50, 1.0f);
+	UpgradeProperties[0] = FUpgradeProperties(5, 15.f, 10, 1.0f);
 
 	bCanClick.Init(true, 4);
 
@@ -133,7 +133,7 @@ void UCombatTabUserWidget::Attack2ButtonOnClicked()
 		if (bCanClick[1] == true && PlayerRef->mp > UpgradeProperties[1].MPCost)
 		{
 			bCanClick[1] = false;
-			AttackFunction(100, 1, 1, UpgradeProperties[1].Damage, "Fire Attack Used", UpgradeProperties[1].MPCost, "Fire");
+			AttackFunction(25, 1, 1, UpgradeProperties[1].Damage, "Fire Attack Used", UpgradeProperties[1].MPCost, "Fire");
 
 			if (GameInstanceRef->LockedButtons[1] == false)
 			{
@@ -159,7 +159,7 @@ void UCombatTabUserWidget::Attack3ButtonOnClicked()
 		if (bCanClick[2] == true && PlayerRef->mp > UpgradeProperties[2].MPCost)
 		{
 			bCanClick[2] = false;
-			AttackFunction(100, 2, 2, UpgradeProperties[2].Damage, "Grass Attack Used", UpgradeProperties[2].MPCost, "Grass");
+			AttackFunction(25, 2, 2, UpgradeProperties[2].Damage, "Grass Attack Used", UpgradeProperties[2].MPCost, "Grass");
 
 			if (GameInstanceRef->LockedButtons[2] == false)
 			{
@@ -185,7 +185,7 @@ void UCombatTabUserWidget::Attack4ButtonOnClicked()
 		if (bCanClick[3] == true && PlayerRef->mp > UpgradeProperties[3].MPCost)
 		{
 			bCanClick[3] = false;
-			AttackFunction(100, 3, 3, UpgradeProperties[3].Damage, "Water Attack Used", UpgradeProperties[3].MPCost, "Water");
+			AttackFunction(25, 3, 3, UpgradeProperties[3].Damage, "Water Attack Used", UpgradeProperties[3].MPCost, "Water");
 
 			if (GameInstanceRef->LockedButtons[3] == false)
 			{
@@ -320,7 +320,7 @@ void UCombatTabUserWidget::ItemFunction(int Cost, int LockedButtonsIndex, int Fi
 
 void UCombatTabUserWidget::Item1ButtonOnClicked()
 {
-	ItemFunction(50, 4, 4, "Upgraded", UpgradeProperties[0].Damage, 
+	ItemFunction(25, 4, 4, "Upgraded", UpgradeProperties[0].Damage, 
 		UpgradeProperties[0].MPCost, UpgradeProperties[0].ItemCost, UpgradeProperties[0].CooldownTime, 0);
 
 	if (GameInstanceRef->LockedButtons[4] == false)
@@ -334,7 +334,7 @@ void UCombatTabUserWidget::Item1ButtonOnClicked()
 
 void UCombatTabUserWidget::Item2ButtonOnClicked()
 {
-	ItemFunction(100, 5, 5, "Upgraded", UpgradeProperties[1].Damage,
+	ItemFunction(25, 5, 5, "Upgraded", UpgradeProperties[1].Damage,
 		UpgradeProperties[1].MPCost, UpgradeProperties[1].ItemCost, UpgradeProperties[1].CooldownTime, 1);
 
 	if (GameInstanceRef->LockedButtons[5] == false)
@@ -348,7 +348,7 @@ void UCombatTabUserWidget::Item2ButtonOnClicked()
 
 void UCombatTabUserWidget::Item3ButtonOnClicked()
 {
-	ItemFunction(100, 6, 6, "Upgraded", UpgradeProperties[2].Damage,
+	ItemFunction(25, 6, 6, "Upgraded", UpgradeProperties[2].Damage,
 		UpgradeProperties[2].MPCost, UpgradeProperties[2].ItemCost, UpgradeProperties[2].CooldownTime, 2);
 
 
@@ -363,7 +363,7 @@ void UCombatTabUserWidget::Item3ButtonOnClicked()
 
 void UCombatTabUserWidget::Item4ButtonOnClicked()
 {
-	ItemFunction(100, 7, 7, "Upgraded", UpgradeProperties[3].Damage,
+	ItemFunction(25, 7, 7, "Upgraded", UpgradeProperties[3].Damage,
 		UpgradeProperties[3].MPCost, UpgradeProperties[3].ItemCost, UpgradeProperties[3].CooldownTime, 3);
 
 	if (GameInstanceRef->LockedButtons[7] == false)
