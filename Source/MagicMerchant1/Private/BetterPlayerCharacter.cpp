@@ -11,13 +11,15 @@ ABetterPlayerCharacter::ABetterPlayerCharacter()
 
 	Health = 100.0f;
 
+	NewHealth = 100.0f;
+
 	HealthRegen = 0.05f;
 
 	HealthRate = 3.0f;
 
 	mp = 100.0f;
 
-	money = 0.0f;
+	money = 10000.0f;
 
 	currency2 = 0.f;
 
@@ -41,7 +43,7 @@ void ABetterPlayerCharacter::BeginPlay()
 
 void ABetterPlayerCharacter::HealthRegenBar()
 {
-	if (Health < 100)
+	if (Health < NewHealth)
 	{
 		AddHp(HealthRegen);
 		

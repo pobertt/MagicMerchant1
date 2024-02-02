@@ -43,6 +43,9 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = HealthStats, meta = (AllowPrivateAccess = "true"))
 		float HealthRate;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = HealthStats, meta = (AllowPrivateAccess = "true"))
+		float NewHealth;
+
 	FTimerHandle HealthRateTimerHandle;
 
 	//Player Stats
