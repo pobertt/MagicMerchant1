@@ -272,16 +272,16 @@ void UCombatTabUserWidget::CooldownText(UTextBlock* ButtonName, int ButtonNum)
 	switch (ButtonNum)
 	{
 	case 0:
-		ButtonName->SetText(FText::FromString("cooldown: \n" + FString::SanitizeFloat(UpgradeProperties[0].CooldownTime)));
+		ButtonName->SetText(FText::FromString("cooldown: " + FString::SanitizeFloat(UpgradeProperties[0].CooldownTime)));
 		break;
 	case 1:
-		ButtonName->SetText(FText::FromString("cooldown: \n" + FString::SanitizeFloat(UpgradeProperties[1].CooldownTime)));
+		ButtonName->SetText(FText::FromString("cooldown: " + FString::SanitizeFloat(UpgradeProperties[1].CooldownTime)));
 		break;
 	case 2:
-		ButtonName->SetText(FText::FromString("cooldown: \n" + FString::SanitizeFloat(UpgradeProperties[2].CooldownTime)));
+		ButtonName->SetText(FText::FromString("cooldown: " + FString::SanitizeFloat(UpgradeProperties[2].CooldownTime)));
 		break;
 	case 3:
-		ButtonName->SetText(FText::FromString("cooldown: \n" + FString::SanitizeFloat(UpgradeProperties[3].CooldownTime)));
+		ButtonName->SetText(FText::FromString("cooldown: " + FString::SanitizeFloat(UpgradeProperties[3].CooldownTime)));
 		break;
 	}
 }
