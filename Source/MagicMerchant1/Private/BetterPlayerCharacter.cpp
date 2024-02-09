@@ -46,17 +46,6 @@ void ABetterPlayerCharacter::HealthRegenBar()
 	if (Health < NewHealth)
 	{
 		AddHp(HealthRegen);
-		
-		//Timer is not getting called
-		//Health Regen and Health Rate are useless
-		/*
-		GetWorld()->GetTimerManager().SetTimer(
-			HealthRateTimerHandle,
-			this,
-			&ABetterPlayerCharacter::HealthTimerReset,
-			HealthRate,
-			false);
-		*/
 	}
 }
 
@@ -65,17 +54,6 @@ void ABetterPlayerCharacter::MPRegenBar()
 	if (mp < 100)
 	{
 		AddMp(0.05f);
-
-		//Timer is not getting called
-		//Health Regen and Health Rate are useless
-		/*
-		GetWorld()->GetTimerManager().SetTimer(
-			HealthRateTimerHandle,
-			this,
-			&ABetterPlayerCharacter::HealthTimerReset,
-			HealthRate,
-			false);
-		*/
 	}
 }
 
