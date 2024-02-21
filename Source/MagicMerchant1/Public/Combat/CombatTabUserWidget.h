@@ -148,6 +148,9 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 		void AttackFunction(int Cost, int LockedButtonsIndex, int FirstClickArrayIndex, int Dmg, FString AttackUsed, float MPCost, FString AttackType);
+
+	UFUNCTION()
+		void AllAttackButtons();
 	
 	UFUNCTION()
 		void ItemFunction(int Cost, int LockedButtonsIndex, int FirstClickArrayIndex, FString ItemUsed, int Damage, float MPCost, int ItemCost, float CooldownTime, int ItemIndex);

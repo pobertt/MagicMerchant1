@@ -94,6 +94,17 @@ void UCombatTabUserWidget::AttackFunction(int Cost, int LockedButtonsIndex, int 
 	}
 }
 
+void UCombatTabUserWidget::AllAttackButtons()
+{
+	Attack1ButtonOnClicked();
+
+	Attack2ButtonOnClicked();
+
+	Attack3ButtonOnClicked();
+
+	Attack4ButtonOnClicked();
+}
+
 void UCombatTabUserWidget::Attack1ButtonOnClicked()
 {
 	if (bCanClick[0] == true && PlayerRef->mp > UpgradeProperties[0].MPCost)
@@ -128,8 +139,6 @@ void UCombatTabUserWidget::Attack1ButtonOnClicked()
 
 void UCombatTabUserWidget::Attack2ButtonOnClicked()
 {
-	if (Idle == false)
-	{
 		if (bCanClick[1] == true && PlayerRef->mp > UpgradeProperties[1].MPCost)
 		{
 			bCanClick[1] = false;
@@ -149,13 +158,10 @@ void UCombatTabUserWidget::Attack2ButtonOnClicked()
 					false);
 			}
 		}
-	}
 }
 
 void UCombatTabUserWidget::Attack3ButtonOnClicked()
 {
-	if (Idle == false)
-	{
 		if (bCanClick[2] == true && PlayerRef->mp > UpgradeProperties[2].MPCost)
 		{
 			bCanClick[2] = false;
@@ -175,13 +181,10 @@ void UCombatTabUserWidget::Attack3ButtonOnClicked()
 					false);
 			}
 		}
-	}
 }
 
 void UCombatTabUserWidget::Attack4ButtonOnClicked()
 {
-	if (Idle == false)
-	{
 		if (bCanClick[3] == true && PlayerRef->mp > UpgradeProperties[3].MPCost)
 		{
 			bCanClick[3] = false;
@@ -201,7 +204,6 @@ void UCombatTabUserWidget::Attack4ButtonOnClicked()
 					false);
 			}
 		}
-	}
 }
 
 void UCombatTabUserWidget::IdleButtonOnClicked()
@@ -239,7 +241,7 @@ void UCombatTabUserWidget::IdleFunction()
 		GetWorld()->GetTimerManager().SetTimer(
 			IdleFunctionTimerHandle,
 			this,
-			&UCombatTabUserWidget::Attack1ButtonOnClicked,
+			&UCombatTabUserWidget::AllAttackButtons,
 			1.0f,
 			true);
 	}
